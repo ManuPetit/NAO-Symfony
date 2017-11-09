@@ -1,0 +1,280 @@
+/* COULEURS DU SITE */
+/* POLICE DU SITE */
+@font-face {
+  font-family: 'Heebo';
+  src: url("../fonts/Heebo-Regular.ttf") format("truetype");
+  font-style: normal;
+  font-weight: 400; }
+
+@font-face {
+  font-family: 'Heebo';
+  src: url("../fonts/Heebo-Light.ttf") format("truetype");
+  font-style: normal;
+  font-weight: 300; }
+
+@font-face {
+  font-family: 'Heebo';
+  src: url("../fonts/Heebo-Bold.ttf") format("truetype");
+  font-style: normal;
+  font-weight: 700; }
+
+@font-face {
+  font-family: 'Asap';
+  src: url("../fonts/Asap-Regular.ttf") format("truetype");
+  font-style: normal;
+  font-weight: 400; }
+
+@font-face {
+  font-family: 'Asap';
+  src: url("../fonts/Asap-Italic.ttf") format("truetype");
+  font-style: italic;
+  font-weight: 400; }
+
+@font-face {
+  font-family: 'Asap';
+  src: url("../fonts/Asap-Bold.ttf") format("truetype");
+  font-style: normal;
+  font-weight: 700; }
+
+@font-face {
+  font-family: 'Asap';
+  src: url("../fonts/Asap-BoldItalic.ttf") format("truetype");
+  font-style: italic;
+  font-weight: 700; }
+
+/* GENERALITIES SECTION */
+body {
+  font-family: 'Asap',Arial,sans-serif;
+  background-color: #ffffff; }
+
+.text-title-green {
+  color: #1daa69;
+  text-shadow: 4px 4px 2px #274144;
+  font-weight: bold; }
+
+.text-title-cream {
+  color: #e0cfc6;
+  text-shadow: 3px 3px 2px #000000; }
+
+.text-title-white {
+  color: #FFFFFF;
+  text-shadow: 2px 2px #000000; }
+
+.text-dark-green {
+  color: #274144; }
+
+.bg-cream {
+  background-color: #e0cfc6; }
+
+.bg-green {
+  background-color: #1daa69; }
+
+.bg-dark-transparent {
+  background-color: rgba(0, 0, 0, 0.6); }
+
+.logo-link {
+  width: 70px; }
+
+.bird-up {
+  width: 75%; }
+
+.border-white {
+  border: 4px solid #ffffff; }
+
+/* NAVIGATION SECTION */
+nav li {
+  padding: 0 5px; }
+
+nav .img-nav {
+  width: 70px; }
+
+.btn {
+  border-radius: 30px !important; }
+
+/* LANDING PAGE -> IMAGE SECTION */
+#image-section {
+  background: url("../img/eagle.jpg") no-repeat;
+  background-size: cover;
+  height: 360px; }
+  #image-section #video-background {
+    display: none; }
+  #image-section h1 {
+    font-size: 2.5em; }
+  #image-section h2 {
+    font-size: 1.5em; }
+
+/* LANDING PAGE -> DECOUVRIR SECTION
+-> QUI SECTION       */
+#decouvrir-section, #qui-section {
+  background-color: #274144;
+  color: #ffffff; }
+
+/* LANDING PAGE -> CAROUSEL SECTION   */
+.carousel-indicators li {
+  border-radius: 15px;
+  margin: 1px 7px;
+  height: 15px;
+  max-width: 15px;
+  border: 1px solid #FFF;
+  background-color: transparent; }
+
+.carousel-indicators .active {
+  background-color: #fff;
+  max-width: 17px;
+  margin: 0 7px;
+  height: 17px; }
+
+.carousel-control-prev, .carousel-control-next {
+  font-size: 1.5rem; }
+
+/* FOOTER SECTION */
+#footer-section .footer-exp {
+  display: block;
+  padding: 0.5rem 1rem;
+  margin-bottom: 0; }
+
+#footer-section .footer-exp {
+  color: #274144; }
+
+#footer-section .land .footer-exp {
+  color: #eeeeee; }
+
+#footer-section .nav-link {
+  color: #274144; }
+
+#footer-section .land .nav-link {
+  color: #eeeeee; }
+
+#footer-section .nav-link:hover {
+  color: #4267b2; }
+
+/* ACCUEIL PAGE --> */
+#accueil-intro img.birdie {
+  width: 47px;
+  height: auto; }
+
+#accueil-intro .read-more {
+  color: #274144; }
+
+#accueil-intro .read-more:hover {
+  text-decoration: none;
+  color: #1daa69; }
+
+#participer-accueil-section .parti-obs {
+  height: 198px;
+  background: url("../img/accueil-observer.png") no-repeat;
+  background-position: center; }
+  #participer-accueil-section .parti-obs h4 {
+    margin-top: 100px; }
+
+#participer-accueil-section .parti-pho {
+  height: 198px;
+  background: url("../img/accueil-photographier.png") no-repeat;
+  background-position: center; }
+  #participer-accueil-section .parti-pho h4 {
+    margin-top: 100px; }
+
+#participer-accueil-section .parti-par {
+  height: 198px;
+  background: url("../img/accueil-partager.png") no-repeat;
+  background-position: center; }
+  #participer-accueil-section .parti-par h4 {
+    margin-top: 115px; }
+
+#participer-accueil-section .parti-val {
+  height: 198px;
+  background: url("../img/accueil-valider.png") no-repeat;
+  background-position: center; }
+  #participer-accueil-section .parti-val h4 {
+    margin-top: 100px; }
+
+#blog-accueil-section a {
+  color: #274144; }
+
+#blog-accueil-section a:hover {
+  color: #4267b2;
+  text-decoration: none; }
+
+#blog-accueil-section h3 {
+  margin-top: calc(100% / 2); }
+  #blog-accueil-section h3 a {
+    color: #ffffff; }
+  #blog-accueil-section h3 a:hover {
+    color: #1a8cff;
+    text-decoration: none; }
+
+#observation-accueil-section .container {
+  background-color: #274144; }
+
+#observation-accueil-section .card-text {
+  font-size: .8em; }
+
+#vouloir-accueil-section a {
+  color: #ffffff; }
+
+#vouloir-accueil-section a:hover {
+  color: #4267b2;
+  text-decoration: none; }
+
+#vouloir-accueil-section h2 {
+  font-size: 1.7em;
+  margin-top: 0%; }
+
+/* PAGE A PROPOS */
+#apropos-proposition-section .box {
+  position: relative;
+  margin-bottom: 120px; }
+
+#apropos-proposition-section .box-title {
+  width: 70%;
+  background: #ffffff;
+  padding: 10px;
+  position: absolute;
+  margin: 0 auto;
+  left: 0;
+  right: 0;
+  top: 80%; }
+  #apropos-proposition-section .box-title hr {
+    border-width: 2px;
+    border-color: #28282f;
+    margin-left: auto;
+    margin-right: 30%; }
+  #apropos-proposition-section .box-title a {
+    color: #000000; }
+  #apropos-proposition-section .box-title a:hover {
+    color: #4267b2;
+    text-decoration: none; }
+
+/* BREAKPOINT SECTION */
+@media (min-width: 768px) {
+  nav .container {
+    border-bottom: 3px #274144 solid; }
+  .carousel-control-prev, .carousel-control-next {
+    font-size: 2.5rem; }
+  #image-section {
+    height: auto;
+    background: url();
+    background-color: #274144; }
+    #image-section #video-background {
+      display: initial;
+      width: 100%; }
+    #image-section #video-inner {
+      width: 100%;
+      left: 0;
+      right: 0;
+      position: absolute;
+      top: 20vh; }
+    #image-section h1 {
+      font-size: 4em; }
+    #image-section h2 {
+      font-size: 2.5em; }
+  #observation-accueil-section .container {
+    background: url("../img/accueil-vertice.png");
+    background-repeat: repeat-x; }
+  .bird-up {
+    width: 100%; }
+  #vouloir-accueil-section h2 {
+    font-size: 2.2em;
+    margin-top: 4%; }
+  #apropos-proposition-section .box {
+    margin-bottom: 70px; } }
