@@ -81,6 +81,12 @@ class User
     private $avatar;
 
     /**
+     * @var \DateTime
+     * @ORM\Column(type="date")
+     */
+    private $dateJoined;
+
+    /**
      * @var \UserBundle\Entity\Role
      * @ORM\ManyToOne(targetEntity="UserBundle\Entity\Role")
      * @ORM\JoinColumn(name="role_id", referencedColumnName="id")
@@ -119,6 +125,7 @@ class User
         $this->badges = new ArrayCollection();
         $this->observations = new ArrayCollection();
         $this->favoriteObservations = new ArrayCollection();
+        $this->dateJoined = new \DateTime();
     }
 
     /**
@@ -239,6 +246,22 @@ class User
     public function setAvatar($avatar)
     {
         $this->avatar = $avatar;
+    }
+
+    /**
+     * @return \DateTime
+     */
+    public function getDateJoined()
+    {
+        return $this->dateJoined;
+    }
+
+    /**
+     * @param \DateTime $dateJoined
+     */
+    public function setDateJoined($dateJoined)
+    {
+        $this->dateJoined = $dateJoined;
     }
 
     /**

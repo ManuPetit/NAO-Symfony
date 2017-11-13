@@ -131,11 +131,39 @@ class UploadDataCommand extends DoctrineCommand
                 "",
                 "All TAXREF bird data has been loaded correctly.",
                 "",
+            ]);
+
+            //Asking for adding fake data
+            $question = new ConfirmationQuestion('Would you like to add fake data (y/n)?', false);
+
+            if ($helper->ask($input, $output, $question)) {
+                $output->writeln([
+                    "",
+                    "5 - Loading fake data for testing and demo",
+                    "    --------------------------------------",
+                    "",
+                    "Please wait...",
+                    "",
+                ]);
+                $filename = __DIR__ . '/../db/fakedata.sql';
+                $sql = file_get_contents($filename);
+                $this->getDoctrineConnection($connectionName)->executeQuery($sql);
+                $output->writeln([
+                    "",
+                    "Fake data has been loaded correctly.",
+                    "",
+                ]);
+            }
+            $output->writeln([
+                "",
+                "All processes terminated.",
+                "",
                 "",
                 "All the data has been succesfully loaded to the database.",
                 "The web site may be used...",
                 "",
             ]);
+
         } catch (Exception $e) {
             $output->writeln(sprintf('<error>Could not load data in database :</error>'));
             $output->writeln(sprintf('<error>%s</error>', $e->getMessage()));
