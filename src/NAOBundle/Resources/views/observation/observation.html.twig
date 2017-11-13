@@ -1,0 +1,72 @@
+{# src/NAOBundle/ressources/views/observation/observation.html.twig #}
+
+{% extends 'NAOBundle::layout.html.twig' %}
+
+{% block title %}{{ parent() }} - Observation {% endblock %}
+
+{% block body %}
+
+<!-- SECTION ARTICLE BLOG -->
+<article id="blog" class="my-5">
+    <div class="container bg-cream">
+        <div class="row py-5">
+            <div class="col-12 text-center">
+                <h1>Milan royal à Piana</h1>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col px-4 pb-4">
+                <div id="carouselObser" class="carousel slide" data-ride="carousel">
+                    <ol class="carousel-indicators">
+                        <li data-target="#carouselObser" data-slide-to="0" class="active"></li>
+                        <li data-target="#carouselObser" data-slide-to="1"></li>
+                        <li data-target="#carouselObser" data-slide-to="2"></li>
+                    </ol>
+                    <div class="carousel-inner">
+                        <div class="carousel-item active">
+                            <img src="{{ asset('img/pobs-01.jpg') }}" alt="" class="img-fluid">
+                        </div>
+                        <div class="carousel-item">
+                            <img src="{{ asset('img/pobs-02.jpg') }}" alt="" class="img-fluid">
+                        </div>
+                        <div class="carousel-item">
+                            <img src="{{ asset('img/pobs-03.jpg') }}" alt="" class="img-fluid">
+                        </div>
+                    </div>
+                    <a class="carousel-control-prev" href="#carouselObser" role="button" data-slide="prev">
+                        <span class="fa fa-chevron-circle-left" aria-hidden="true"></span>
+                        <span class="sr-only">Précédent</span>
+                    </a>
+                    <a class="carousel-control-next" href="#carouselObser" role="button" data-slide="next">
+                        <span class="fa fa-chevron-circle-right" aria-hidden="true"></span>
+                        <span class="sr-only">Suivant</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+        <div class="row pt-4 px-4">
+            <div class="col-12 col-md-4">Auteur : Jean</div>
+            <div class="col-12 col-md-4">Espèce : Milan</div>
+        </div>
+        <div class="row px-4">
+            <div class="col-12 col-md-4">Date : 4 juin 2017</div>
+            <div class="col-12 col-md-4">Lieu : Piana</div>
+            <div class="col-12 col-md-4">Point: 42.260662, 8.676282</div>
+            <div class="col-12 py-5">
+                <p>Superbe oiseau oiseau observé cette année, en juin près de Porto, en Corse.</p>
+            </div>
+        </div>
+    </div>
+</article>
+
+<section class="back-up d-none d-md-block">
+    <div class="container">
+        <div class="row justify-content-end">
+            <a href="#" title="Remonter vers le haut de la page">
+                <img src="../img/bird-up.png" alt="" class="bird-up">
+            </a>
+        </div>
+    </div>
+</section>
+
+{% endblock %}

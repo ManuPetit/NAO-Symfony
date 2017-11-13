@@ -1,0 +1,37 @@
+{# src/NAOBundle/Ressources/views/layout.html.twig #}
+
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>{% block title %}NAO{% endblock %}</title>
+    <link rel="stylesheet" href="{{ asset('css/font-awesome.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/bootstrap.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/style.css') }}">
+    <link rel="icon" type="image/png" href="{{ asset('favicon-32x32.png') }}" sizes="32x32" />
+    <link rel="icon" type="image/png" href="{{ asset('favicon-16x16.png') }}" sizes="16x16" />
+    <link rel="stylesheet" href="{{ asset('jqueryui/jquery-ui.css') }}">
+</head>
+<body>
+
+    {{ include("NAOBundle:Default:navbar.html.twig") }}
+
+    {% block body %}{% endblock %}
+
+    {{ include("NAOBundle:Default:footer.html.twig") }}
+
+    <script src="{{ asset('js/jquery.min.js') }}"></script>
+    <script src="{{ asset('js/popper.min.js') }}"></script>
+    <script src="{{ asset('js/bootstrap.min.js') }}"></script>
+    <script src="{{ asset('jqueryui/jquery-ui.js') }}"></script>
+    <script>
+        $(function() {
+            $('#mentions_legales')
+                .click(function(e){e.preventDefault();})
+                .tooltip({position: { my: "top+25%", at: "center" }});
+        });
+    </script>
+</body>
+</html>

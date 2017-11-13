@@ -1,0 +1,213 @@
+{# src/NAOBundle/ressources/views/home/home.html.twig #}
+
+{% extends "NAOBundle::layout.html.twig" %}
+
+{% block title %}{{ parent() }} - Bienvenue {% endblock %}
+
+{% block body %}
+<!-- INTRO SECTION -->
+<section id="accueil-intro" class="bg-white pt-3">
+    <div class="container">
+        <div class="row px-0">
+            <div class="col text-center px-0">
+                <h1 class="text-dark-green">Nos Amis Les Oiseaux</h1>
+                <img src="{{ asset('img/accueil-top.png') }}" alt="" class="img-fluid">
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- PARTICIPER SECTION -->
+<section id="participer-accueil-section" class="">
+    <div class="container bg-light">
+        <div class="row ">
+            <div class="col text-center px-0">
+                <h2 class="text-dark-green">Comment participer ?</h2>
+            </div>
+        </div>
+        <div class="row py-3">
+            <div class="col-12 col-sm-6 col-md-3 parti-obs text-center">
+                <h4 class="text-white">Observer</h4>
+            </div>
+            <div class="col-12 col-sm-6 col-md-3 parti-pho text-center">
+                <h4 class="text-white">Photographier</h4>
+            </div>
+            <div class="col-12 col-sm-6 col-md-3 parti-par text-center">
+                <h4 class="text-white">Partager</h4>
+            </div>
+            <div class="col-12 col-sm-6 col-md-3 parti-val text-center">
+                <h4 class="text-white">Valider</h4>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col px-0 pb-0">
+                <img src="{{ asset('img/accueil-comment.png') }}" alt="" class="img-fluid">
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- SECTION BLOG -->
+<section id="blog-accueil-section">
+    <div class="container">
+        <div class="row">
+            <div class="col text-center pb-3">
+                <h2>Les derniers articles</h2>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12 col-md-4">
+                <div class="card mb-3">
+                    <img src="../../img/blog-01.jpg" alt="" class="card-img-top">
+                    <div class="card-img-overlay text-center">
+                        <h3 class="card-title text-white bg-dark-transparent py-3">
+                            <a href="../../../../../../fichiers%20prep/blog.html">Le bon endroit</a>
+                        </h3>
+                    </div>
+                    <div class="card-body">
+                        <p class="card-text">Choisir le bon moment pour sortir, chercher l'oiseau dans le paysage, être attentif au moindre cri sont les principes de base de l'ornithologie de terrain. Cela s'apprend, dans les livres mais surtout sur le terrain, seul ou en compagnie d'ornithologues plus expérimentés.</p>
+                        <div class="col-12 text-right">
+                            <a href="#" class="align-self-right">Lire plus <i class="fa fa-angle-double-right"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-md-4">
+                <div class="card mb-3">
+                    <img src="../../img/blog-02.jpg" alt="" class="card-img-top">
+                    <div class="card-img-overlay text-center">
+                        <h3 class="card-title text-white bg-dark-transparent py-3">
+                            <a href="../../../../../../fichiers%20prep/blog.html">Choisir ses jumelles</a>
+                        </h3>
+                    </div>
+                    <div class="card-body">
+                        <p class="card-text">Étant donné la multitude des marques et des modèles disponibles sur le marché, il devient très difficile, pour un débutant (et même pour un utilisateur confirmé) de choisir une paire de jumelles bien adaptée à ses besoins et à son budget; or il s'agit certainement de l'objet le plus important pour un observateur, qui l'accompagnera partout sur le terrain.</p>
+                        <div class="col-12 text-right">
+                            <a href="#" class="align-self-right">Lire plus <i class="fa fa-angle-double-right"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-md-4">
+                <div class="card mb-3">
+                    <img src="../../img/blog-03.jpg" alt="" class="card-img-top">
+                    <div class="card-img-overlay text-center">
+                        <h3 class="card-title text-white bg-dark-transparent py-3">
+                            <a href="../../../../../../fichiers%20prep/blog.html">Un livre pour débuter</a>
+                        </h3>
+                    </div>
+                    <div class="card-body">
+                        <p class="card-text">Conçu spécialement pour les débutants et observateurs occasionnels, ce guide est le premier à aborder l’identification des oiseaux communs par leur caractère le plus visible : leurs couleurs. Aucune connaissance préalable en ornithologie n’est nécessaire pour l’utiliser.</p>
+                        <div class="col-12 text-right">
+                            <a href="#" class="align-self-right">Lire plus <i class="fa fa-angle-double-right"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col px-0 pb-0">
+                <img src="{{ asset('img/accueil-comment-bas.png') }}" alt="" class="img-fluid">
+            </div>
+        </div>
+    </div>
+</section>
+<!-- SECTION OBSERVATIONS -->
+<section id="observation-accueil-section">
+    <div class="container pt-5 pb-3">
+        <div class="row">
+            <div class="col text-center text-white py-3">
+                <h2>Les dernières observations</h2>
+            </div>
+        </div>
+        <div class="row text-dark">
+            <div class="row justify-content-center m-0">
+                <div class="col-10 bg-white col-md-5 pt-3">
+                    <div class="card">
+                        <a href="#" title="Aller voir l'observation du Rouge-gorge">
+                            <img src="{{ asset('img/obs-01.jpg') }}" alt="" class="card-img-top">
+                        </a>
+                        <div class="card-body row">
+                            <div class="col-6 px-sm-0">
+                                <p class="card-text"><strong>Espèce :</strong> Rouge-gorge</p>
+                                <p class="card-text"><strong>Publiée par :</strong> Philippe Tourai</p>
+                            </div>
+                            <div class="col-6 px-sm-0">
+                                <p class="card-text"><strong>Date :</strong> 10/08/2017</p>
+                                <p class="card-text"><strong>Lieu :</strong> Dijon</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-10 bg-white col-md-5 pt-3">
+                    <div class="card">
+                        <a href="#" title="Aller voir l'observation du Milan">
+                            <img src="{{ asset('img/obs-02.jpg') }}" alt="" class="card-img-top">
+                        </a>
+                        <div class="card-body row">
+                            <div class="col-6 px-sm-0">
+                                <p class="card-text"><strong>Espèce :</strong> Milan</p>
+                                <p class="card-text"><strong>Publiée par :</strong> Doumé Filippi</p>
+                            </div>
+                            <div class="col-6 px-sm-0">
+                                <p class="card-text"><strong>Date :</strong> 07/05/2017</p>
+                                <p class="card-text"><strong>Lieu :</strong> Piana</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row justify-content-center m-0">
+                <div class="col-10 bg-white col-md-5 pt-md-3">
+                    <div class="card">
+                        <a href="#" title="Aller voir l'observation du Flamand rose">
+                            <img src="{{ asset('img/obs-03.jpg') }}" alt="" class="card-img-top">
+                        </a>
+                        <div class="card-body row">
+                            <div class="col-6 px-sm-0">
+                                <p class="card-text"><strong>Espèce :</strong> Flamand rose</p>
+                                <p class="card-text"><strong>Publiée par :</strong> Jojo</p>
+                            </div>
+                            <div class="col-6 px-sm-0">
+                                <p class="card-text"><strong>Date :</strong> 06/07/2017</p>
+                                <p class="card-text"><strong>Lieu :</strong> Ste Marie de la Mer</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-10 bg-white col-md-5 pt-3 pb-3 pb-md-0">
+                    <div class="card">
+                        <a href="#" title="Aller voir l'observation de la Mésange bleue">
+                            <img src="{{ asset('img/obs-04.jpg') }}" alt="" class="card-img-top">
+                        </a>
+                        <div class="card-body row">
+                            <div class="col-6 px-sm-0">
+                                <p class="card-text"><strong>Espèce :</strong> Mésange bleue</p>
+                                <p class="card-text"><strong>Publiée par :</strong> Jean Vacheron</p>
+                            </div>
+                            <div class="col-6 px-sm-0">
+                                <p class="card-text"><strong>Date :</strong> 25/09/2017</p>
+                                <p class="card-text"><strong>Lieu :</strong> Toulouse</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- RETOUR VERS LE HAUT SECTION -->
+<section class="back-up">
+    <div class="container">
+        <div class="row justify-content-end">
+            <a href="#" title="Remonter vers le haut de la page">
+                <img src="{{ asset('img/bird-up.png') }}" alt="" class="bird-up">
+            </a>
+        </div>
+    </div>
+</section>
+
+    {{ include("NAOBundle:Default:participate_section.html.twig") }}
+
+{% endblock %}
