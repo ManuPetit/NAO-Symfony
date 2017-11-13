@@ -9,3 +9,4 @@ blog:
 nao:
     resource: "@NAOBundle/Resources/config/routing.yml"
     prefix:   /
+
