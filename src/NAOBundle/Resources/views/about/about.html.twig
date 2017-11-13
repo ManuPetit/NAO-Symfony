@@ -1,0 +1,64 @@
+{# src/NAOBundle/Ressources/views/about/about.html.twig #}
+
+{% extends "NAOBundle::layout.html.twig" %}
+
+{% block title %}{{ parent() }} - A propos {% endblock %}
+
+{% block body %}
+
+    <!-- SECTION A PROPOS -->
+    <section id="apropos-intro-section" class="py-5">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-12 col-md-4 text-center pb-3 pb-md-0">
+                    <h2>Nous sommes des passionnés des oiseaux</h2>
+                </div>
+                <div class="col-12 col-md-8">
+                    <p>L’association a été créée en 2003 par Michel Dujardin, le musicien percussionniste Laurent Julia, avec l’aide du maire de Villard de Lans Jean Pierre Bouvier.</p>
+                    <p>A ses débuts, l’association s’occupait principalement de la protection de la faune sauvage et de ses biotopes dans les départements de la Drôme et de l’Isère.</p>
+                    <p>Entre 2005 et 2010, l’association va, par l’intermédiaire de Michel Dujardin, promouvoir et sensibiliser les enfants aux problèmes écologiques. Elle va permettre dans les écoles, la vulgarisation des connaissances naturalistes par le biais de conférences, animations et sorties scolaires.</p>
+                    <p></p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION PROPOSITIONS -->
+    <section id="apropos-proposition-section">
+        <div class="container bg-green p-5 mb-5">
+            <div class="row">
+                <div class="col-12 col-md-4 box">
+                    <img src="{{ asset('img/propos-01.jpg') }}" alt="" class="img-fluid border-white">
+                    <div class="box-title">
+                        <hr>
+                        <a href="participer.html">
+                            <h4>Participez à notre projet</h4>
+                        </a>
+                        <hr>
+                    </div>
+                </div>
+                <div class="col-12 col-md-4 box">
+                    <img src="{{ asset('img/propos-02.jpg') }}" alt="" class="img-fluid border-white">
+                    <div class="box-title">
+                        <hr>
+                        <a href="blog.html">
+                            <h4>Visitez notre blog</h4>
+                        </a>
+                        <hr>
+                    </div>
+                </div>
+                <div class="col-12 col-md-4 box">
+                    <img src="{{ asset('img/propos-03.jpg') }}" alt="" class="img-fluid border-white">
+                    <div class="box-title">
+                        <hr>
+                        <a href="#">
+                            <h4>Instagramez avec nous</h4>
+                        </a>
+                        <hr>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+{% endblock %}

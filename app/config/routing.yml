@@ -1,18 +1,11 @@
+user:
+    resource: "@UserBundle/Resources/config/routing.yml"
+    prefix:   /
+
 blog:
-    resource: "@BlogBundle/Controller/"
-    type:     annotation
+    resource: "@BlogBundle/Resources/config/routing.yml"
     prefix:   /
 
 nao:
-    resource: "@NAOBundle/Controller/"
-    type:     annotation
+    resource: "@NAOBundle/Resources/config/routing.yml"
     prefix:   /
-
-user:
-    resource: "@UserBundle/Controller/"
-    type:     annotation
-    prefix:   /
-
-app:
-    resource: '@AppBundle/Controller/'
-    type: annotation

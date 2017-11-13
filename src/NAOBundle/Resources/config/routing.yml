@@ -1,0 +1,27 @@
+nao_index:
+    path:     /index
+    defaults: { _controller: NAOBundle:Default:index }
+
+nao_homepage:
+    path:     /accueil
+    defaults: { _controller: NAOBundle:Default:home }
+
+nao_about:
+    path:     /apropos
+    defaults: { _controller: NAOBundle:Default:about }
+
+nao_observation:
+    path:     /observation
+    defaults: { _controller: NAOBundle:Default:observation }
+
+nao_participate:
+    path:     /participate
+    defaults: { _controller: NAOBundle:Default:participate }
+
+nao_search:
+    path:     /rechercher
+    defaults: { _controller: NAOBundle:Default:search }
+
+nao_contact:
+    path:     /contact
+    defaults: { _controller: NAOBundle:Default:contact}
