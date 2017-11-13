@@ -1,0 +1,229 @@
+{# src/NAOBundle/ressources/views/index/index.html.twig #}
+
+{% extends "NAOBundle::layout.html.twig" %}
+
+{% block title %}{{ parent() }}{% endblock %}
+
+{% block body %}
+
+<!-- IMAGE/FILM SECTION -->
+<section id="image-section">
+    <video id="video-background" preload muted autoplay loop>
+        <source src="{{ asset('video/intro-birds.mp4" t') }}" type="video/mp4">
+        <source src="{{ asset('video/intro-birds_1.webm') }}" type="video/webm">
+    </video>
+    <div id="video-inner">
+        <div class="container">
+            <div class="row pt-3 pt-md-5">
+                <div class="col text-center">
+                    <h1 class="text-title-green m-4">Nos Amis Les Oiseaux</h1>
+                    <h2 class="text-title-cream">Vivez notre programme d'observation</h2>
+                    <a href="#" class="btn btn-primary btn-lg align-self-end m-3 m-md-5">S'inscrire</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- DECOUVRIR SECTION -->
+<section id="decouvrir-section" class="py-5">
+    <div class="container">
+        <div class="row justify-content-end">
+            <div class="col-5 order-2 col-md-4 order-md-1 text-center">
+                <img src="{{ asset('img/map.jpg') }}" alt="" class="img-fluid">
+            </div>
+            <div class="col-12 order-1 col-md-8 order-md-2">
+                <h2 class="pb-2">Découvrir</h2>
+                <p>Notre site vous propose aussi de découvrir les nombreuses espèces d'oiseaux se trouvant autour de vous grâce à notre carte interactive.</p>
+                <p>Grâce à elle, vous pourrez observer où ont eu lieu les observations faites par nos membres et à partir à la recherche de ces merveilleux volatiles.</p>
+            </div>
+            <div class="col-7 order-3 col-md-8 align-self-center text-center">
+                <a href="#" class="btn btn-primary">Carte interactive</a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- COMMENT SECTION -->
+<section id="comment-section bg-light" class="py-5">
+    <div class="container">
+        <div class="row">
+            <div class="col-12 text-center">
+                <h2 class="pb-2">Comment ça marche ?</h2>
+            </div>
+            <div class="col-12 col-md-6">
+                <div class="row p-2">
+                    <div class="col-5 align-self-center">
+                        <img src="{{ asset('img/comment-inscription.jpg') }}" alt="" class="img-fluid rounded-circle">
+                    </div>
+                    <div class="col-7 text-center align-self-center">
+                        <p>Inscription simple en quelques clics.<br>Rejoignez une communauté de passionnés.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-md-6">
+                <div class="row p-2">
+                    <div class="col-5 align-self-center">
+                        <img src="{{ asset('img/comment-observer.jpg') }}" alt="" class="img-fluid rounded-circle">
+                    </div>
+                    <div class="col-7 text-center align-self-center">
+                        <p>Observez et photographiez les oiseaux autour de vous.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12 col-md-6">
+                <div class="row p-2">
+                    <div class="col-5 align-self-center">
+                        <img src="{{ asset('img/comment-participer.jpg') }}" alt="" class="img-fluid rounded-circle">
+                    </div>
+                    <div class="col-7 text-center align-self-center">
+                        <p>Rédigez et partagez vos observations avec les autres membres.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-md-6">
+                <div class="row p-2">
+                    <div class="col-5 align-self-center">
+                        <img src="{{ asset('img/comment-valider.jpg') }}" alt="" class="img-fluid rounded-circle">
+                    </div>
+                    <div class="col-7 text-center align-self-center">
+                        <p>Votre observation sera validée par un professionnel et publiée sur notre site.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row justify-content-center justify-content-md-end py-3">
+            <a href="#" class="btn btn-primary">Consulter les observations</a>
+        </div>
+    </div>
+</section>
+
+<!-- QUI SOMMES NOUS SECTION -->
+<section id="qui-section" class="py-5">
+    <div class="container">
+        <div class="row">
+            <div class="col-12 col-md-6 px-4">
+                <h2 class="pb-2 text-center">Qui sommes-nous ?</h2>
+                <p>L'association NAO fondée en 2003 par Michel Dujardin, a pour but l'observation et la préservation de la faune ornithologique.</p>
+                <p>Après plusieurs années d'existence, Michel Dujardin a décidé de divesifier son association en créant ce site internet. Il a pour but de permettre la rencontre entre particuliers passionnés d'oiseaux et professionnels afin que chcun puisse partager ses connaissances et s'ouvrir au monde qui l'entoure.</p>
+                <div class="row justify-content-center justify-content-md-end py-3">
+                    <a href="{{ path('nao_about') }}" class="btn btn-primary">En savoir plus</a>
+                </div>
+            </div>
+            <div class="col-12 col-md-6 px-4">
+                <h2 class="pb-2 text-center">Blog</h2>
+                <p>Intéressé par le monde merveilleux des oiseaux?</p>
+                <p>Que ce soit pour parler de matériel d'observation, de l'évolutionb de l'environnement ou tout simplement de différentes espèces, nos professionnels s'attaquent à tous les sujets.</p>
+                <p>Venez découvrir nos articles et apprenez en plus sur ce monde merveilleux qui vous entoure !</p>
+                <div class="row justify-content-center justify-content-md-end py-3">
+                    <a href="{{ path('blog_homepage') }}" class="btn btn-primary">Se rendre sur le blog</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- TEMOIGNAGES SECTION -->
+<section id="temoignages-section" class="bg-dark">
+    <div class="container py-3">
+        <div class="row text-white">
+            <div class="col text-center">
+                <h2 class="">Témoignages</h2>
+            </div>
+            <div class="row m-0">
+                <div class="col">
+                    <div id="carouselTemoins" class="carousel slide" data-ride="carousel">
+                        <ol class="carousel-indicators">
+                            <li data-target="#carouselTemoins" data-slide-to="0" class="active"></li>
+                            <li data-target="#carouselTemoins" data-slide-to="1"></li>
+                            <li data-target="#carouselTemoins" data-slide-to="2"></li>
+                            <li data-target="#carouselTemoins" data-slide-to="3"></li>
+                            <li data-target="#carouselTemoins" data-slide-to="4"></li>
+                        </ol>
+                        <div class="carousel-inner">
+                            <div class="carousel-item active p-4">
+                                <div class="row justify-content-center">
+                                    <div class="col-12 col-md-3 text-center">
+                                        <img src="{{ asset('img/temoin-05.jpg') }}" alt="" class="img-fluid rounded-circle">
+                                    </div>
+                                    <div class="col-12 col-md-7  align-self-center">
+                                        <blockquote class="blockquote text-md-right">
+                                            <p>Je crois fermement en l’avenir, si nous savons préparer et expliquer à nos enfants les merveilles qui composent notre monde.</p>
+                                            <footer class="blockquote-footer">Michel Dujardin, <cite>Association Nos Amis les Oiseaux</cite></footer>
+                                        </blockquote>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="carousel-item p-4">
+                                <div class="row justify-content-center">
+                                    <div class="col-12 col-md-7  align-self-center order-2 order-md-1">
+                                        <blockquote class="blockquote">
+                                            <p>Entendre l'oiseau qui s'envole, le vent qui se lève, l'arbre qui m'appelle... tout est là, tout est vivant, tout est dans la forêt, et je peux maintenant le partager.</p>
+                                            <footer class="blockquote-footer">Emily Vernay, <cite>de Fontainebleau</cite></footer>
+                                        </blockquote>
+                                    </div>
+                                    <div class="col-12 col-md-3 text-center order-1 order-md-2">
+                                        <img src="{{ asset('img/temoin-02.jpg') }}" alt="" class="img-fluid rounded-circle">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="carousel-item p-4">
+                                <div class="row justify-content-center">
+                                    <div class="col-12 col-md-3 text-center">
+                                        <img src="{{ asset('img/temoin-01.jpg') }}" alt="" class="img-fluid rounded-circle">
+                                    </div>
+                                    <div class="col-12 col-md-7  align-self-center">
+                                        <blockquote class="blockquote text-md-right">
+                                            <p>Ici, il n'y a pas que le Mont Blanc. Les montagnes environnantes sont une volière naturelle que j'aime explorer, avec mon appareil photo, tout en écoutant le chant des oiseaux.</p>
+                                            <footer class="blockquote-footer">Philippe Ebert, <cite>Lycéen à Chamonix</cite></footer>
+                                        </blockquote>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="carousel-item p-4">
+                                <div class="row justify-content-center">
+                                    <div class="col-12 col-md-7  align-self-center order-2 order-md-1">
+                                        <blockquote class="blockquote">
+                                            <p>Avec toutes ces magnifiques photos prises par les membres du site, je ne risque pas de me retrouver en manque d'inspiration pour peindre mes tableaux.</p>
+                                            <footer class="blockquote-footer">Catherina Achard <cite>Peintre animalière et illustratrice pour enfant</cite></footer>
+                                        </blockquote>
+                                    </div>
+                                    <div class="col-12 col-md-3 text-center order-1 order-md-2">
+                                        <img src="{{ asset('img/temoin-04.jpg') }}" alt="" class="img-fluid rounded-circle">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="carousel-item p-4">
+                                <div class="row justify-content-center">
+                                    <div class="col-12 col-md-3 text-center">
+                                        <img src="{{ asset('img/temoin-03.jpg') }}" alt="" class="img-fluid rounded-circle">
+                                    </div>
+                                    <div class="col-12 col-md-7  align-self-center">
+                                        <blockquote class="blockquote text-md-right">
+                                            <p>Je trouve intéressant de rendre service aux membres du site, simplement et gratuitement. Ce site, c'est aussi la possibilité de rencontres très enrichissantes. Tout me donne envie d'y revenir.</p>
+                                            <footer class="blockquote-footer">Pierre Thevenou, <cite>Ornithologue au Parc du Pont de Gau</cite></footer>
+                                        </blockquote>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <a class="carousel-control-prev" href="#carouselTemoins" role="button" data-slide="prev">
+                            <span class="fa fa-chevron-circle-left" aria-hidden="true"></span>
+                            <span class="sr-only">Previous</span>
+                        </a>
+                        <a class="carousel-control-next" href="#carouselTemoins" role="button" data-slide="next">
+                            <span class="fa fa-chevron-circle-right" aria-hidden="true"></span>
+                            <span class="sr-only">Next</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+    {{ include("NAOBundle:Default:participate_section.html.twig") }}
+
+{% endblock %}
