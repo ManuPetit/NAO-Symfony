@@ -13,7 +13,15 @@ class DefaultController extends Controller
 
     public function homeAction()
     {
-        return $this->render('NAOBundle:home:home.html.twig');
+        $em = $this->getDoctrine()->getManager();
+        $observations = $em->getRepository('NAOBundle:Observation')->getCompleteObs();
+        $posts = $em->getRepository('BlogBundle:Post')->getLastArticles();
+        var_dump($posts);
+
+        return $this->render('NAOBundle:home:home.html.twig', array(
+            'observations' => $observations,
+            'posts'        => $posts
+        ));
     }
 
     public function aboutAction()
