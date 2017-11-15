@@ -59,17 +59,19 @@
             {% for post in posts %}
             <div class="col-12 col-md-4">
                 <div class="card mb-3">
-                    <img src="img/observations/{% for p in post.BlogImages %}{% if loop.first %}{{ p.file | striptags }}{% endif %}{% endfor %}"
-                    alt="" class="card-img-top">
-
-                    <div class="card-img-overlay text-center">
+                    {% if post.BlogImages.snapshot is empty %}
+                    <img src="{{ app.request.basePath }}/img/image-not-available.jpg" alt="" class="card-img-top">
+                    {% else %}
+                        {% for p in post.BlogImages %}
+                            {% if loop.first %}
+                                <img src="{{ app.request.basePath }}/img/posts/{{ p.file|striptags }}" alt="" class="card-img-top">
+                            {% endif %}
+                        {% endfor %}
+                    {% endif %}
+                <div class="card-img-overlay text-center">
                         <h3 class="card-title text-white bg-dark-transparent py-3">
                             <a href="../../../../../../fichiers%20prep/blog.html">{{ post.title }}</a>
                         </h3>
-
-
-
-
                     </div>
                     <div class="card-body">
                         <p class="card-text">{{ post.content | striptags | slice(0,100) }}.</p>
@@ -104,8 +106,15 @@
                 <div class="col-10 bg-white col-md-5 pt-3">
                     <div class="card">
                         <a href="#" title="Aller voir l'observation du {{ obs.bird.frenchName }}">
-                            <img src="{{ asset('img/observations/7a47Qsq5835ze.jpg') }}"
-                            alt="" class="card-img-top">
+                            {% if obs.Photos.snapshot is empty %}
+                                <img src="{{ app.request.basePath }}/img/image-not-available.jpg" alt="" class="card-img-top">
+                            {% else %}
+                                {% for o in obs.Photos %}
+                                    {% if loop.first %}
+                                        <img src="{{ app.request.basePath }}/img/observations/{{ o.file|striptags }}" alt="" class="card-img-top">
+                                    {% endif %}
+                                {% endfor %}
+                            {% endif %}
                         </a>
                         <div class="card-body row">
                             <div class="col-6 px-sm-0">

@@ -9,27 +9,24 @@
 namespace NAOBundle\Repository;
 
 use Doctrine\ORM\EntityRepository;
+use Doctrine\ORM\Tools\Pagination\Paginator;
 
 class ObservationRepository extends EntityRepository
 {
-    public function getCompleteObs()
+    public function getLastObservations($limit = 4)
     {
         $qb = $this
             ->createQueryBuilder('o')
             ->leftJoin('o.bird', 'bird')
             ->addSelect('bird')
-            ->innerJoin('o.photos','photos')
+            ->leftJoin('o.photos','photos')
             ->addSelect('photos')
             ->leftJoin('o.user', 'user')
             ->addSelect('user')
-            ->setFirstResult(1)
-            ->setMaxResults(4)
-            ->getQuery()
-            ->getResult()
-            ;
-        return $qb;
+            ->orderBy('o.date', 'DESC')
+            ->setFirstResult(0)
+            ->setMaxResults($limit);
+        return new Paginator($qb);
     }
-
-
 
 }

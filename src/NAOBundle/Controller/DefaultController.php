@@ -3,6 +3,7 @@
 namespace NAOBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Doctrine\ORM\Tools\Pagination\Paginator;
 
 class DefaultController extends Controller
 {
@@ -14,10 +15,8 @@ class DefaultController extends Controller
     public function homeAction()
     {
         $em = $this->getDoctrine()->getManager();
-        $observations = $em->getRepository('NAOBundle:Observation')->getCompleteObs();
-        $posts = $em->getRepository('BlogBundle:Post')->getLastArticles();
-        var_dump($posts);
-
+        $observations = $em->getRepository('NAOBundle:Observation')->getLastObservations();
+        $posts = $em->getRepository('BlogBundle:Post')->getLastPosts();
         return $this->render('NAOBundle:home:home.html.twig', array(
             'observations' => $observations,
             'posts'        => $posts

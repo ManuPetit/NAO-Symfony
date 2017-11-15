@@ -9,19 +9,20 @@
 namespace BlogBundle\Repository;
 
 use Doctrine\ORM\EntityRepository;
+use Doctrine\ORM\Tools\Pagination\Paginator;
 
 class PostRepository extends EntityRepository
 {
-    public function getLastArticles()
+    public function getLastPosts($limit = 3)
     {
         $qb = $this
             ->createQueryBuilder('p')
             ->leftJoin('p.blogImages', 'blog')
             ->addSelect('blog')
-            ->setMaxResults(3)
-            ->getQuery()
-            ->getResult()
+            ->orderBy('p.date', 'DESC')
+            ->setFirstResult(0)
+            ->setMaxResults($limit)
         ;
-        return $qb;
+        return new Paginator($qb);
     }
 }

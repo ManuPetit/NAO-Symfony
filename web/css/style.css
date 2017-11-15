@@ -209,6 +209,28 @@ nav .img-nav {
 #observation-accueil-section .card-text {
   font-size: .8em; }
 
+/* Gestion des images en responsiv */
+@media all and (min-width: 1024px){
+  .card-img-top {
+    width:100%;
+    height:30vh;
+  }
+}
+
+@media all and (min-width: 768px) and (max-width: 1024px){
+  .card-img-top {
+    width:100%;
+    height:30vh;
+  }
+}
+
+@media all and (max-width: 768px) {
+  .card-img-top {
+    width:100%;
+    height:50vh;
+  }
+}
+
 #vouloir-accueil-section a {
   color: #ffffff; }
 
