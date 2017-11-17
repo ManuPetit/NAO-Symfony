@@ -1,0 +1,143 @@
+{%  extends 'NAOBundle::layout.html.twig' %}
+
+{%  block body %}
+    <!-- OBSERVATION SECTION -->
+    <section id="my-observations">
+        <div class="container py-5 bg-green px-md-5">
+            <div class="row">
+                <div class="col-4 d-none d-md-block">
+                    <img src="img/profile.jpg" alt="" style="width:120px;" class="m-4">
+                    <ul class="nav flex-column side-menu">
+                        <li class="nav-item">
+                            <a href="mes-observations.html" class="nav-link d-flex justify-content-between">
+                                <p class="p-1 m-0">Mes observations</p>
+                                <p class="p-1 m-0"><i class="fa fa-angle-right"></i></p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="mes-favoris.html" class="nav-link d-flex justify-content-between">
+                                <p class="p-1 m-0">Mes favoris</p>
+                                <p class="p-1 m-0"><i class="fa fa-angle-right"></i></p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="mon-profil.html" class="nav-link d-flex justify-content-between active">
+                                <p class="p-1 m-0">Modifier mon profil</p>
+                                <p class="p-1 m-0"><i class="fa fa-angle-right"></i></p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="mes-badges.html" class="nav-link d-flex justify-content-between">
+                                <p class="p-1 m-0">Mes badges</p>
+                                <p class="p-1 m-0"><i class="fa fa-angle-right"></i></p>
+                            </a>
+                        </li>
+                        {% if is_granted('ROLE_PRO') %}
+                            <li class="nav-item">
+                                <a href="gestion-observation.html" class="nav-link d-flex justify-content-between">
+                                    <p class="p-1 m-0">Gestion des observations</p>
+                                    <p class="p-1 m-0"><i class="fa fa-angle-right"></i></p>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="article.html" class="nav-link d-flex justify-content-between">
+                                    <p class="p-1 m-0">Ecrire un article du blog</p>
+                                    <p class="p-1 m-0"><i class="fa fa-angle-right"></i></p>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="gestion-article.html" class="nav-link d-flex justify-content-between">
+                                    <p class="p-1 m-0">Gestion des articles du blog</p>
+                                    <p class="p-1 m-0"><i class="fa fa-angle-right"></i></p>
+                                </a>
+                            </li>
+                        {% endif %}
+                        {% if is_granted('ROLE_ADMIN') %}
+                            <li class="nav-item">
+                                <a href="gestion-membre.html" class="nav-link d-flex justify-content-between">
+                                    <p class="p-1 m-0">Gestion des utilisateurs</p>
+                                    <p class="p-1 m-0"><i class="fa fa-angle-right"></i></p>
+                                </a>
+                            </li>
+                        {% endif %}
+                        <li class="nav-item">
+                            <a href="#" class="nav-link d-flex justify-content-between">
+                                <p class="p-1 m-0">Déconnexion</p>
+                                <p class="p-1 m-0"><i class="fa fa-angle-right"></i></p>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="col-12 col-md-8 text-white pb-md-4">
+                    <div class="row justify-content-center py-4">
+                        <div class="col-4">
+                            <a class="btn btn-outline-light btn-lg" href="participer.html" title="Ajouter une observation">
+                                <i class="fa fa-plus"></i> Observation
+                            </a>
+                        </div>
+                    </div>
+                    <div class="row row-separate py-3">
+                        <div class="col-12 col-md-6">Moineau domestique</div>
+                        <div class="col-6 col-md-3">10 août 2017</div>
+                        <div class="col-6 col-md-3">Bordeaux</div>
+                        <div class="col-8 text-right">Brouillon</div>
+                        <div class="col-1">
+                            <a href="#" title="Supprimer observation"><i class="fa fa-trash"></i></a>
+                        </div>
+                        <div class="col-1">
+                            <a href="#" title="Editer observation"><i class="fa fa-pencil"></i></a>
+                        </div>
+                        <div class="col-1 text-dark">
+                            <i class="fa fa-angle-double-right"></i>
+                        </div>
+                    </div>
+                    <div class="row row-separate py-3">
+                        <div class="col-12 col-md-6">Pigeon sur un toit</div>
+                        <div class="col-6 col-md-3">21 août 2017</div>
+                        <div class="col-6 col-md-3">Bordeaux</div>
+                        <div class="col-8 text-right">Brouillon</div>
+                        <div class="col-1">
+                            <a href="#" title="Supprimer observation"><i class="fa fa-trash"></i></a>
+                        </div>
+                        <div class="col-1">
+                            <a href="#" title="Editer observation"><i class="fa fa-pencil"></i></a>
+                        </div>
+                        <div class="col-1 text-dark">
+                            <i class="fa fa-angle-double-right"></i>
+                        </div>
+                    </div>
+                    <div class="row row-separate py-3">
+                        <div class="col-12 col-md-6">Mésange Bleue</div>
+                        <div class="col-6 col-md-3">23 septembre 2017</div>
+                        <div class="col-6 col-md-3">Merignac</div>
+                        <div class="col-8 text-right">En attente de validation</div>
+                        <div class="col-1 text-dark">
+                            <i class="fa fa-angle-double-right"></i>
+                        </div>
+                        <div class="col-1 text-dark">
+                            <i class="fa fa-trash"></i>
+                        </div>
+                        <div class="col-1 text-dark">
+                            <i class="fa fa-angle-double-right"></i>
+                        </div>
+                    </div>
+                    <div class="row row-separate py-3">
+                        <div class="col-12 col-md-6">Pie</div>
+                        <div class="col-6 col-md-3">1 août 2017</div>
+                        <div class="col-6 col-md-3">Bordeaux</div>
+                        <div class="col-8 text-right">Publié</div>
+                        <div class="col-1 text-dark">
+                            <i class="fa fa-trash"></i>
+                        </div>
+                        <div class="col-1 text-dark">
+                            <i class="fa fa-pencil"></i>
+                        </div>
+                        <div class="col-1">
+                            <a href="#" title="Voir observation"><i class="fa fa-angle-double-right"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock %}

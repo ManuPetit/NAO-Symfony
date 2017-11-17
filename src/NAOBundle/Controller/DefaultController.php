@@ -17,7 +17,7 @@ class DefaultController extends Controller
         $em = $this->getDoctrine()->getManager();
         $observations = $em->getRepository('NAOBundle:Observation')->getLastObservations();
         $posts = $em->getRepository('BlogBundle:Post')->getLastPosts();
-        return $this->render('NAOBundle:home:home.html.twig', array(
+        return $this->render('NAOBundle:Default:home.html.twig', array(
             'observations' => $observations,
             'posts'        => $posts
         ));

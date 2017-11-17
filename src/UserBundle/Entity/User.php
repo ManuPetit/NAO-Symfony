@@ -10,6 +10,8 @@ namespace UserBundle\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Validator\Constraints as Assert;
 use NAOBundle\Entity\Observation;
 
@@ -18,8 +20,10 @@ use NAOBundle\Entity\Observation;
  * @package UserBundle\Entity
  * @ORM\Table(name="users")
  * @ORM\Entity(repositoryClass="UserBundle\Repository\UserRepository")
+ * @UniqueEntity(fields="login", message="Ce nom d'utilisateur est déjà utilisé")
+ * @UniqueEntity(fields="email", message="Cet email est déjà utilisé")
  */
-class User
+class User implements UserInterface
 {
     /**
      * @var integer
@@ -92,6 +96,11 @@ class User
      * @ORM\JoinColumn(name="role_id", referencedColumnName="id")
      */
     private $role;
+
+    /**
+     * @var string
+     */
+    private $plainPassword;
 
     /**
      * @var \UserBundle\Entity\UserStatus
@@ -373,4 +382,53 @@ class User
     {
         $this->favoriteObservations->removeElement($observation);
     }
+
+    public function getRoles()
+    {
+        return array($this->role->getName());
+
+    }
+
+    public function getPassword()
+    {
+        return $this->mdp;
+    }
+
+    public function getUsername()
+    {
+        return $this->email;
+    }
+
+    public function eraseCredentials()
+    {
+        return null;
+    }
+
+    /**
+     * generate random 64 characters salt
+     */
+    private function generateSalt()
+    {
+        $this->salt = random_bytes(30);
+    }
+
+    /**
+     * @return string
+     */
+    public function getPlainPassword()
+    {
+        return $this->plainPassword;
+    }
+
+    /**
+     * @param string $plainPassword
+     */
+    public function setPlainPassword($plainPassword)
+    {
+        //each time a plain password change, we generate a new salt
+        $this->generateSalt();
+        $this->plainPassword = $plainPassword;
+    }
+
+
 }
