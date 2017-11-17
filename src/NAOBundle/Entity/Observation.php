@@ -30,7 +30,7 @@ class Observation
 
     /**
      * @var \DateTime
-     * @ORM\Column(type="datetime")
+     * @ORM\Column(type="datetime")d
      */
     private $date;
 

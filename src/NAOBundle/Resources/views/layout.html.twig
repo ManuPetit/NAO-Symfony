@@ -13,6 +13,10 @@
     <link rel="icon" type="image/png" href="{{ asset('favicon-32x32.png') }}" sizes="32x32" />
     <link rel="icon" type="image/png" href="{{ asset('favicon-16x16.png') }}" sizes="16x16" />
     <link rel="stylesheet" href="{{ asset('jqueryui/jquery-ui.css') }}">
+    <script src="{{ asset('js/jquery.min.js') }}"></script>
+    <script src="{{ asset('js/popper.min.js') }}"></script>
+    <script src="{{ asset('js/bootstrap.min.js') }}"></script>
+    <script src="{{ asset('jqueryui/jquery-ui.js') }}"></script>
 </head>
 <body>
 
@@ -22,16 +26,15 @@
 
     {{ include("NAOBundle:Default:footer.html.twig") }}
 
-    <script src="{{ asset('js/jquery.min.js') }}"></script>
-    <script src="{{ asset('js/popper.min.js') }}"></script>
-    <script src="{{ asset('js/bootstrap.min.js') }}"></script>
-    <script src="{{ asset('jqueryui/jquery-ui.js') }}"></script>
+
     <script>
         $(function() {
+            //Affichage des mentions légales
             $('#mentions_legales')
                 .click(function(e){e.preventDefault();})
                 .tooltip({position: { my: "top+25%", at: "center" }});
         });
     </script>
+
 </body>
 </html>

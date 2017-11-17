@@ -2,8 +2,10 @@
 
 namespace NAOBundle\Controller;
 
+use NAOBundle\Entity\Observation;
+use NAOBundle\Form\ObservationType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Doctrine\ORM\Tools\Pagination\Paginator;
+use Symfony\Component\HttpFoundation\Request;
 
 class DefaultController extends Controller
 {
@@ -33,9 +35,28 @@ class DefaultController extends Controller
         return $this->render('NAOBundle:observation:observation.html.twig');
     }
 
-    public function participateAction()
+    public function participateAction(Request $request)
     {
-        return $this->render('NAOBundle:participate:participate.html.twig');
+        $observation = new Observation();
+        $form = $this->get('form.factory')->create(ObservationType::class, $observation);
+        if ($request->isMethod('POST')){
+            $form->handleRequest($request);
+            if ($form->isValid()){
+                $observation->getPhotos();
+                var_dump($observation->getPhotos([1]));
+                $em = $this->getDoctrine()->getManager();
+                $em->persist($observation);
+                $em->flush();
+
+                $request->getSession()->getFlashbag()->add('info','Observation enregistrée et soumise à validation');
+                return $this->redirectToRoute('nao_participate');
+            }
+        }
+
+
+        return $this->render('NAOBundle:participate:participate.html.twig', array(
+            'form' => $form->createView(),
+        ));
     }
 
     public function searchAction()

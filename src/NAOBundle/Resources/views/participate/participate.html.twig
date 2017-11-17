@@ -5,11 +5,223 @@
 {% block title %}{{ parent() }} - Participer {% endblock %}
 
 {% block body %}
+    <div id="participer-section" class="py-5">
+        <div class="container">
+            <div class="row">
+                <div class="col-12 text-center pb-3">
+                    <h1>Saisir une observation</h1>
+                </div>
+            </div>
+            <div id="observation_form">
+            {{ form_start(form) }}
+                <div class="row">
+                    <div class="form-group col-12 col-md-6">
+                        {{ form_label(form.bird, "Nom de l'oiseau *", {'label_attr': {'class': 'control-label'}}) }}
+                        {{ form_errors(form.bird) }}
+                        {{ form_widget(form.bird, {'attr': {'class': 'form-control'}}) }}
+                    </div>
+                    <div class="form-group col-12 col-md-6">
 
-    <div class="container-fluid">
-        <div class="row justify-content-center">
-            <img src="{{ asset('img/workinprogressdog.jpg') }}">
+                    </div>
+                </div>
+                {{ form_errors(form) }}
+                {{ form_row(form.bird) }}
+                <div class="row">
+                    <div class="form-group col-12 col-md-6">
+                        {{ form_label(form.title, "Titre *", {'label_attr': {'class': 'control-label'}}) }}
+                        {{ form_errors(form.title) }}
+                        {{ form_widget(form.title, {'attr': {'class': 'form-control'}}) }}
+                    </div>
+                    <div class="form-group col-12 col-md-6">
+                        {{ form_label(form.place, "Lieu *", {'label_attr': {'class': 'control-label'}}) }}
+                        {{ form_errors(form.place) }}
+                        {{ form_widget(form.place, {'attr': {'class': 'form-control'}}) }}
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="form-group col-12 col-md-12">
+                        <div class="container" id="map"></div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="form-group col-12 col-md-6">
+                        {{ form_label(form.latitude, "latitude *", {'label_attr': {'class': 'control-label'}}) }}
+                        {{ form_errors(form.latitude) }}
+                        {{ form_widget(form.latitude, {'attr': {'class': 'form-control'}}) }}
+                    </div>
+                    <div class="form-group col-12 col-md-6">
+                        {{ form_label(form.longitude, "longitude *", {'label_attr': {'class': 'control-label'}}) }}
+                        {{ form_errors(form.longitude) }}
+                        {{ form_widget(form.longitude, {'attr': {'class': 'form-control'}}) }}
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="form-group col-12 col-md-6">
+                        {{ form_label(form.date, "Date de l'observation *", {'label_attr': {'class': 'control-label'}}) }}
+                        {{ form_errors(form.date) }}
+                        {{ form_widget(form.date, {'attr': {'class': 'form-control'}}) }}
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="form-group col-12">
+                        {{ form_label(form.content, "Description *", {'label_attr': {'class': 'control-label'}}) }}
+                        {{ form_errors(form.content) }}
+                        {{ form_widget(form.content, {'attr': {'class': 'form-control'}}) }}
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="form-group col-12">
+                        {{ form_label(form.photos, "Photo *", {'label_attr': {'class': 'control-label'}}) }}
+                        {{ form_errors(form.photos) }}
+                        {{ form_widget(form.photos, {'attr': {'class': 'form-control'}}) }}
+                        <a href="#" id="add_photo" class="btn btn-default">Ajouter une photo</a>
+                    </div>
+                </div>
+                <div class="row justify-content-around">
+                    <div class="col-12 col-md-4 py-2">
+                        {{ form_widget(form.Sauvegarder, {'attr': {'class': 'btn btn-primary btn-block'}}) }}
+                    </div>
+                    <div class="col-12 col-md-4 py-2">
+                        {{ form_widget(form.Envoyer, {'attr': {'class': 'btn btn-primary btn-block'}}) }}
+                    </div>
+                </div>
+                {{ form_rest(form) }}
+                {{ form_end(form) }}
+            </div>
         </div>
     </div>
+
+    <script>
+        $(function(){
+            //Mise en place du Français pour le datepicker
+            $.datepicker.regional['fr'] = {
+                closeText: 'Fermer',
+                prevText: 'Précédent',
+                nextText: 'Suivant',
+                currentText: 'Aujourd\'hui',
+                monthNames: ['Janvier','Février','Mars','Avril','Mai','Juin','Juillet','Août','Septembre','Octobre','Novembre','Décembre'],
+                monthNamesShort: ['Janv.','Févr.','Mars','Avril','Mai','Juin','Juil.','Août','Sept.','Oct.','Nov.','Déc.'],
+                dayNames: ['Dimanche','Lundi','Mardi','Mercredi','Jeudi','Vendredi','Samedi'],
+                dayNamesShort: ['Dim.','Lun.','Mar.','Mer.','Jeu.','Ven.','Sam.'],
+                dayNamesMin: ['D','L','M','M','J','V','S'],
+                weekHeader: 'Sem.',
+                dateFormat: 'dd/mm/yy',
+                firstDay: 1,
+                isRTL: false,
+                showMonthAfterYear: false,
+                yearSuffix: ''};
+            $.datepicker.setDefaults($.datepicker.regional['fr']);
+            //Ajout du datepicker
+            $("#naobundle_observation_date").datepicker();
+        });
+    </script>
+    <script async defer
+            src="https://maps.googleapis.com/maps/api/js?key= AIzaSyAmofWU0olWbvT_AZBjmqo3IhPjC0gLPf4 &callback=initMap">
+    </script>
+    <script>
+        $('#map').hide();
+        $('#naobundle_observation_place').click(function(){
+            $('#map').show();
+            initMap();
+        })
+
+       var image = '{{ asset('img/mini-oiseau.png') }}';
+       var map;
+       var marker;
+       var toulouse = {lat: 43.600452, lng: 1.427867};
+       function initMap() {
+            map = new google.maps.Map(document.getElementById('map'), {
+                zoom: 6,
+                center: toulouse,
+                mapTypeId: google.maps.MapTypeId.TERRAIN
+            });
+
+            function placeMarker(location) {
+                if(marker){
+                    marker.setPosition(location);
+                } else {
+                    marker = new google.maps.Marker({
+                        position:location,
+                        map:map,
+                        icon:image
+                    });
+                }
+                //récupération des coordonnées gps
+                console.log(location.lat());
+                $('#naobundle_observation_latitude').val(location.lat());
+                $('#naobundle_observation_longitude').val(location.lng());
+            }
+            google.maps.event.addListener(map, 'click', function(event) {
+                placeMarker(event.latLng);
+            });
+       }
+    </script>
+    <script type="text/javascript">
+        $(document).ready(function() {
+            // On récupère la balise <div> en question qui contient l'attribut « data-prototype » qui nous intéresse.
+            var $container = $('div#naobundle_observation_photos');
+
+            // On définit un compteur unique pour nommer les champs qu'on va ajouter dynamiquement
+            var index = $container.find(':input').length;
+
+            // On ajoute un nouveau champ à chaque clic sur le lien d'ajout.
+            $('#add_photo').click(function(e) {
+                addPhoto($container);
+
+                e.preventDefault(); // évite qu'un # apparaisse dans l'URL
+                return false;
+            });
+
+            // On ajoute un premier champ automatiquement s'il n'en existe pas déjà un (cas d'une nouvelle annonce par exemple).
+            if (index == 0) {
+                addPhoto($container);
+            } else {
+                // S'il existe déjà des catégories, on ajoute un lien de suppression pour chacune d'entre elles
+                $container.children('div').each(function() {
+                    addDeleteLink($(this));
+                });
+            }
+
+            // La fonction qui ajoute un formulaire CategoryType
+            function addPhoto($container) {
+                // Dans le contenu de l'attribut « data-prototype », on remplace :
+                // - le texte "__name__label__" qu'il contient par le label du champ
+                // - le texte "__name__" qu'il contient par le numéro du champ
+                var template = $container.attr('data-prototype')
+                    .replace(/__name__label__/g, 'Photo n°' + (index+1))
+                    .replace(/__name__/g,        index)
+                ;
+
+                // On crée un objet jquery qui contient ce template
+                var $prototype = $(template);
+
+                // On ajoute au prototype un lien pour pouvoir supprimer la catégorie
+                addDeleteLink($prototype);
+
+                // On ajoute le prototype modifié à la fin de la balise <div>
+                $container.append($prototype);
+
+                // Enfin, on incrémente le compteur pour que le prochain ajout se fasse avec un autre numéro
+                index++;
+            }
+
+            // La fonction qui ajoute un lien de suppression d'une catégorie
+            function addDeleteLink($prototype) {
+                // Création du lien
+                var $deleteLink = $('<a href="#" class="btn btn-danger">Supprimer</a>');
+
+                // Ajout du lien
+                $prototype.append($deleteLink);
+
+                // Ajout du listener sur le clic du lien pour effectivement supprimer la catégorie
+                $deleteLink.click(function(e) {
+                    $prototype.remove();
+
+                    e.preventDefault(); // évite qu'un # apparaisse dans l'URL
+                    return false;
+                });
+            }
+        });
+    </script>
 
 {% endblock %}

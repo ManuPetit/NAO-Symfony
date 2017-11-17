@@ -42,7 +42,7 @@ class Family
 
     /**
      * @var ArrayCollection
-     * @ORM\OneToMany(targetEntity="NAOBundle\Entity\Bird", mappedBy="family")     *
+     * @ORM\OneToMany(targetEntity="NAOBundle\Entity\Bird", mappedBy="family")
      */
     private $birds;
 

@@ -6,10 +6,393 @@
 
 {% block body %}
 
-    <div class="container-fluid">
-        <div class="row justify-content-center">
-            <img src="{{ asset('img/workinprogressdog.jpg') }}">
+<head>
+  <style>
+  #map {
+    width: 100%;
+    height: 300px;
+  }
+
+  .options-box {
+    background: #fff;
+    border: 1px solid #999;
+    border-radius: 3px;
+    height: 100%;
+    line-height: 35px;
+    padding: 10px 10px 30px 10px;
+    text-align: left;
+    width: 340px;
+  }
+
+  .text {
+    font-size: 12px;
+  }
+  @media (min-width:768px) {
+    #map {
+      height: 500px;
+    }
+  }
+  </style>
+</head>
+<body>
+
+  <!-- FORM SECTION -->
+  <div id="rechercher-section" class="py-3">
+    <div class="container">
+      <div class="row">
+        <div class="col-12 text-center pb-3">
+          <h1>Rechercher une espèce</h1>
         </div>
+      </div>
+      <form id="rechercher_form">
+        <div class="row">
+          <div class="form-group col-12 col-md-6">
+            <label for="name">Nom de l'oiseau *</label>
+            <input type="text" id="birdname" class="form-control">
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-12">
+            <p>Choisissez une espèce</p>
+          </div>
+        </div>
+        <div class="row">
+          <div class="form-group col-12 col-md-6">
+            <select class="form-control" id="orders">
+              <option>Ordre</option>
+              <option value="1">Accipitriformes</option>
+              <option value="8">Cuculiformes</option>
+              <option value="21">Piciformes</option>
+              <option value="29">Trogoniformes</option>
+            </select>
+          </div>
+          <div class="form-group col-12 col-md-6">
+            <select class="form-control" id="families">
+              <option>Famille</option>
+              <option value="1">Accipitridae</option>
+              <option value="8">Anhimidae</option>
+              <option value="20">Capitonidae</option>
+              <option value="104">Regulidae</option>
+            </select>
+          </div>
+        </div>
+        <div class="row justify-content-center py-2 py-md-5">
+          <div class="col-12 col-md-4">
+            <a href="#" class="btn btn-success btn-block" id="show-oiseaux">Voir le résultat</a>
+          </div>
+        </div>
+      </form>
     </div>
+  </div>
+
+  <!-- SHOW RESULTS SECTION -->
+  <div id="rechercher-result-section" class="pb-5">
+    <div class="container bg-brown">
+      <div class="row justify-content-center">
+        <div class="col-12 col-md-10 py-3 py-md-5">
+          <div id="map"></div>
+        </div>
+      </div>
+      <div class="row justify-content-center text-white">
+        <div class="col-12 col-md-8">
+          <table class="table table-sm" id="tablemap">
+            <tr>
+              <td>10 août 2017</td>
+              <td>Montépilloy</td>
+              <td>Jean</td>
+              <td>
+                <a href="">
+                  <i class="fa fa-arrow-right"></i>
+                </a>
+              </td>
+            </tr>
+            <tr>
+              <td>26 sept. 2017</td>
+              <td>Luxey</td>
+              <td>Emily</td>
+              <td>
+                <a href="">
+                  <i class="fa fa-arrow-right"></i>
+                </a>
+              </td>
+            </tr>
+            <tr>
+              <td>04 nov. 2017</td>
+              <td>Asco</td>
+              <td>fifi</td>
+              <td>
+                <a href="">
+                  <i class="fa fa-arrow-right"></i>
+                </a>
+              </td>
+            </tr>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+  var map;
+  //tableau vide pour inserer les oiseaux
+  var markers = [];
+
+  function initMap() {
+    //creation du style de la carte
+    document.getElementById('tablemap').style.display = 'none';
+    styles = [{
+      "featureType": "water",
+      "elementType": "geometry",
+      "stylers": [{
+        "visibility": "on"
+      },
+      {
+        "color": "#aee2e0"
+      }
+    ]
+  },
+  {
+    "featureType": "landscape",
+    "elementType": "geometry.fill",
+    "stylers": [{
+      "color": "#abce83"
+    }]
+  },
+  {
+    "featureType": "poi",
+    "elementType": "geometry.fill",
+    "stylers": [{
+      "color": "#769E72"
+    }]
+  },
+  {
+    "featureType": "poi",
+    "elementType": "labels.text.fill",
+    "stylers": [{
+      "color": "#7B8758"
+    }]
+  },
+  {
+    "featureType": "poi",
+    "elementType": "labels.text.stroke",
+    "stylers": [{
+      "color": "#EBF4A4"
+    }]
+  },
+  {
+    "featureType": "poi.park",
+    "elementType": "geometry",
+    "stylers": [{
+      "visibility": "simplified"
+    },
+    {
+      "color": "#8dab68"
+    }
+  ]
+},
+{
+  "featureType": "road",
+  "elementType": "geometry.fill",
+  "stylers": [{
+    "visibility": "simplified"
+  }]
+},
+{
+  "featureType": "road",
+  "elementType": "labels.text.fill",
+  "stylers": [{
+    "color": "#5B5B3F"
+  }]
+},
+{
+  "featureType": "road",
+  "elementType": "labels.text.stroke",
+  "stylers": [{
+    "color": "#ABCE83"
+  }]
+},
+{
+  "featureType": "road",
+  "elementType": "labels.icon",
+  "stylers": [{
+    "visibility": "off"
+  }]
+},
+{
+  "featureType": "road.local",
+  "elementType": "geometry",
+  "stylers": [{
+    "color": "#A4C67D"
+  }]
+},
+{
+  "featureType": "road.arterial",
+  "elementType": "geometry",
+  "stylers": [{
+    "color": "#9BBF72"
+  }]
+},
+{
+  "featureType": "road.highway",
+  "elementType": "geometry",
+  "stylers": [{
+    "color": "#EBF4A4"
+  }]
+},
+{
+  "featureType": "transit",
+  "stylers": [{
+    "visibility": "off"
+  }]
+},
+{
+  "featureType": "administrative",
+  "elementType": "geometry.stroke",
+  "stylers": [{
+    "visibility": "on"
+  },
+  {
+    "color": "#87ae79"
+  }
+]
+},
+{
+  "featureType": "administrative",
+  "elementType": "geometry.fill",
+  "stylers": [{
+    "color": "#7f2200"
+  },
+  {
+    "visibility": "off"
+  }
+]
+},
+{
+  "featureType": "administrative",
+  "elementType": "labels.text.stroke",
+  "stylers": [{
+    "color": "#ffffff"
+  },
+  {
+    "visibility": "on"
+  },
+  {
+    "weight": 4.1
+  }
+]
+},
+{
+  "featureType": "administrative",
+  "elementType": "labels.text.fill",
+  "stylers": [{
+    "color": "#495421"
+  }]
+},
+{
+  "featureType": "administrative.neighborhood",
+  "elementType": "labels",
+  "stylers": [{
+    "visibility": "off"
+  }]
+}
+];
+//nouvelle carte
+map = new google.maps.Map(document.getElementById('map'), {
+  center: {
+    lat: 48.860100,
+    lng: 2.348539
+  },
+  zoom: 13,
+  mapTypeControl: false,
+  styles: styles
+});
+
+//observations d'oiseaux
+var observations = [{
+  title: 'Moineau domestique',
+  lieu: 'Montépilloy',
+  location: {
+    lat: 49.212019,
+    lng: 2.692987
+  }
+}, {
+  title: 'Moineau domestique',
+  lieu: 'Luxey',
+  location: {
+    lat: 44.260773,
+    lng: -0.532514
+  }
+}, {
+  title: 'Moineau domestique',
+  lieu: 'Asco',
+  location: {
+    lat: 42.457788,
+    lng: 9.033258
+  }
+}];
+
+// variable pour la fenêtre d'info
+var infoWindow = new google.maps.InfoWindow();
+
+//création des markers
+for (var i=0; i < observations.length; i++){
+  var position = observations[i].location;
+  var title = observations[i].title;
+  //création du marker
+  var marker = new google.maps.Marker({
+    position: position,
+    title: title,
+    animation: google.maps.Animation.DROP,
+    id: i
+  });
+  markers.push(marker);
+  //ajout des events sur marker
+  marker.addListener('click', function() {
+    populateInfoWin(this, infoWindow);
+  });
+}
+
+//ajout event sur les boutons
+document.getElementById('show-oiseaux').addEventListener('click', showOiseaux);
+
+//function pour afficher les infos du marker
+function populateInfoWin(marker, infoWindow){
+  console.log(observations);
+  //vérifier que ce n'est pas déjà ouvert
+  if (infoWindow.marker != marker){
+    infoWindow.marker = marker;
+    var id = marker.id;
+    var content = '<div>' + marker.title + '</div>';
+    content += '<div>Vu à <em>' + observations[id].lieu + '</em></div>' + '<img src="' + observations[id].image + '" alt="' + marker.title + '">';
+    infoWindow.setContent(content);
+    infoWindow.open(map, marker);
+    infoWindow.addListener('closeclick', function(){
+      infoWindow.setMarker(null);
+    });
+  }
+}
+
+function showOiseaux() {
+  //show liste
+  document.getElementById('tablemap').style.display = 'inline-table';
+  var bounds = new google.maps.LatLngBounds();
+  //étends les bordures de la carte
+  for (var i=0; i<markers.length; i++){
+    markers[i].setMap(map);
+    bounds.extend(markers[i].position);
+  }
+  map.fitBounds(bounds);
+}
+
+}
+
+</script>
+<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCTCCkM-6bWoL4S0qxYduwMC6k_aIzgrKg&v=3&callback=initMap"></script>
+</body>
+</html>
+
+
+
+
 
 {% endblock %}
