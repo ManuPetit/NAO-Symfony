@@ -28,11 +28,11 @@ user_favoris:
 
 user_gestion_observation:
     path: /gestion-observation
-    defaults: { _controller:  }
+    defaults: { _controller: UserBundle:observations:gestionObservations }
 
 user_observation:
     path: /mes-observations
-    defaults: { _controller:  }
+    defaults: { _controller: UserBundle:observations:observation }
 
 user_inscription:
     path: /inscription

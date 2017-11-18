@@ -93,14 +93,19 @@ body {
 .side-menu a, #my-observations a {
   color: #ffffff; }
 
-.side-menu a.active, .side-menu a:hover, #my-observations a.active, #my-observations a:hover {
+.side-menu a:hover, #my-observations a:hover {
   color: #274144; }
 
 .side-menu li, #my-observations li {
   border-bottom: 1px #ffffff solid; }
 
-.dropdown-menu a.active {
-  background-color: #274144; }
+.side-menu li.active a, #my-observations li.active a {
+  color: #274144; }
+
+.dropdown-menu {
+  left: -20%; }
+  .dropdown-menu a.active {
+    background-color: #274144; }
 
 /* NAVIGATION SECTION */
 nav li {
@@ -326,6 +331,8 @@ nav .img-nav {
     border-bottom: 3px #274144 solid; }
   .carousel-control-prev, .carousel-control-next {
     font-size: 2.5rem; }
+  .dropdown-menu {
+    left: -105%; }
   #image-section {
     height: auto;
     background: url();

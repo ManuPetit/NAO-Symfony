@@ -8,17 +8,24 @@
                 <img src="{{ asset('img/user.png') }}" class="img-nav" alt="">
             </a>
             <div class="dropdown-menu">
-                <a class="dropdown-item" href="#">Se connecter</a>
-                <a class="dropdown-item" href="#">Voir son profil</a>
-                <div class="dropdown-divider"></div>
-                <a class="dropdown-item" href="#">Déconnexion</a>
+                {% if is_granted('ROLE_ADMIN') %}
+                    {% set usermenu = knp_menu_get('users', [], {'level': 'ADMIN'}) %}
+                {% elseif is_granted('ROLE_PRO') %}
+                    {% set usermenu = knp_menu_get('users', [], {'level': 'PRO'}) %}
+                {% elseif is_granted('ROLE_MEMBRE') %}
+                    {% set usermenu = knp_menu_get('users', [], {'level': 'MEMBRE'}) %}
+                {% else %}
+                    {% set usermenu = knp_menu_get('users') %}
+                {% endif %}
+                {{ knp_menu_render(usermenu, {'template': 'NAOBundle:Menu:knp_user_menu.html.twig'}) }}
             </div>
         </div>
         <button class="navbar-toggler" data-toggle="collapse" data-target="#navbarNav">
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarNav">
-            <ul class="navbar-nav align-items-center mx-auto">
+            {{ knp_menu_render('main', {'template': 'NAOBundle:Menu:knp_menu.html.twig', 'currentClass': 'active'}) }}
+            {#<ul class="navbar-nav align-items-center mx-auto">
                 <li class="nav-item text-center ">
                     <a class="nav-link" href="{{ path('nao_homepage') }}">Accueil</a>
                 </li>
@@ -40,7 +47,7 @@
                 <li class="nav-item text-center">
                     <a class="nav-link" href="{{ path('nao_observation') }}">Observation</a>
                 </li>
-            </ul>
+            </ul>#}
         </div>
     </div>
 </nav>

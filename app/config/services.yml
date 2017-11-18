@@ -4,9 +4,18 @@ parameters:
     #parameter_name: value
 
 services:
+    app.menu_builder:
+        public: true
+        class: NAOBundle\Menu\Builder
+        arguments: ["@knp_menu.factory"]
+        tags:
+            - { name: knp_menu.menu_builder, method: createMainMenu, alias: main }
+            - { name: knp_menu.menu_builder, method: createSideMenu, alias: side }
+            - { name: knp_menu.menu_builder, method: createUserMenu, alias: users }
+
     app.form_login_authenticator:
         class: UserBundle\Security\FormLoginAuthenticator
-        arguments: ["@Router","@security.password_encoder"]
+        arguments: ["@router","@security.password_encoder"]
 
     # default configuration for services in *this* file
     _defaults:
