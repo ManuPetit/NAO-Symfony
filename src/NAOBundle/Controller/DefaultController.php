@@ -61,7 +61,12 @@ class DefaultController extends Controller
 
     public function searchAction()
     {
-        return $this->render('NAOBundle:search:search.Html.twig');
+        $em = $this->getDoctrine()->getManager();
+        $bird = $em->getRepository('NAOBundle:Bird')->find(2);
+        $form = $this->get('form.factory')->create(BirdType::class, $bird);
+        return $this->render('NAOBundle:search:search.Html.twig', array(
+            'form' => $form->createView(),
+        ));
     }
 
     public function contactAction()

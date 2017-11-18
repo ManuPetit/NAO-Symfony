@@ -13,7 +13,14 @@ class BirdType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('cdNom')->add('latinName')->add('frenchName')->add('author')->add('description')->add('family')->add('habitat');
+        $builder
+            ->add('cdNom')
+            ->add('latinName')
+            ->add('frenchName')
+            ->add('author')
+            ->add('description')
+            ->add('family')
+            ->add('habitat');
     }
     
     /**
