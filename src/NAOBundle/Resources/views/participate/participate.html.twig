@@ -7,6 +7,13 @@
 {% block body %}
     <div id="participer-section" class="py-5">
         <div class="container">
+            {% for message in app.session.flashbag.get('info') %}
+            <div class="row justify-content-center mb-3">
+                <div class="col-12 text-center alert-info p-3">
+                    <span>{{ message }}</span>
+                </div>
+            </div>
+            {% endfor %}
             <div class="row">
                 <div class="col-12 text-center pb-3">
                     <h1>Saisir une observation</h1>
@@ -14,16 +21,6 @@
             </div>
             <div id="observation_form">
             {{ form_start(form) }}
-                <div class="row">
-                    <div class="form-group col-12 col-md-6">
-                        {{ form_label(form.bird, "Nom de l'oiseau *", {'label_attr': {'class': 'control-label'}}) }}
-                        {{ form_errors(form.bird) }}
-                        {{ form_widget(form.bird, {'attr': {'class': 'form-control'}}) }}
-                    </div>
-                    <div class="form-group col-12 col-md-6">
-
-                    </div>
-                </div>
                 {{ form_errors(form) }}
                 {{ form_row(form.bird) }}
                 <div class="row">
@@ -69,14 +66,14 @@
                         {{ form_widget(form.content, {'attr': {'class': 'form-control'}}) }}
                     </div>
                 </div>
-                <div class="row">
+                <!--<div class="row">
                     <div class="form-group col-12">
-                        {{ form_label(form.photos, "Photo *", {'label_attr': {'class': 'control-label'}}) }}
-                        {{ form_errors(form.photos) }}
-                        {{ form_widget(form.photos, {'attr': {'class': 'form-control'}}) }}
+
+
+
                         <a href="#" id="add_photo" class="btn btn-default">Ajouter une photo</a>
                     </div>
-                </div>
+                </div>-->
                 <div class="row justify-content-around">
                     <div class="col-12 col-md-4 py-2">
                         {{ form_widget(form.Sauvegarder, {'attr': {'class': 'btn btn-primary btn-block'}}) }}
@@ -116,7 +113,7 @@
         });
     </script>
     <script async defer
-            src="https://maps.googleapis.com/maps/api/js?key= AIzaSyAmofWU0olWbvT_AZBjmqo3IhPjC0gLPf4 &callback=initMap">
+            src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAmofWU0olWbvT_AZBjmqo3IhPjC0gLPf4&callback=initMap">
     </script>
     <script>
         $('#map').hide();
@@ -128,8 +125,10 @@
        var image = '{{ asset('img/mini-oiseau.png') }}';
        var map;
        var marker;
+       var geocoder;
        var toulouse = {lat: 43.600452, lng: 1.427867};
        function initMap() {
+            geocoder = new google.maps.Geocoder();
             map = new google.maps.Map(document.getElementById('map'), {
                 zoom: 6,
                 center: toulouse,
@@ -150,12 +149,22 @@
                 console.log(location.lat());
                 $('#naobundle_observation_latitude').val(location.lat());
                 $('#naobundle_observation_longitude').val(location.lng());
+
+                var latlng = {lat: location.lat(), lng: location.lng()};
+                geocoder.geocode({'location': latlng}, function(results,status){
+                    if(status === 'OK'){
+                        $('#naobundle_observation_place').val(results[1].address_components[0].long_name);
+                    } else {
+                        $('#naobundle_observation_place').val('Echec de la géolocalisation : ' + status);
+                    }
+                })
             }
             google.maps.event.addListener(map, 'click', function(event) {
                 placeMarker(event.latLng);
             });
        }
     </script>
+    <!--Add method to get photo(s)-->
     <script type="text/javascript">
         $(document).ready(function() {
             // On récupère la balise <div> en question qui contient l'attribut « data-prototype » qui nous intéresse.

@@ -73,7 +73,7 @@ class Observation
 
     /**
      * @var Bird
-     * @ORM\ManyToOne(targetEntity="NAOBundle\Entity\Bird")
+     * @ORM\ManyToOne(targetEntity="NAOBundle\Entity\Bird", cascade={"persist"})
      * @ORM\JoinColumn(name="bird_id",referencedColumnName="id")
      */
     private $bird;

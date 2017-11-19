@@ -2,6 +2,7 @@
 
 namespace NAOBundle\Form;
 
+use Doctrine\ORM\EntityRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
@@ -22,12 +23,15 @@ class ObservationType extends AbstractType
     {
         $builder
             ->add('bird',               EntityType::class, array(
-                'label'         =>'Nom de l\'oiseau *',
-                'class'         => 'NAOBundle:Bird',
-                'choice_label'  => 'frenchName',
-                'multiple'      => false
+                'class'        => 'NAOBundle:Bird',
+                'query_builder' => function (EntityRepository $er) {
+                    return $er->createQueryBuilder('b')
+                        ->orderBy('b.frenchName', 'ASC');
+                },
+                'choice_label' => 'frenchName',
+                'label'        => 'Nom de l\'oiseau',
+                'multiple'     => false,
             ))
-            //choisir une famille
             ->add('title',              TextType::class,array(
                 'label'         =>'Donner un titre à mon observation *',
             ))
@@ -50,11 +54,11 @@ class ObservationType extends AbstractType
             ->add('content',            TextareaType::class,array(
                 'label'         => 'Description de l\'observation'
             ))
-            ->add('photos',              CollectionType::class,array(
+            /*->add('photos',              CollectionType::class,array(
                 'entry_type'   => PhotoType::class,
                 'allow_add'    => true,
                 'allow_delete' => true
-            ))
+            ))*/
             ->add('Envoyer',            SubmitType::class)
             ->add('Sauvegarder',        SubmitType::class);
     }

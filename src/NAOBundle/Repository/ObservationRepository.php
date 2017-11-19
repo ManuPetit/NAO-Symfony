@@ -13,7 +13,7 @@ use Doctrine\ORM\Tools\Pagination\Paginator;
 
 class ObservationRepository extends EntityRepository
 {
-    public function getLastObservations($limit = 4)
+    public function getLastObservations($first = 0, $limit = 8)
     {
         $qb = $this
             ->createQueryBuilder('o')
@@ -24,7 +24,7 @@ class ObservationRepository extends EntityRepository
             ->leftJoin('o.user', 'user')
             ->addSelect('user')
             ->orderBy('o.date', 'DESC')
-            ->setFirstResult(0)
+            ->setFirstResult($first)
             ->setMaxResults($limit);
         return new Paginator($qb);
     }

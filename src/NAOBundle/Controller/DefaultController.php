@@ -2,6 +2,7 @@
 
 namespace NAOBundle\Controller;
 
+use NAOBundle\Entity\Bird;
 use NAOBundle\Entity\Observation;
 use NAOBundle\Form\ObservationType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -37,17 +38,16 @@ class DefaultController extends Controller
 
     public function participateAction(Request $request)
     {
+        $testObs = $this->getDoctrine()->getManager()->getRepository('NAOBundle:MainStatus');
         $observation = new Observation();
+        $observation->setMainStatus($testObs->find(2));
         $form = $this->get('form.factory')->create(ObservationType::class, $observation);
         if ($request->isMethod('POST')){
             $form->handleRequest($request);
             if ($form->isValid()){
-                $observation->getPhotos();
-                var_dump($observation->getPhotos([1]));
                 $em = $this->getDoctrine()->getManager();
                 $em->persist($observation);
                 $em->flush();
-
                 $request->getSession()->getFlashbag()->add('info','Observation enregistrée et soumise à validation');
                 return $this->redirectToRoute('nao_participate');
             }
