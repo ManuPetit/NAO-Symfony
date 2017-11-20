@@ -13,13 +13,13 @@ use Doctrine\ORM\Tools\Pagination\Paginator;
 
 class ObservationRepository extends EntityRepository
 {
-    public function getLastObservations($first = 0, $limit = 8)
+    public function getLastObservations($first = 0, $limit = 4)
     {
         $qb = $this
             ->createQueryBuilder('o')
             ->leftJoin('o.bird', 'bird')
             ->addSelect('bird')
-            ->leftJoin('o.photos','photos')
+            ->LeftJoin('o.photos','photos')
             ->addSelect('photos')
             ->leftJoin('o.user', 'user')
             ->addSelect('user')

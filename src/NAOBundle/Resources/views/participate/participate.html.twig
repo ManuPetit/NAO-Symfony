@@ -66,20 +66,20 @@
                         {{ form_widget(form.content, {'attr': {'class': 'form-control'}}) }}
                     </div>
                 </div>
-                <!--<div class="row">
+                <div class="row">
                     <div class="form-group col-12">
-
-
-
+                        {{ form_label(form.photos, "Photos", {'label_attr': {'class': 'control-label'}}) }}
+                        {{ form_errors(form.photos) }}
+                        {{ form_widget(form.photos, {'attr': {'class': 'form-control'}}) }}
                         <a href="#" id="add_photo" class="btn btn-default">Ajouter une photo</a>
                     </div>
-                </div>-->
+                </div>
                 <div class="row justify-content-around">
                     <div class="col-12 col-md-4 py-2">
-                        {{ form_widget(form.Sauvegarder, {'attr': {'class': 'btn btn-primary btn-block'}}) }}
+                        {{ form_widget(form.save, {'attr': {'class': 'btn btn-block'}}) }}
                     </div>
                     <div class="col-12 col-md-4 py-2">
-                        {{ form_widget(form.Envoyer, {'attr': {'class': 'btn btn-primary btn-block'}}) }}
+                        {{ form_widget(form.saveAndAdd, {'attr': {'class': 'btn btn-block'}}) }}
                     </div>
                 </div>
                 {{ form_rest(form) }}
@@ -87,6 +87,9 @@
             </div>
         </div>
     </div>
+
+    {% block javascripts %}
+    {{ parent() }}
 
     <script>
         $(function(){
@@ -164,73 +167,48 @@
             });
        }
     </script>
-    <!--Add method to get photo(s)-->
-    <script type="text/javascript">
+    <script>
         $(document).ready(function() {
             // On récupère la balise <div> en question qui contient l'attribut « data-prototype » qui nous intéresse.
             var $container = $('div#naobundle_observation_photos');
-
-            // On définit un compteur unique pour nommer les champs qu'on va ajouter dynamiquement
-            var index = $container.find(':input').length;
+            var index = 1;
 
             // On ajoute un nouveau champ à chaque clic sur le lien d'ajout.
             $('#add_photo').click(function(e) {
-                addPhoto($container);
-
+                addCategory($container);
                 e.preventDefault(); // évite qu'un # apparaisse dans l'URL
                 return false;
             });
 
             // On ajoute un premier champ automatiquement s'il n'en existe pas déjà un (cas d'une nouvelle annonce par exemple).
-            if (index == 0) {
-                addPhoto($container);
-            } else {
-                // S'il existe déjà des catégories, on ajoute un lien de suppression pour chacune d'entre elles
-                $container.children('div').each(function() {
-                    addDeleteLink($(this));
-                });
-            }
+                addCategory($container);
+
 
             // La fonction qui ajoute un formulaire CategoryType
-            function addPhoto($container) {
-                // Dans le contenu de l'attribut « data-prototype », on remplace :
-                // - le texte "__name__label__" qu'il contient par le label du champ
-                // - le texte "__name__" qu'il contient par le numéro du champ
-                var template = $container.attr('data-prototype')
-                    .replace(/__name__label__/g, 'Photo n°' + (index+1))
-                    .replace(/__name__/g,        index)
-                ;
-
+            function addCategory($container) {
+                var template = $container.attr('data-prototype').replace(/__name__label__/g, 'Photo ' + index).replace(/__name__/g,'');
                 // On crée un objet jquery qui contient ce template
                 var $prototype = $(template);
-
-                // On ajoute au prototype un lien pour pouvoir supprimer la catégorie
                 addDeleteLink($prototype);
-
-                // On ajoute le prototype modifié à la fin de la balise <div>
                 $container.append($prototype);
-
-                // Enfin, on incrémente le compteur pour que le prochain ajout se fasse avec un autre numéro
                 index++;
             }
 
             // La fonction qui ajoute un lien de suppression d'une catégorie
             function addDeleteLink($prototype) {
-                // Création du lien
                 var $deleteLink = $('<a href="#" class="btn btn-danger">Supprimer</a>');
-
-                // Ajout du lien
-                $prototype.append($deleteLink);
-
-                // Ajout du listener sur le clic du lien pour effectivement supprimer la catégorie
+                $prototype.prepend($deleteLink);
                 $deleteLink.click(function(e) {
                     $prototype.remove();
-
-                    e.preventDefault(); // évite qu'un # apparaisse dans l'URL
+                    e.preventDefault();
                     return false;
                 });
             }
         });
     </script>
+
+
+
+    {% endblock %}
 
 {% endblock %}

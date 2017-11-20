@@ -79,3 +79,10 @@ fos_elastica:
     indexes:
             app:
                 index_name: app_%kernel.environment%
+
+vich_uploader:
+    db_driver: orm
+    mappings:
+            product_image:
+                uri_prefix:         /img/observations
+                upload_destination: '%kernel.root_dir%/../web/img/observations'

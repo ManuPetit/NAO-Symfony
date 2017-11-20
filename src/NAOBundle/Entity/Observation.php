@@ -87,7 +87,7 @@ class Observation
 
     /**
      * @var ArrayCollection
-     * @ORM\OneToMany(targetEntity="NAOBundle\Entity\Photo", mappedBy="observation")
+     * @ORM\OneToMany(targetEntity="NAOBundle\Entity\Photo", cascade={"persist"}, mappedBy="observation")
      */
     private $photos;
 

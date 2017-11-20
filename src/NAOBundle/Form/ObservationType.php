@@ -25,8 +25,7 @@ class ObservationType extends AbstractType
             ->add('bird',               EntityType::class, array(
                 'class'        => 'NAOBundle:Bird',
                 'query_builder' => function (EntityRepository $er) {
-                    return $er->createQueryBuilder('b')
-                        ->orderBy('b.frenchName', 'ASC');
+                    return $er->getLikeQueryBuilder('D%');
                 },
                 'choice_label' => 'frenchName',
                 'label'        => 'Nom de l\'oiseau',
@@ -54,13 +53,13 @@ class ObservationType extends AbstractType
             ->add('content',            TextareaType::class,array(
                 'label'         => 'Description de l\'observation'
             ))
-            /*->add('photos',              CollectionType::class,array(
-                'entry_type'   => PhotoType::class,
-                'allow_add'    => true,
-                'allow_delete' => true
-            ))*/
-            ->add('Envoyer',            SubmitType::class)
-            ->add('Sauvegarder',        SubmitType::class);
+            ->add('photos',             CollectionType::class, array(
+                'entry_type'    => PhotoType::class,
+                'allow_add'     => true,
+                'allow_delete'  => true
+            ))
+            ->add('save',               SubmitType::class, array('label' => 'Envoyer'))
+            ->add('saveAndAdd',         SubmitType::class, array('label' => 'Sauvegarder'));
     }
     
     /**

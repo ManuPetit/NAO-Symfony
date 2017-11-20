@@ -42,18 +42,26 @@ class DefaultController extends Controller
         $observation = new Observation();
         $observation->setMainStatus($testObs->find(2));
         $form = $this->get('form.factory')->create(ObservationType::class, $observation);
-        if ($request->isMethod('POST')){
+        if ($request->isMethod('POST'))
+        {
             $form->handleRequest($request);
-            if ($form->isValid()){
+            if ($form->isSubmitted() && $form->isValid())
+            {
+                if ($form->getClickedButton()->getName() === 'saveAndAdd'){
+                    $observation->setMainStatus($testObs->find(1));
+                }
                 $em = $this->getDoctrine()->getManager();
+                $photos = $observation->getPhotos();
+                foreach ($photos as $photo){
+                    $photo->setObservation($observation);
+                    $photo->upload();
+                }
                 $em->persist($observation);
                 $em->flush();
                 $request->getSession()->getFlashbag()->add('info','Observation enregistrée et soumise à validation');
                 return $this->redirectToRoute('nao_participate');
             }
         }
-
-
         return $this->render('NAOBundle:participate:participate.html.twig', array(
             'form' => $form->createView(),
         ));

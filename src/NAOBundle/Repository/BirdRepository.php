@@ -12,5 +12,12 @@ use Doctrine\ORM\EntityRepository;
 
 class BirdRepository extends EntityRepository
 {
-
+    public function getLikeQueryBuilder($pattern)
+    {
+        return $this
+            ->createQueryBuilder('b')
+            ->where('b.frenchName LIKE :pattern')
+            ->setParameter('pattern', $pattern)
+            ;
+    }
 }

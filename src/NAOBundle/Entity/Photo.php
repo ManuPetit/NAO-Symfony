@@ -27,6 +27,10 @@ class Photo
      */
     private $id;
 
+    /**
+     * @var string
+     * @ORM\Column(type="string", length=75)
+     */
     private $file;
 
     /**
@@ -36,6 +40,36 @@ class Photo
      */
     private $observation;
 
+    private $fileAdd;
+    public function getFileAdd()
+    {
+        return $this->fileAdd;
+    }
+    public function setFileAdd(UploadedFile $fileAdd = null)
+    {
+        $this->fileAdd = $fileAdd;
+    }
+    public function upload()
+    {
+        if (null === $this->fileAdd)
+        {
+            return;
+        }
+        $file = $this->fileAdd->getClientOriginalName();
+        $this->fileAdd->move($this->getUploadRootDir(), $file);
+        $this->file = $file;
+    }
+
+    public function getUploadDir()
+    {
+        return 'img/observations';
+    }
+    public function getUploadRootDir()
+    {
+        return __DIR__.'/../../../web/'.$this->getUploadDir();
+    }
+
+
     /**
      * @return int
      */
@@ -44,12 +78,17 @@ class Photo
         return $this->id;
     }
 
+    /**
+     * @return string
+     */
     public function getFile()
     {
         return $this->file;
     }
-
-    function setFile(UploadedFile $file)
+    /**
+     * @param string $file
+     */
+    public function setFile($file)
     {
         $this->file = $file;
     }
@@ -69,37 +108,4 @@ class Photo
     {
         $this->observation = $observation;
     }
-
-    public function upload()
-    {
-        // Si jamais il n'y a pas de fichier (champ facultatif), on ne fait rien
-        if (null === $this->file) {
-            return;
-        }
-
-        // On récupère le nom original du fichier de l'internaute
-        $name = $this->file->getClientOriginalName();
-
-        // On déplace le fichier envoyé dans le répertoire de notre choix
-        $this->file->move($this->getUploadRootDir(), $name);
-
-        // On sauvegarde le nom de fichier dans notre attribut $url
-        $this->url = $name;
-
-        // On crée également le futur attribut alt de notre balise <img>
-        $this->alt = $name;
-    }
-
-    public function getUploadDir()
-    {
-        // On retourne le chemin relatif vers l'image pour un navigateur (relatif au répertoire /web donc)
-        return 'img/observations';
-    }
-
-    protected function getUploadRootDir()
-    {
-        // On retourne le chemin relatif vers l'image pour notre code PHP
-        return __DIR__.'/../../../../web/'.$this->getUploadDir();
-    }
-
 }
