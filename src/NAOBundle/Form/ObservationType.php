@@ -3,6 +3,7 @@
 namespace NAOBundle\Form;
 
 use Doctrine\ORM\EntityRepository;
+use NAOBundle\Repository\BirdRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
@@ -24,8 +25,10 @@ class ObservationType extends AbstractType
         $builder
             ->add('bird',               EntityType::class, array(
                 'class'        => 'NAOBundle:Bird',
-                'query_builder' => function (EntityRepository $er) {
-                    return $er->getLikeQueryBuilder('D%');
+                'query_builder' => function (BirdRepository $er) {
+                    return $er->createQueryBuilder('b')
+                        ->where('b.frenchName is not NULL')
+                        ->orderBy('b.frenchName', 'ASC');
                 },
                 'choice_label' => 'frenchName',
                 'label'        => 'Nom de l\'oiseau',
