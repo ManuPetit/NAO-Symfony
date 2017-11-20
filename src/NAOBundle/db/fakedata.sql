@@ -23,14 +23,17 @@ SET time_zone = "+00:00";
 --
 
 INSERT INTO `users` (`id`, `role_id`, `user_status_id`, `email`, `login`, `mdp`, `salt`, `town`, `phone`, `avatar`, `date_joined`) VALUES
-(1, 1, 1, 'michel.dujardin@gmail.com', 'michel', 'michel', 'michel', 'Rémuzat', '04 75 27 18 12', 'mdujardin.jpg', '2017-04-02'),
-(2, 2, 1, 'pierre@free.fr', 'pierre', 'pierre', 'pierre', 'Saintes Maries de la Mer', NULL, 'pontdugau.jpg', '2017-08-12'),
-(3, 3, 1, 'e.vernay@laposte.net', 'emily', 'emily', 'emily', 'Fontainebleau', '0633524568', 'evernay.jpg', '2017-08-24'),
-(4, 3, 2, 'georges@live.fr', 'georges', 'georges', 'georges', 'Arnay le Duc', '0685652452', 'georges.png', '2017-08-12'),
-(5, 3, 3, 'fanfan@gmail.com', 'françois', 'françois', 'françois', 'Reims', NULL, NULL, '2017-07-04'),
-(6, 2, 1, 'carole@live.fr', 'carole', 'carole', 'carole', 'Bourg en Bresse', NULL, 'carole.jpg', '2017-06-25'),
-(7, 3, 1, 'dominique@sfr.fr', 'doumé', 'doumé', 'doumé', 'Cargèse', '0495452352', 'doume.jpg', '2017-07-14'),
-(8, 3, 1, 'gina@free.fr', 'gina', 'gina', 'gina', NULL, NULL, 'gina.jpg', '2017-08-01');
+(1, 1, 1, 'michel.dujardin@gmail.com', 'michel', '$2y$13$fBkLg6F9MmchjILl8XZ9ken9X6HL2VYPqhEs7jrqdJefqer2B/5R.', '?g?ةF??T?\Zt???݌U	??????X,', 'Rémuzat', '04 75 27 18 12', 'mdujardin.jpg', '2017-04-02'),
+(2, 2, 1, 'pierre@free.fr', 'pierre', '$2y$13$1eOUrjxGbY6/KqqVAC5RA.WfiIxXP1AcD1dXNrTq1EsOkyb7siohG', '?~.??.Z?h????4???pC?Ř???', 'Saintes Maries de la Mer', NULL, 'pontdugau.jpg', '2017-08-12'),
+(3, 3, 1, 'e.vernay@laposte.net', 'emily', '$2y$13$1eOUrjxGbY6/KqqVAC5RA.WfiIxXP1AcD1dXNrTq1EsOkyb7siohG', '?~.??.Z?h????4???pC?Ř???', 'Fontainebleau', '0633524568', 'evernay.jpg', '2017-08-24'),
+(4, 3, 2, 'georges@live.fr', 'georges', '$2y$13$1eOUrjxGbY6/KqqVAC5RA.WfiIxXP1AcD1dXNrTq1EsOkyb7siohG', '?~.??.Z?h????4???pC?Ř???', 'Arnay le Duc', '0685652452', 'georges.png', '2017-08-12'),
+(5, 3, 3, 'fanfan@gmail.com', 'françois', '$2y$13$1eOUrjxGbY6/KqqVAC5RA.WfiIxXP1AcD1dXNrTq1EsOkyb7siohG', '?~.??.Z?h????4???pC?Ř???', 'Reims', NULL, NULL, '2017-07-04'),
+(6, 2, 1, 'carole@live.fr', 'carole', '$2y$13$1eOUrjxGbY6/KqqVAC5RA.WfiIxXP1AcD1dXNrTq1EsOkyb7siohG', '?~.??.Z?h????4???pC?Ř???', 'Bourg en Bresse', NULL, 'carole.jpg', '2017-06-25'),
+(7, 3, 1, 'dominique@sfr.fr', 'doumé', '$2y$13$1eOUrjxGbY6/KqqVAC5RA.WfiIxXP1AcD1dXNrTq1EsOkyb7siohG', '?~.??.Z?h????4???pC?Ř???', 'Cargèse', '0495452352', 'doume.jpg', '2017-07-14'),
+(8, 3, 1, 'gina@free.fr', 'gina', '$2y$13$1eOUrjxGbY6/KqqVAC5RA.WfiIxXP1AcD1dXNrTq1EsOkyb7siohG', '?~.??.Z?h????4???pC?Ř???', NULL, NULL, 'gina.jpg', '2017-08-01'),
+(9, 3, 1, 'manu1@free.fr', 'manu1', '$2y$13$1eOUrjxGbY6/KqqVAC5RA.WfiIxXP1AcD1dXNrTq1EsOkyb7siohG', '?~.??.Z?h????4???pC?Ř???', NULL, NULL, NULL, '2017-11-17'),
+(10, 3, 1, 'toto@sfr.fr', 'toto', '$2y$13$BY.dWlZPX1I.8AaKWV5dkeAmA7V2uL4faaeZHumxA67D6/7o7NsuO', '??7?Iّ??5???&8?-L@??ǧ?', 'Paris', '0475336258', NULL, '2017-11-19'),
+(11, 3, 1, 'jojo@sfr.fr', 'jojo', '$2y$13$Houdvg5uLWV6/0pzWhAoX.51xACYf5FoTVL2JqHdZc1QGTk1RNlhu', '7?	??)??e?}?f?i? =CB?t??c??', NULL, NULL, NULL, '2017-11-19');
 
 --
 -- Déchargement des données de la table `posts`
@@ -115,6 +118,9 @@ INSERT INTO `photos` (`id`, `observation_id`, `file`) VALUES
 INSERT INTO `bookmarks` (`user_id`, `observation_id`) VALUES
 (7, 1),
 (7, 2);
+(9, 1);
+(9, 5);
+(2, 8);
 
 --
 -- Déchargement des données de la table `rewards`

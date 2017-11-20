@@ -1,3 +1,49 @@
 user_homepage:
     path:     /
-    defaults: { _controller: UserBundle:Default:index }
+    defaults: { _controller: NAOBundle:Default:home }
+
+user_profile:
+    path: /mon-profil
+    defaults: { _controller: UserBundle:Admin:profil }
+
+user_badge:
+    path: /mes-badges
+    defaults: { _controller: UserBundle:Admin:badge }
+
+user_gestion_user:
+    path: /gestion-membre
+    defaults: { _controller: UserBundle:Admin:gestionUser }
+
+user_article:
+    path: /article
+    defaults: { _controller: UserBundle:Blog:article }
+
+user_gestion_article:
+    path: /gestion-article
+    defaults: { _controller: UserBundle:Blog:gestionArticles }
+
+user_favoris:
+    path: /mes-favoris
+    defaults: { _controller: UserBundle:observations:favoris }
+
+user_gestion_observation:
+    path: /gestion-observation
+    defaults: { _controller: UserBundle:observations:gestionObservations }
+
+user_observation:
+    path: /mes-observations
+    defaults: { _controller: UserBundle:observations:observation }
+
+user_inscription:
+    path: /inscription
+    defaults: { _controller: UserBundle:Inscription:register }
+
+delete_observation:
+    path: /observation-supprimer/{id}
+    defaults: { _controller: UserBundle:observations:deleteObservation }
+
+delete_favori:
+    path: /favori-supprimer/{id}
+    defaults: { _controller: UserBundle:observations:deleteFavoris }
+
+

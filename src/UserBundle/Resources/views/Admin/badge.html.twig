@@ -1,0 +1,72 @@
+{% extends 'NAOBundle::layout.html.twig' %}
+
+{% block title %}
+    Mes badges - NAO
+{% endblock %}
+
+{% block body %}
+    <!-- BADGES SECTION -->
+    <section id="my-badges">
+        <div class="container py-5 bg-green px-md-5">
+            <div class="row">
+                {% include 'UserBundle:Default:side_menu_top.html.twig' %}
+                <div class="col-12 col-md-8 text-dark-green mt-md-2 pt-md-5 pb-md-4">
+                    <div class="col-12 pb-4">
+                        <h1>Mes badges</h1>
+                    </div>
+                    {% for badge in badges %}
+                    {% if badge.id == 1 %}
+                    <div class="row">
+                        <div class="col-12 mt-3">
+                            <h4>Observateur</h4>
+                        </div>
+                        {% elseif badge.id == 5 %}
+                    </div>
+                    <div class="row">
+                        <div class="col-12 mt-5">
+                            <h4>Photographe</h4>
+                        </div>
+                        {% elseif badge.id == 9 %}
+                    </div>
+                    <div class="row">
+                        <div class="col-12 mt-5">
+                            <h4>Ancienneté</h4>
+                        </div>
+                        {% endif %}
+
+                        {% if badge.id <5 %}
+                            {% set my_pic="observateur-5.png" %}
+                        {% elseif badge.id >4 and badge.id <9 %}
+                            {% set my_pic="photographe-5.png" %}
+                        {% else %}
+                            {% set my_pic="anciennete-5.png" %}
+                        {% endif %}
+                        <div class="col-6 col-md-3 flex-column d-flex justify-content-between justify-content-between text-center">
+                            {% if badge.user_id is null %}
+                                <img src="{{ asset('img/badges/' ~ my_pic) }}" alt="" class="img-fluid">
+                                <p class="text-grey">{{ badge.badge }}</p>
+                                <p class="text-grey">
+                                    <small>{{ badge.myDesc }}</small>
+                                </p>
+                            {% else %}
+                                <img src="{{ asset('img/badges/' ~ badge.pic) }}" alt="" class="img-fluid">
+                                <p>{{ badge.badge }}</p>
+                                <p>
+                                    <small>({{ badge.myDesc }})</small>
+                                </p>
+                            {% endif %}
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+            <div class="d-none d-md-block">
+                <div class="row justify-content-end">
+                    <a href="#" title="Remonter vers le haut de la page">
+                        <img src="img/bird-up.png" alt="" class="bird-up">
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock %}

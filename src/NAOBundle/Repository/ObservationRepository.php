@@ -10,6 +10,7 @@ namespace NAOBundle\Repository;
 
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\Tools\Pagination\Paginator;
+use UserBundle\Entity\User;
 
 class ObservationRepository extends EntityRepository
 {
@@ -29,4 +30,36 @@ class ObservationRepository extends EntityRepository
         return new Paginator($qb);
     }
 
+    public function getObservationsPerUser(User $user)
+    {
+        $masqued = 'Masqué';
+        $deleted = 'Supprimé';
+        return $this->createQueryBuilder('o')
+            ->andWhere('o.user = :user')
+            ->setParameter('user', $user)
+            ->leftJoin('o.mainStatus', 's')
+            ->addSelect('s')
+            ->andWhere('s.name <> :name_masqued')
+            ->setParameter('name_masqued', $masqued)
+            ->andWhere('s.name <> :name_deleted')
+            ->setParameter('name_deleted', $deleted)
+            ->getQuery()
+            ->getResult();
+    }
+
+    public function getAllObservations()
+    {
+        $deleted = 'Supprimé';
+        $notready = 'Brouillon';
+        return $this->createQueryBuilder('o')
+            ->leftJoin('o.mainStatus', 's')
+            ->addSelect('s')
+            ->andWhere('s.name <> :name_deleted')
+            ->setParameter('name_deleted', $deleted)
+            ->andWhere('s.name <> :name_not_ready')
+            ->setParameter('name_not_ready', $notready)
+            ->orderBy('s.id')
+            ->getQuery()
+            ->getResult();
+    }
 }
