@@ -38,4 +38,12 @@ user_inscription:
     path: /inscription
     defaults: { _controller: UserBundle:Inscription:register }
 
+delete_observation:
+    path: /observation-supprimer/{id}
+    defaults: { _controller: UserBundle:observations:deleteObservation }
+
+delete_favori:
+    path: /favori-supprimer/{id}
+    defaults: { _controller: UserBundle:observations:deleteFavoris }
+
 

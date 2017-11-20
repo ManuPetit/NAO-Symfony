@@ -310,7 +310,7 @@ nav .img-nav {
   text-decoration: none; }
 
 /* ADMIN SECTIONS */
-#profil_form .row:not(:last-child),
+#profil_form .row:not(:last-of-type),
 #my-observations .row-separate:not(:last-child) {
   padding-bottom: 12px;
   border-bottom: 1px #ffffff solid; }

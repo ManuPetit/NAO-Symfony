@@ -8,126 +8,61 @@
     <section id="my-profile">
         <div class="container py-5 bg-green px-md-5">
             <div class="row">
-                <div class="col-4 d-none d-md-block">
-                    <img src="img/profile.jpg" alt="" style="width:120px;" class="m-4">
-                    <ul class="nav flex-column side-menu">
-                        {% if is_granted('ROLE_ADMIN') %}
-                            {% set sidemenu = knp_menu_get('side', [], {'level': 'ADMIN'}) %}
-                        {% elseif is_granted('ROLE_PRO') %}
-                            {% set sidemenu = knp_menu_get('side', [], {'level': 'PRO'}) %}
-                        {% else %}
-                            {% set sidemenu = knp_menu_get('side', [], {'level': ''}) %}
-                        {% endif %}
-                        {{ knp_menu_render(sidemenu, {'template': 'NAOBundle:Menu:knp_menu.html.twig', 'currentClass': 'active'}) }}
-                        {#<li class="nav-item">
-                            <a href="mes-observations.html" class="nav-link d-flex justify-content-between">
-                                <p class="p-1 m-0">Mes observations</p>
-                                <p class="p-1 m-0"><i class="fa fa-angle-right"></i></p>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="mes-favoris.html" class="nav-link d-flex justify-content-between">
-                                <p class="p-1 m-0">Mes favoris</p>
-                                <p class="p-1 m-0"><i class="fa fa-angle-right"></i></p>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="mon-profil.html" class="nav-link d-flex justify-content-between active">
-                                <p class="p-1 m-0">Modifier mon profil</p>
-                                <p class="p-1 m-0"><i class="fa fa-angle-right"></i></p>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="mes-badges.html" class="nav-link d-flex justify-content-between">
-                                <p class="p-1 m-0">Mes badges</p>
-                                <p class="p-1 m-0"><i class="fa fa-angle-right"></i></p>
-                            </a>
-                        </li>
-                        {% if is_granted('ROLE_PRO') %}
-                        <li class="nav-item">
-                            <a href="gestion-observation.html" class="nav-link d-flex justify-content-between">
-                                <p class="p-1 m-0">Gestion des observations</p>
-                                <p class="p-1 m-0"><i class="fa fa-angle-right"></i></p>
-                            </a>
-                        </li>
-                            <li class="nav-item">
-                                <a href="article.html" class="nav-link d-flex justify-content-between">
-                                    <p class="p-1 m-0">Ecrire un article du blog</p>
-                                    <p class="p-1 m-0"><i class="fa fa-angle-right"></i></p>
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="gestion-article.html" class="nav-link d-flex justify-content-between">
-                                    <p class="p-1 m-0">Gestion des articles du blog</p>
-                                    <p class="p-1 m-0"><i class="fa fa-angle-right"></i></p>
-                                </a>
-                            </li>
-                        {% endif %}
-                        {% if is_granted('ROLE_ADMIN') %}
-                            <li class="nav-item">
-                                <a href="gestion-membre.html" class="nav-link d-flex justify-content-between">
-                                    <p class="p-1 m-0">Gestion des utilisateurs</p>
-                                    <p class="p-1 m-0"><i class="fa fa-angle-right"></i></p>
-                                </a>
-                            </li>
-                        {% endif %}
-                        <li class="nav-item">
-                            <a href="#" class="nav-link d-flex justify-content-between">
-                                <p class="p-1 m-0">Déconnexion</p>
-                                <p class="p-1 m-0"><i class="fa fa-angle-right"></i></p>
-                            </a>
-                        </li>#}
-                    </ul>
-                </div>
+
+                {% include 'UserBundle:Default:side_menu_top.html.twig' %}
+
                 <div class="col-12 col-md-8 text-white pl-md-4">
                     <div class="row justify-content-end">
+                        <div class="col-12 d-md-none pb-4">
+                            <h1>Modifier mon profil</h1>
+                        </div>
                         <div class="col-12 col-md-4">
                             <div class="card mb-3 text-right">
-                                <img src="img/profile.jpg" alt="" class="card-img">
+                                {% if avatar is empty %}
+                                    <img src="{{ asset('img/avatars/LOGO-site.png') }}" alt="" class="card-img">
+                                {% else %}
+                                    <img src="{{ asset('img/avatars/' ~ avatar) }}" alt="" class="card-img">
+                                {% endif %}
                                 <div class="card-img-overlay">
-                                    <a href="change-image.html" class="btn btn-success" title="Changer mon image"><i
+                                    <a href="#" class="btn btn-success" title="Changer mon image"><i
                                                 class="fa fa-picture-o"></i></a>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <form id="profil_form">
-                        <div class="form-group row">
-                            <label for="email" class="col-12 col-md-4 col-form-label">E-mail</label>
-                            <div class="col-12 col-md-8">
-                                <input type="text" id="email" class="form-control" value="my.email@gmail.fr">
-                            </div>
+                    {{ form_start(form) }}
+                    <div class="form-group row">
+                        {{ form_label(form.email) }}
+                        {{ form_widget(form.email) }}
+                        {{ form_errors(form.email) }}
+                    </div>
+                    <div class="form-group row">
+                        {{ form_label(form.plainPassword.first) }}
+                        {{ form_widget(form.plainPassword.first) }}
+                        {{ form_errors(form.plainPassword.first) }}
+                    </div>
+                    <div class="form-group row">
+                        {{ form_label(form.plainPassword.second) }}
+                        {{ form_widget(form.plainPassword.second) }}
+                        {{ form_errors(form.plainPassword.second) }}
+                    </div>
+                    <div class="form-group row">
+                        {{ form_label(form.town) }}
+                        {{ form_widget(form.town) }}
+                        {{ form_errors(form.town) }}
+                    </div>
+                    <div class="form-group row">
+                        {{ form_label(form.phone) }}
+                        {{ form_widget(form.phone) }}
+                        {{ form_errors(form.phone) }}
+                    </div>
+                    <div class="row justify-content-center py-2 py-md-5">
+                        <div class="col-12 col-md-4">
+                            <button type="submit" class="btn btn-success btn-block">Valider</button>
                         </div>
-                        <div class="form-group row">
-                            <label for="mdp1" class="col-12 col-md-4 col-form-label">Nouveau mot de passe</label>
-                            <div class="col-12 col-md-8">
-                                <input type="password" id="mdp1" class="form-control" value="mamampapa">
-                            </div>
-                        </div>
-                        <div class="form-group row">
-                            <label for="mdp2" class="col-12 col-md-4 col-form-label">Confirmer mot de passe</label>
-                            <div class="col-12 col-md-8">
-                                <input type="password" id="mdp2" class="form-control" value="mamampapa">
-                            </div>
-                        </div>
-                        <div class="form-group row">
-                            <label for="ville" class="col-12 col-md-4 col-form-label">Ville</label>
-                            <div class="col-12 col-md-8">
-                                <input type="text" id="ville" class="form-control" value="Sanary sur Mer">
-                            </div>
-                        </div>
-                        <div class="form-group row">
-                            <label for="telephone" class="col-12 col-md-4 col-form-label">Téléphone</label>
-                            <div class="col-12 col-md-8">
-                                <input type="text" id="telephone" class="form-control" value="04 91 12 12 12">
-                            </div>
-                        </div>
-                        <div class="row justify-content-center py-2 py-md-5">
-                            <div class="col-12 col-md-4">
-                                <a href="#" class="btn btn-success btn-block">Valider</a>
-                            </div>
-                        </div>
-                    </form>
+                    </div>
+                    {{ form_end(form) }}
+
                 </div>
             </div>
         </div>

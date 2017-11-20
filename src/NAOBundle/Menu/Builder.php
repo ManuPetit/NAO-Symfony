@@ -99,7 +99,6 @@ class Builder
 
     public function createUserMenu(array $options)
     {
-        dump($options);
         $menu = $this->factory->createItem('root');
         if (isset($options['level'])) {
             $menu->addChild('Mes observations', ['route' => 'user_observation']);

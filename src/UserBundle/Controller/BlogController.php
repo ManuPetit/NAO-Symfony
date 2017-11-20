@@ -15,7 +15,9 @@ class BlogController extends Controller
      */
     public function articleAction(Request $request)
     {
-        return $this->render('UserBundle:Blog:article.html.twig');
+        return $this->render('UserBundle:Blog:article.html.twig', [
+            'avatar' => $this->getUser()->getAvatar()
+        ]);
     }
 
     /**
@@ -25,6 +27,8 @@ class BlogController extends Controller
      */
     public function gestionArticlesAction(Request $request)
     {
-        return $this->render('UserBundle:Blog:gestion_article.html.twig');
+        return $this->render('UserBundle:Blog:gestion_article.html.twig', [
+            'avatar' => $this->getUser()->getAvatar()
+        ]);
     }
 }

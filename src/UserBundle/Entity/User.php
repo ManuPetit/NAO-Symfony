@@ -111,7 +111,7 @@ class User implements UserInterface
 
     /**
      * @var ArrayCollection
-     * @ORM\ManyToMany(targetEntity="UserBundle\Entity\Badge")
+     * @ORM\ManyToMany(targetEntity="UserBundle\Entity\Badge", inversedBy="users")
      * @ORM\JoinTable(name="rewards")
      */
     private $badges;
@@ -319,6 +319,7 @@ class User implements UserInterface
     public function addBadge(Badge $badge)
     {
         if (!$this->badges->contains($badge)){
+            $badge->addUser($this);
             $this->badges[] = $badge;
         }
     }
@@ -328,7 +329,9 @@ class User implements UserInterface
      */
     public function removeBadge(Badge $badge)
     {
+        $badge->removeUser($this);
         $this->badges->removeElement($badge);
+
     }
 
     /**
