@@ -2,8 +2,11 @@
 
 namespace NAOBundle\Controller;
 
+use NAOBundle\Entity\Bird;
+use NAOBundle\Entity\Observation;
+use NAOBundle\Form\ObservationType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Doctrine\ORM\Tools\Pagination\Paginator;
+use Symfony\Component\HttpFoundation\Request;
 
 class DefaultController extends Controller
 {
@@ -33,14 +36,45 @@ class DefaultController extends Controller
         return $this->render('NAOBundle:observation:observation.html.twig');
     }
 
-    public function participateAction()
+    public function participateAction(Request $request)
     {
-        return $this->render('NAOBundle:participate:participate.html.twig');
+        $testObs = $this->getDoctrine()->getManager()->getRepository('NAOBundle:MainStatus');
+        $observation = new Observation();
+        $observation->setMainStatus($testObs->find(2));
+        $form = $this->get('form.factory')->create(ObservationType::class, $observation);
+        if ($request->isMethod('POST'))
+        {
+            $form->handleRequest($request);
+            if ($form->isSubmitted() && $form->isValid())
+            {
+                if ($form->getClickedButton()->getName() === 'saveAndAdd'){
+                    $observation->setMainStatus($testObs->find(1));
+                }
+                $em = $this->getDoctrine()->getManager();
+                $photos = $observation->getPhotos();
+                foreach ($photos as $photo){
+                    $photo->setObservation($observation);
+                    $photo->upload();
+                }
+                $em->persist($observation);
+                $em->flush();
+                $request->getSession()->getFlashbag()->add('info','Observation enregistrée et soumise à validation');
+                return $this->redirectToRoute('nao_participate');
+            }
+        }
+        return $this->render('NAOBundle:participate:participate.html.twig', array(
+            'form' => $form->createView(),
+        ));
     }
 
     public function searchAction()
     {
-        return $this->render('NAOBundle:search:search.Html.twig');
+        $em = $this->getDoctrine()->getManager();
+        $bird = $em->getRepository('NAOBundle:Bird')->find(2);
+        $form = $this->get('form.factory')->create(BirdType::class, $bird);
+        return $this->render('NAOBundle:search:search.Html.twig', array(
+            'form' => $form->createView(),
+        ));
     }
 
     public function contactAction()
