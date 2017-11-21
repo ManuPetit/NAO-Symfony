@@ -6,8 +6,12 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
 class DefaultController extends Controller
 {
-    public function indexAction()
+    public function indexAction($id = 0)
     {
-        return $this->render('BlogBundle:index:index.html.twig');
+        $em = $this->getDoctrine()->getManager();
+        $posts = $em->getRepository('BlogBundle:Post')->getLastPosts();
+        return $this->render('BlogBundle:index:index.html.twig', array(
+            'posts' => $posts
+        ));
     }
 }

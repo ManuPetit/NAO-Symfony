@@ -14,18 +14,18 @@ use UserBundle\Entity\User;
 
 class ObservationRepository extends EntityRepository
 {
-    public function getLastObservations($limit = 4)
+    public function getLastObservations($first = 0, $limit = 4)
     {
         $qb = $this
             ->createQueryBuilder('o')
             ->leftJoin('o.bird', 'bird')
             ->addSelect('bird')
-            ->leftJoin('o.photos','photos')
+            ->LeftJoin('o.photos','photos')
             ->addSelect('photos')
             ->leftJoin('o.user', 'user')
             ->addSelect('user')
             ->orderBy('o.date', 'DESC')
-            ->setFirstResult(0)
+            ->setFirstResult($first)
             ->setMaxResults($limit);
         return new Paginator($qb);
     }

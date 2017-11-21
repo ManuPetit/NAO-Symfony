@@ -30,7 +30,7 @@ class Observation
 
     /**
      * @var \DateTime
-     * @ORM\Column(type="datetime")
+     * @ORM\Column(type="datetime")d
      */
     private $date;
 
@@ -73,7 +73,7 @@ class Observation
 
     /**
      * @var Bird
-     * @ORM\ManyToOne(targetEntity="NAOBundle\Entity\Bird")
+     * @ORM\ManyToOne(targetEntity="NAOBundle\Entity\Bird", cascade={"persist"})
      * @ORM\JoinColumn(name="bird_id",referencedColumnName="id")
      */
     private $bird;
@@ -87,7 +87,7 @@ class Observation
 
     /**
      * @var ArrayCollection
-     * @ORM\OneToMany(targetEntity="NAOBundle\Entity\Photo", mappedBy="observation")
+     * @ORM\OneToMany(targetEntity="NAOBundle\Entity\Photo", cascade={"persist"}, mappedBy="observation")
      */
     private $photos;
 
