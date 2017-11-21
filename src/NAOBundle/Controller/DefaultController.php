@@ -4,9 +4,11 @@ namespace NAOBundle\Controller;
 
 use NAOBundle\Entity\Bird;
 use NAOBundle\Entity\Observation;
+use NAOBundle\Form\BirdType;
 use NAOBundle\Form\ObservationType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 
 class DefaultController extends Controller
 {
@@ -36,6 +38,11 @@ class DefaultController extends Controller
         return $this->render('NAOBundle:observation:observation.html.twig');
     }
 
+    /**
+     * @param Request $request
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
+     * @Security("has_role('ROLE_MEMBRE')")
+     */
     public function participateAction(Request $request)
     {
         $testObs = $this->getDoctrine()->getManager()->getRepository('NAOBundle:MainStatus');
