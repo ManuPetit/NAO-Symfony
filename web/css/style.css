@@ -115,6 +115,7 @@ nav .img-nav {
   width: 70px; }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 .navbar-light .navbar-nav .nav-link {
   color: #274144; }
 
@@ -128,6 +129,8 @@ nav .img-nav {
 .btn-landing {
   border-radius: 30px !important; }
 
+=======
+>>>>>>> 9d58e64420da478f0ec15d445f1fd93e3e3c01d7
 =======
 >>>>>>> 9d58e64420da478f0ec15d445f1fd93e3e3c01d7
 /* LANDING PAGE -> IMAGE SECTION */
@@ -256,7 +259,10 @@ nav .img-nav {
   font-size: .8em; }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
+=======
+>>>>>>> 9d58e64420da478f0ec15d445f1fd93e3e3c01d7
 /*Gestion des images en responsiv*/
 @media all and (min-width: 1200px){
   .card-title {
