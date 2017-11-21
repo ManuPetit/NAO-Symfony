@@ -1,0 +1,51 @@
+{% extends 'NAOBundle::layout.html.twig' %}
+
+{% block title %}
+    Mes favoris - NAO
+{% endblock %}
+
+{% block body %}
+    <!-- FAVORIS SECTION -->
+    <section id="my-observations">
+        <div class="container py-5 bg-green px-md-5">
+            <div class="row">
+                {% include 'UserBundle:Default:side_menu_top.html.twig' %}
+                <div class="col-12 col-md-8 text-white mt-md-5 pt-md-5 pb-md-4">
+                    <div class="col-12 d-md-none pb-4">
+                        <h1>Mes favoris</h1>
+                    </div>
+                    {% if favoris is empty %}
+                        <div class="row row-separate py-3">
+                            <p class="col-12">Vous n'avez pas encore choisi d'observations préférées.</p>
+                        </div>
+                    {% else %}
+                        {% for observation in favoris %}
+                            <div class="row row-separate py-3">
+                                <div class="col-3 col-md-3">{{ observation.date|date("d m/Y") }}</div>
+                                <div class="col-3 col-md-3">{{ observation.place }}</div>
+                                <div class="col-3 col-md-4">{{ observation.title }}</div>
+                                <div class="col-1">
+                                    <a href="{{ path('delete_favori', {'id': observation.id }) }}"
+                                       onclick="return confirm('Etes-vous certain de vouloir enlever cette observation de vos favoris ?');"
+                                       title="Retirer de mes favoris">
+                                        <i class="fa fa-trash"></i>
+                                    </a>
+                                </div>
+                                <div class="col-1">
+                                    <a href="#" title="Voir observation"><i class="fa fa-angle-double-right"></i></a>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    {% endif %}
+                </div>
+            </div>
+            <div class="d-none d-md-block">
+                <div class="row justify-content-end">
+                    <a href="#" title="Remonter vers le haut de la page">
+                        <img src="img/bird-up.png" alt="" class="bird-up">
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock %}

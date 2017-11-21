@@ -8,6 +8,7 @@
 
 namespace UserBundle\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -37,6 +38,23 @@ class Badge
      * @ORM\Column(type="string", length=45)
      */
     private $image;
+
+    /**
+     * @var string
+     * @ORM\Column(type="string", length=80)
+     */
+    private $description;
+
+    /**
+     * @var ArrayCollection | User
+     * @ORM\ManyToMany(targetEntity="UserBundle\Entity\User", mappedBy="badges")
+     */
+    private $users;
+
+    public function __construct()
+    {
+        $this->users = new ArrayCollection();
+    }
 
     /**
      * @return int
@@ -76,6 +94,46 @@ class Badge
     public function setImage($image)
     {
         $this->image = $image;
+    }
+
+    /**
+     * @return string
+     */
+    public function getDescription()
+    {
+        return $this->description;
+    }
+
+    /**
+     * @param string $description
+     */
+    public function setDescription($description)
+    {
+        $this->description = $description;
+    }
+
+    /**
+     * @return ArrayCollection|User
+     */
+    public function getUsers()
+    {
+        return $this->users;
+    }
+
+    /**
+     * @param User $user
+     */
+    public function addUser(User $user)
+    {
+        $this->users[] = $user;
+    }
+
+    /**
+     * @param User $user
+     */
+    public function removeUser(User $user)
+    {
+        $this->users->removeElement($user);
     }
 
 }

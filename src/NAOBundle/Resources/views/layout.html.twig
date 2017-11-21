@@ -28,6 +28,14 @@
 
     {{ include("NAOBundle:Default:navbar.html.twig") }}
 
+    {# message section #}
+    <div class="container my-3">
+        <div class="col-12">
+            {% include 'NAOBundle:Default:flash-message.html.twig' %}
+        </div>
+    </div>
+    {# ENDOF message section #}
+
     {% block body %}{% endblock %}
 
     {{ include("NAOBundle:Default:footer.html.twig") }}

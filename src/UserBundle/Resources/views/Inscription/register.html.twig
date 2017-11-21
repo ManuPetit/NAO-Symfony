@@ -1,0 +1,60 @@
+{% extends 'NAOBundle::layout.html.twig' %}
+{% block title %}
+    S'inscrire - NAO
+{% endblock %}
+
+{% block body %}
+    <div id="connexion-section" class="py-5">
+        <div class="container">
+            <div class="row justify-content-center pb-3">
+                <h4>S'inscrire avec</h4>
+            </div>
+            <div class="row justify-content-center">
+                <div class="col-3 col-md-2">
+                    <a href="#" class="btn btn-primary btn-block">
+                        <i class="fa fa-facebook"></i>
+                    </a>
+                </div>
+                <div class="col-3 col-md-2">
+                    <a href="#" class="btn btn-danger btn-block">
+                        <i class="fa fa-google-plus"></i>
+                    </a>
+                </div>
+            </div>
+            <div class="row justify-content-center pt-5 pb-3">
+                <h4>Ou avec votre e-mail</h4>
+            </div>
+            {{ form_start(form) }}
+                <div class="row justify-content-center">
+                    <div class="form-group col-12 col-md-4">
+                        {{ form_row(form.login, {'attr': {'class': 'form-control'}}) }}
+                    </div>
+                    <div class="form-group col-12 col-md-4">
+                        {{ form_row(form.email, {'attr': {'class': 'form-control'}}) }}
+                    </div>
+                </div>
+                <div class="row justify-content-center">
+                    <div class="form-group col-12 col-md-4">
+                        {{ form_row(form.plainPassword.first, {'attr': {'class': 'form-control'}}) }}
+                    </div>
+                    <div class="form-group col-12 col-md-4">
+                        {{ form_row(form.plainPassword.second, {'attr': {'class': 'form-control'}}) }}
+                    </div>
+                </div>
+                <div class="row justify-content-center">
+                    <div class="col-12 pt-4">
+                        <p class="text-center">Vous êtes un ornithologue professionnel ? Envoyez nous un justificatif à <a href="mailto:contact@nao.fr">contact@nao.fr</a></p>
+                    </div>
+                    <div class="col-12 col-md-4 py-2 py-md-4">
+                        <button class="btn btn-success btn-block pb-3" type="submit">Valider</button>
+                    </div>
+                    <div class="col-12">
+                        <p class="text-center">
+                            <a href="{{ path('login') }}">Déjà inscrit ? Se connecter !</a>
+                        </p>
+                    </div>
+                </div>
+            {{ form_end(form) }}
+        </div>
+    </div>
+{% endblock %}

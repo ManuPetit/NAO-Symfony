@@ -1,0 +1,18 @@
+
+            <div class="col-4 d-none d-md-block">
+                {% if avatar is empty %}
+                    <img src="{{ asset('img/avatars/LOGO-site.png') }}" style="width:120px;" class="m-4">
+                {% else %}
+                    <img src="{{ asset('img/avatars/' ~ avatar) }}" style="width:120px;" class="m-4">
+                {% endif %}
+                <ul class="nav flex-column side-menu">
+                    {% if is_granted('ROLE_ADMIN') %}
+                        {% set sidemenu = knp_menu_get('side', [], {'level': 'ADMIN'}) %}
+                    {% elseif is_granted('ROLE_PRO') %}
+                        {% set sidemenu = knp_menu_get('side', [], {'level': 'PRO'}) %}
+                    {% else %}
+                        {% set sidemenu = knp_menu_get('side', [], {'level': ''}) %}
+                    {% endif %}
+                    {{ knp_menu_render(sidemenu, {'template': 'NAOBundle:Menu:knp_side_menu.html.twig', 'currentClass': 'active'}) }}
+                </ul>
+            </div>
