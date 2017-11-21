@@ -82,7 +82,6 @@ class observationsController extends Controller
         //retrouver toutes les observations
         $em = $this->getDoctrine()->getManager();
         $observations = $em->getRepository('NAOBundle:Observation')->getAllObservations();
-        dump($observations);
         return $this->render('UserBundle:Observations:gestion_observations.html.twig', [
             'observations' => $observations,
             'avatar' => $this->getUser()->getAvatar()
