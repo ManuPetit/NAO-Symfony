@@ -9,6 +9,7 @@
 namespace UserBundle\Repository;
 
 use Doctrine\ORM\EntityRepository;
+use UserBundle\Entity\User;
 
 class BadgeRepository extends EntityRepository
 {

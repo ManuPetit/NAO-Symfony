@@ -1,0 +1,79 @@
+{% extends 'NAOBundle::layout.html.twig' %}
+
+{% block title %}
+    Mes observations - NAO
+{% endblock %}
+
+{% block body %}
+    <!-- OBSERVATION SECTION -->
+    <section id="my-observations">
+        <div class="container py-5 bg-green px-md-5">
+            <div class="row">
+
+                {% include 'UserBundle:Default:side_menu_top.html.twig' %}
+
+                <div class="col-12 col-md-8 text-white pb-md-4">
+                    <div class="row justify-content-center py-md-4">
+                        <div class="col-12 d-md-none pb-4">
+                            <h1>Mes observations</h1>
+                        </div>
+                        <div class="col-8">
+                            <a class="btn btn-outline-light btn-lg btn-block" href="{{ path('nao_participate') }}"
+                               title="Ajouter une observation">
+                                <i class="fa fa-plus"></i> Observation
+                            </a>
+                        </div>
+                    </div>
+                    {% if observations is empty %}
+                        <div class="row row-separate py-3">
+                            <p class="col-12">Vous n'avez pas encore fait d'observation.</p>
+                        </div>
+                    {% else %}
+                        {% for observation in observations %}
+                            <div class="row row-separate py-3">
+                                <div class="col-2">{{ observation.date|date("d m/Y") }}</div>
+                                <div class="col-2">{{ observation.place }}</div>
+                                <div class="col-3">{{ observation.title }}</div>
+                                <div class="col-2">{{ observation.mainStatus.name }}</div>
+                                {% if observation.mainStatus.name is same as ('Publié') %}
+                                    <div class="col-1 text-dark">
+                                        <i class="fa fa-trash"></i>
+                                    </div>
+                                    <div class="col-1 text-dark">
+                                        <i class="fa fa-pencil"></i>
+                                    </div>
+                                    <div class="col-1">
+                                        <a href="#" title="Voir observation"><i
+                                                    class="fa fa-angle-double-right"></i></a>
+                                    </div>
+                                {% else %}
+                                    <div class="col-1">
+                                        <a href="{{ path('delete_observation', {'id': observation.id}) }}"
+                                           title="Supprimer observation"
+                                           onclick="return confirm('Etes-vous certain de vouloir supprimer cette observation ?');">
+                                            <i class="fa fa-trash"></i>
+                                        </a>
+                                    </div>
+                                    <div class="col-1">
+                                        <a href="#" title="Editer observation"><i class="fa fa-pencil"></i></a>
+                                    </div>
+                                    <div class="col-1 text-dark">
+                                        <i class="fa fa-angle-double-right"></i>
+                                    </div>
+                                {% endif %}
+                            </div>
+                        {% endfor %}
+                    {% endif %}
+
+                </div>
+            </div>
+            <div class="d-none d-md-block">
+                <div class="row justify-content-end">
+                    <a href="#" title="Remonter vers le haut de la page">
+                        <img src="img/bird-up.png" alt="" class="bird-up">
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock %}

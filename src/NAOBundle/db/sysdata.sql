@@ -22,19 +22,19 @@ SET time_zone = "+00:00";
 -- Déchargement des données de la table `badges`
 --
 
-INSERT INTO `badges` (`id`, `name`, `image`) VALUES
-(1, 'Nouvel observateur', 'observateur-1.png'),
-(2, 'Observateur', 'observateur-2.png'),
-(3, 'Observateur confirmé', 'observateur-3.png'),
-(4, 'Observateur expert', 'observateur-4.png'),
-(5, 'Nouveau photographe', 'photographe-1.png'),
-(6, 'Photographe', 'photographe-2.png'),
-(7, 'Photographe confirmé', 'photographe-3.png'),
-(8, 'Photographe expert', 'photographe-4.png'),
-(9, 'Nouveau membre', 'anciennete-1.png'),
-(10, 'Membre', 'anciennete-2.png'),
-(11, 'Membre confirmé', 'anciennete-3.png'),
-(12, 'Membre expert', 'anciennete-4.png');
+INSERT INTO `badges` (`id`, `name`, `image`, `description`) VALUES
+(1, 'Nouvel observateur', 'observateur-1.png', '1 observation'),
+(2, 'Observateur', 'observateur-2.png', '5+ observations'),
+(3, 'Observateur confirmé', 'observateur-3.png', '20+ observations'),
+(4, 'Observateur expert', 'observateur-4.png', '50+ observations'),
+(5, 'Nouveau photographe', 'photographe-1.png', '1 photo'),
+(6, 'Photographe', 'photographe-2.png', '10+ photos'),
+(7, 'Photographe confirmé', 'photographe-3.png', '50+ photos'),
+(8, 'Photographe expert', 'photographe-4.png', '100+ photos'),
+(9, 'Nouveau membre', 'anciennete-1.png', 'inscription'),
+(10, 'Membre', 'anciennete-2.png', '6+ mois'),
+(11, 'Membre confirmé', 'anciennete-3.png', '1+ an'),
+(12, 'Membre expert', 'anciennete-4.png', '2+ ans');
 
 --
 -- Déchargement des données de la table `main_statuses`

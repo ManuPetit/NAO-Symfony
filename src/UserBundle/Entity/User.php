@@ -10,6 +10,8 @@ namespace UserBundle\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Validator\Constraints as Assert;
 use NAOBundle\Entity\Observation;
 
@@ -18,8 +20,10 @@ use NAOBundle\Entity\Observation;
  * @package UserBundle\Entity
  * @ORM\Table(name="users")
  * @ORM\Entity(repositoryClass="UserBundle\Repository\UserRepository")
+ * @UniqueEntity(fields="login", message="Ce nom d'utilisateur est déjà utilisé")
+ * @UniqueEntity(fields="email", message="Cet email est déjà utilisé")
  */
-class User
+class User implements UserInterface
 {
     /**
      * @var integer
@@ -94,6 +98,11 @@ class User
     private $role;
 
     /**
+     * @var string
+     */
+    private $plainPassword;
+
+    /**
      * @var \UserBundle\Entity\UserStatus
      * @ORM\ManyToOne(targetEntity="UserBundle\Entity\UserStatus")
      * @ORM\JoinColumn(name="user_status_id", referencedColumnName="id")
@@ -102,7 +111,7 @@ class User
 
     /**
      * @var ArrayCollection
-     * @ORM\ManyToMany(targetEntity="UserBundle\Entity\Badge")
+     * @ORM\ManyToMany(targetEntity="UserBundle\Entity\Badge", inversedBy="users")
      * @ORM\JoinTable(name="rewards")
      */
     private $badges;
@@ -310,6 +319,7 @@ class User
     public function addBadge(Badge $badge)
     {
         if (!$this->badges->contains($badge)){
+            $badge->addUser($this);
             $this->badges[] = $badge;
         }
     }
@@ -319,7 +329,9 @@ class User
      */
     public function removeBadge(Badge $badge)
     {
+        $badge->removeUser($this);
         $this->badges->removeElement($badge);
+
     }
 
     /**
@@ -373,4 +385,53 @@ class User
     {
         $this->favoriteObservations->removeElement($observation);
     }
+
+    public function getRoles()
+    {
+        return array($this->role->getName());
+
+    }
+
+    public function getPassword()
+    {
+        return $this->mdp;
+    }
+
+    public function getUsername()
+    {
+        return $this->email;
+    }
+
+    public function eraseCredentials()
+    {
+        return null;
+    }
+
+    /**
+     * generate random 64 characters salt
+     */
+    private function generateSalt()
+    {
+        $this->salt = random_bytes(30);
+    }
+
+    /**
+     * @return string
+     */
+    public function getPlainPassword()
+    {
+        return $this->plainPassword;
+    }
+
+    /**
+     * @param string $plainPassword
+     */
+    public function setPlainPassword($plainPassword)
+    {
+        //each time a plain password change, we generate a new salt
+        $this->generateSalt();
+        $this->plainPassword = $plainPassword;
+    }
+
+
 }
