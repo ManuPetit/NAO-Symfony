@@ -114,6 +114,7 @@ nav li {
 nav .img-nav {
   width: 70px; }
 
+<<<<<<< HEAD
 .navbar-light .navbar-nav .nav-link {
   color: #274144; }
 
@@ -127,6 +128,8 @@ nav .img-nav {
 .btn-landing {
   border-radius: 30px !important; }
 
+=======
+>>>>>>> 9d58e64420da478f0ec15d445f1fd93e3e3c01d7
 /* LANDING PAGE -> IMAGE SECTION */
 #image-section {
   background: url("../img/eagle.jpg") no-repeat;
@@ -196,6 +199,7 @@ nav .img-nav {
   text-decoration: none;
   color: #1daa69; }
 
+/*Section participer*/
 #participer-accueil-section .parti-obs {
   height: 198px;
   background: url("../img/accueil-observer.png") no-repeat;
@@ -223,7 +227,13 @@ nav .img-nav {
   background-position: center; }
   #participer-accueil-section .parti-val h4 {
     margin-top: 100px; }
+#map {
+  width: 100%;
+  height: 400px;
+  background-color: grey;
+}
 
+/* Section blog */
 #blog-accueil-section a {
   color: #274144; }
 
@@ -245,6 +255,28 @@ nav .img-nav {
 #observation-accueil-section .card-text {
   font-size: .8em; }
 
+<<<<<<< HEAD
+=======
+/*Gestion des images en responsiv*/
+@media all and (min-width: 1200px){
+  .card-title {
+    font-size: 1.75rem;
+  }
+}
+
+@media all and (min-width: 750px) and (max-width: 1200px){
+  .card-title {
+    font-size: 1rem;
+  }
+}
+
+@media all and (max-width: 750px) {
+  .card-title {
+    font-size: 1.75rem;
+  }
+}
+
+>>>>>>> 9d58e64420da478f0ec15d445f1fd93e3e3c01d7
 #vouloir-accueil-section a {
   color: #ffffff; }
 
@@ -360,3 +392,12 @@ nav .img-nav {
     margin-top: 4%; }
   #apropos-proposition-section .box {
     margin-bottom: 70px; } }
+
+input[type="file"] {
+  cursor:pointer;
+}
+
+#naobundle_observation_save,#naobundle_observation_saveAndAdd {
+  color: white;
+  background-color: #274144;
+}
