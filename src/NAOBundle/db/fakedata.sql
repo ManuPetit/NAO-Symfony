@@ -117,9 +117,9 @@ INSERT INTO `photos` (`id`, `observation_id`, `file`) VALUES
 
 INSERT INTO `bookmarks` (`user_id`, `observation_id`) VALUES
 (7, 1),
-(7, 2);
-(9, 1);
-(9, 5);
+(7, 2),
+(9, 1),
+(9, 5),
 (2, 8);
 
 --
