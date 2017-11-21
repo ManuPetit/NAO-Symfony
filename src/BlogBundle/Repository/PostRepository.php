@@ -13,14 +13,14 @@ use Doctrine\ORM\Tools\Pagination\Paginator;
 
 class PostRepository extends EntityRepository
 {
-    public function getLastPosts($limit = 3)
+    public function getLastPosts($first = 0, $limit = 3)
     {
         $qb = $this
             ->createQueryBuilder('p')
             ->leftJoin('p.blogImages', 'blog')
             ->addSelect('blog')
             ->orderBy('p.date', 'DESC')
-            ->setFirstResult(0)
+            ->setFirstResult($first)
             ->setMaxResults($limit)
         ;
         return new Paginator($qb);

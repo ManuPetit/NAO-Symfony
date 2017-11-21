@@ -40,6 +40,8 @@ framework:
 twig:
     debug: '%kernel.debug%'
     strict_variables: '%kernel.debug%'
+    form_themes:
+        - 'bootstrap_3_layout.html.twig'
 
 # Doctrine Configuration
 doctrine:
@@ -70,3 +72,17 @@ swiftmailer:
     username: '%mailer_user%'
     password: '%mailer_password%'
     spool: { type: memory }
+
+fos_elastica:
+    clients:
+        default: { host: localhost, port: 9200 }
+    indexes:
+            app:
+                index_name: app_%kernel.environment%
+
+vich_uploader:
+    db_driver: orm
+    mappings:
+            product_image:
+                uri_prefix:         /img/observations
+                upload_destination: '%kernel.root_dir%/../web/img/observations'
