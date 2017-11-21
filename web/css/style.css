@@ -1,4 +1,4 @@
-/* COULEURS DU SITE */
+s/* COULEURS DU SITE */
 /* POLICE DU SITE */
 @font-face {
   font-family: 'Heebo';
@@ -255,7 +255,6 @@ nav .img-nav {
 #observation-accueil-section .card-text {
   font-size: .8em; }
 
-<<<<<<< HEAD
 =======
 /*Gestion des images en responsiv*/
 @media all and (min-width: 1200px){
