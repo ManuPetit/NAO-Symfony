@@ -29,12 +29,14 @@
     {{ include("NAOBundle:Default:navbar.html.twig") }}
 
     {# message section #}
+    {% if app.session.flashbag.get('info') %}
     <div class="container my-3">
         <div class="col-12">
             {% include 'NAOBundle:Default:flash-message.html.twig' %}
         </div>
     </div>
-    {# ENDOF message section #}
+    {% endif %}
+    {# END OF message section #}
 
     {% block body %}{% endblock %}
 

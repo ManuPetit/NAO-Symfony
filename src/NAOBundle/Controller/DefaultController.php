@@ -33,11 +33,6 @@ class DefaultController extends Controller
         return $this->render('NAOBundle:about:about.html.twig');
     }
 
-    public function observationAction()
-    {
-        return $this->render('NAOBundle:observation:observation.html.twig');
-    }
-
     /**
      * @param Request $request
      * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
@@ -45,9 +40,11 @@ class DefaultController extends Controller
      */
     public function participateAction(Request $request)
     {
+        $currentUser = $this->getUser();
         $testObs = $this->getDoctrine()->getManager()->getRepository('NAOBundle:MainStatus');
         $observation = new Observation();
         $observation->setMainStatus($testObs->find(2));
+        $observation->setUser($currentUser);
         $form = $this->get('form.factory')->create(ObservationType::class, $observation);
         if ($request->isMethod('POST'))
         {

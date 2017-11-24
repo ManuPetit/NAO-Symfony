@@ -66,8 +66,16 @@
                         {{ form_widget(form.content, {'attr': {'class': 'form-control'}}) }}
                     </div>
                 </div>
-                        {{ form_row(form.photos) }}
-                        <!--<a href="#" id="add_photo" class="btn btn-info">Ajouter une photo</a>-->
+
+                <div id="addPhotoImg">
+                    <a href="#" title="Ajouter une photo à votre article" >
+                        <i class="fa fa-picture-o img-link"></i>
+                    </a>
+                </div>
+                <div id="addPhotoDiv"> {{ form_row(form.photos) }}
+                    <a href="#" id="add_photo" class="btn btn-info">Ajouter une photo</a>
+                </div>
+
                 <div class="row justify-content-around">
                     <div class="col-12 col-md-4 py-2">
                         {{ form_widget(form.save, {'attr': {'class': 'btn btn-block'}}) }}
@@ -161,38 +169,49 @@
             });
        }
     </script>
+
+    <script>
+        $(function(){
+            $('#addPhotoDiv').hide();
+            $('#addPhotoImg').click(function(e){
+                $('#addPhotoImg').hide();
+                $('#addPhotoDiv').show();
+                e.preventDefault();
+            });
+        })
+    </script>
+
+
     <script type="text/javascript">
-        $(document).ready(function() {
+        $(function(){
             var $container = $('div#naobundle_observation_photos');
             var index = $container.find(':input').length;
+
             $('#add_photo').click(function(e) {
-                addPhoto($container);
+                addCategory($container);
                 e.preventDefault();
-                return false;
+
             });
 
-            if (index == 0) {addPhoto($container);}
-            function addPhoto($container) {
-                var template = $container.attr('data-prototype')
-                    .replace(/__name__label__/g, 'Photo n°' + (index+1))
-                    .replace(/__name__/g,        index)
-                ;
+            function addCategory($container) {
+                var template = $container.attr('data-prototype').replace(/__name__label__/g, 'Catégorie n°' + (index+1)).replace(/__name__/g,index);
                 var $prototype = $(template);
                 addDeleteLink($prototype);
                 $container.append($prototype);
                 index++;
             }
+
             function addDeleteLink($prototype) {
                 var $deleteLink = $('<a href="#" class="btn btn-danger">Supprimer</a>');
                 $prototype.append($deleteLink);
                 $deleteLink.click(function(e) {
                     $prototype.remove();
                     e.preventDefault();
-                    return false;
                 });
             }
+            //addCategory($container);
         });
-    </script>
+        </script>
     {% endblock %}
 
 {% endblock %}

@@ -27,7 +27,8 @@ class ObservationType extends AbstractType
                 'class'        => 'NAOBundle:Bird',
                 'query_builder' => function (BirdRepository $er) {
                     return $er->createQueryBuilder('b')
-                        ->where('b.frenchName is not NULL')
+                        ->where('b.frenchName LIKE :pattern')
+                        ->setParameter('pattern', '')
                         ->orderBy('b.frenchName', 'ASC');
                 },
                 'choice_label' => 'frenchName',
