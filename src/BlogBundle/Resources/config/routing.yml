@@ -5,3 +5,23 @@ blog_homepage:
 blog_refresh:
     path:     /blog/{limit}
     defaults: { _controller: BlogBundle:Default:refresh }
+
+user_article:
+    path: /article
+    defaults: { _controller: BlogBundle:Default:article }
+
+user_gestion_article:
+    path: /gestion-article
+    defaults: { _controller: BlogBundle:Default:gestionArticles }
+
+user_delete_article:
+    path: /delete-article/{id}
+    defaults: { _controller: BlogBundle:Default:deleteArticle }
+
+user_update_post_status:
+    path: /update-status-post/{id}/{status}
+    defaults: { _controller: BlogBundle:Default:updateArticleStatus }
+
+user_article_update:
+    path: /article-editer/{id}
+    defaults: { _controller: BlogBundle:Default:articleUpdate }

@@ -55,7 +55,7 @@ class Post
 
     /**
      * @var ArrayCollection
-     * @ORM\OneToMany(targetEntity="BlogBundle\Entity\BlogImage", mappedBy="post")
+     * @ORM\OneToMany(targetEntity="BlogBundle\Entity\BlogImage", mappedBy="post", cascade={"persist"})
      */
     private $blogImages;
 
@@ -76,6 +76,7 @@ class Post
     public function __construct()
     {
         $this->blogImages = new ArrayCollection();
+        $this->date = new \DateTime();
     }
 
     /**

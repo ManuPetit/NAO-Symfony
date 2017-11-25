@@ -1,5 +1,5 @@
 user_homepage:
-    path:     /
+    path: /accueil
     defaults: { _controller: NAOBundle:Default:home }
 
 user_profile:
@@ -13,14 +13,6 @@ user_badge:
 user_gestion_user:
     path: /gestion-membre
     defaults: { _controller: UserBundle:Admin:gestionUser }
-
-user_article:
-    path: /article
-    defaults: { _controller: UserBundle:Blog:article }
-
-user_gestion_article:
-    path: /gestion-article
-    defaults: { _controller: UserBundle:Blog:gestionArticles }
 
 user_favoris:
     path: /mes-favoris
@@ -45,5 +37,21 @@ delete_observation:
 delete_favori:
     path: /favori-supprimer/{id}
     defaults: { _controller: UserBundle:observations:deleteFavoris }
+
+update_status_observation:
+    path: /update-status-obs/{id}/{value}
+    defaults: { _controller: UserBundle:observations:updateObservationStatus }
+
+user_update_user_role:
+    path: /update_user_role/{id}/{role}
+    defaults: { _controller: UserBundle:Admin:updateUserRole }
+
+user_update_user_status:
+    path: /update_user_status/{id}/{status}
+    defaults: { _controller: UserBundle:Admin:updateUserStatus }
+
+user_upload_picture:
+    path: /user_picture
+    defaults: { _controller: UserBundle:Admin:userUploadAvatar }
 
 

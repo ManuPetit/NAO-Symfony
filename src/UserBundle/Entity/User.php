@@ -10,10 +10,11 @@ namespace UserBundle\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Security\Core\User\AdvancedUserInterface;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Validator\Constraints as Assert;
 use NAOBundle\Entity\Observation;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 /**
  * Class User
@@ -23,7 +24,7 @@ use NAOBundle\Entity\Observation;
  * @UniqueEntity(fields="login", message="Ce nom d'utilisateur est déjà utilisé")
  * @UniqueEntity(fields="email", message="Cet email est déjà utilisé")
  */
-class User implements UserInterface
+class User implements AdvancedUserInterface
 {
     /**
      * @var integer
@@ -129,12 +130,55 @@ class User implements UserInterface
      */
     private $favoriteObservations;
 
+
     public function __construct()
     {
         $this->badges = new ArrayCollection();
         $this->observations = new ArrayCollection();
         $this->favoriteObservations = new ArrayCollection();
         $this->dateJoined = new \DateTime();
+    }
+
+    /**
+     * Image file to uploaded
+     * @var string
+     */
+    private $upFile;
+
+    /**
+     * @return mixed
+     */
+    public function getUpFile()
+    {
+        return $this->upFile;
+    }
+
+    /**
+     * @param mixed $upFile
+     */
+    public function setUpFile(UploadedFile $upFile = null)
+    {
+        $this->upFile = $upFile;
+    }
+
+    public function upload()
+    {
+        if (null === $this->upFile) {
+            return;
+        }
+        $file = $this->upFile->getClientOriginalName();
+        $this->upFile->move($this->getUploadRootDir(), $file);
+        $this->avatar = $file;
+    }
+
+    public function getUploadDir()
+    {
+        return 'img/avatar';
+    }
+
+    public function getUploadRootDir()
+    {
+        return __DIR__ . '/../../../web/' . $this->getUploadDir();
     }
 
     /**
@@ -302,7 +346,7 @@ class User implements UserInterface
      */
     public function setUserStatus(UserStatus $userStatus)
     {
-        $this->userStatus = $userStatus;
+       $this->userStatus = $userStatus;
     }
 
     /**
@@ -318,7 +362,7 @@ class User implements UserInterface
      */
     public function addBadge(Badge $badge)
     {
-        if (!$this->badges->contains($badge)){
+        if (!$this->badges->contains($badge)) {
             $badge->addUser($this);
             $this->badges[] = $badge;
         }
@@ -354,7 +398,7 @@ class User implements UserInterface
     /**
      * @param Observation $observation
      */
-    public  function removeObservation(Observation $observation)
+    public function removeObservation(Observation $observation)
     {
         $this->observations->removeElement($observation);
         $observation->setUser(null);
@@ -373,7 +417,7 @@ class User implements UserInterface
      */
     public function addFavoriteObservation(Observation $observation)
     {
-        if (!$this->favoriteObservations->contains($observation)){
+        if (!$this->favoriteObservations->contains($observation)) {
             $this->favoriteObservations[] = $observation;
         }
     }
@@ -431,6 +475,30 @@ class User implements UserInterface
         //each time a plain password change, we generate a new salt
         $this->generateSalt();
         $this->plainPassword = $plainPassword;
+    }
+
+    public function isAccountNonExpired()
+    {
+        return true;
+    }
+
+    public function isAccountNonLocked()
+    {
+        return true;
+    }
+
+    public function isCredentialsNonExpired()
+    {
+        return true;
+    }
+
+    public function isEnabled()
+    {
+        if ($this->userStatus->getName() == 'Actif'){
+            return true;
+        }else {
+            return false;
+        }
     }
 
 
