@@ -1,0 +1,87 @@
+{% extends '@NAO/layout.html.twig' %}
+{% block title %}
+    Gestion articles - NAO
+{% endblock %}
+
+{% block body %}
+    <!-- Observations SECTION -->
+    <section id="my-observations">
+        <div class="container py-5 bg-green px-md-5">
+            <div class="row">
+                {% include 'UserBundle:Default:side_menu_top.html.twig' %}
+                <div class="col-12 col-md-8 text-white mt-md-5 pt-md-5 pb-md-4">
+                    <div class="col-12 d-md-none pb-4">
+                        <h1>Gestion des articles</h1>
+                    </div>
+                    {% if articles is empty %}
+                        <div class="row row-separate py-3">
+                            <p class="col-12">Aucun article.</p>
+                        </div>
+                    {% else %}
+                        <div class="row py-3 text-dark-green align-items-baseline">
+                            <div class="col-5">
+                                <select id="filter_status" class="form-control" onchange="filter()">
+                                    <option selected>Filtrer par...</option>
+                                    <option value="0">Tous status</option>
+                                    {% for filter in filters %}
+                                        <option value="{{ filter.id }}">{{ filter.name }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                            <div class="col-6">
+                                <div class="input-group">
+                                    <input type="text" class="form-control" id="search_name" onchange="filter()">
+                                    <span class="input-group-addon" onclick="search()"><i
+                                                class="fa fa-search"></i></span>
+                                </div>
+                            </div>
+                        </div>
+                        {% for article in articles %}
+                            <div class="row row-separate py-3 align-items-baseline">
+                                <div class="col-2 text-center">{{ article.date|date("d m/Y") }}</div>
+                                <div class="col-5 text-center">{{ article.title }}</div>
+                                <div class="col-4 text-center">{{ article.user.login|capitalize }}</div>
+                                <div class="col-1">
+                                    <a href="#" title="Voir observation">
+                                        <i class="fa fa-angle-double-right"></i>
+                                    </a>
+                                </div>
+                                <div class="col-2 text-center">
+                                    {% if article.mainStatus.id == 3 %}
+                                        <a href="#" title="Masquer cet article"
+                                           onclick="masquer({{ article.id }})">Masquer</a>
+                                    {% else %}
+                                        <p class="text-grey mb-0">Masquer</p>
+                                    {% endif %}
+                                </div>
+                                <div class="col-5 text-center">
+                                    <a href="{{ path('user_article_update', {'id': article.id}) }}" title="Modifier cet article">Modifier</a>
+                                </div>
+                                <div class="col-4 text-center">
+                                    {% if article.mainStatus.id != 3 %}
+                                        <a href="#"
+                                           title="Publier cet article sur le blog"
+                                           onclick="publier({{ article.id }})">Publier</a>
+                                    {% else %}
+                                        <p class="text-grey mb-0">Publier</p>
+                                    {% endif %}
+                                </div>
+                                <div class="col-1">
+                                    <a href="{{ path('user_delete_article', {'id': article.id}) }}"
+                                       title="Supprimer article"
+                                       onclick="return confirm('Etes-vous certain de vouloir supprimer cet article ?');">
+                                        <i class="fa fa-trash"></i>
+                                    </a>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock %}
+
+{% block javascripts %}
+    <script src="{{ asset('js/gestion-post.js') }}"></script>
+{% endblock %}

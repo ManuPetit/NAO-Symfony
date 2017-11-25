@@ -1,5 +1,5 @@
 nao_index:
-    path:     /index
+    path: /
     defaults: { _controller: NAOBundle:Default:index }
 
 nao_homepage:

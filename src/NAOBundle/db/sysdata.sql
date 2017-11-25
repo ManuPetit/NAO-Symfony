@@ -40,12 +40,12 @@ INSERT INTO `badges` (`id`, `name`, `image`, `description`) VALUES
 -- Déchargement des données de la table `main_statuses`
 --
 
-INSERT INTO `main_statuses` (`id`, `name`) VALUES
-(1, 'Brouillon'),
-(2, 'En attente de validation'),
-(3, 'Publié'),
-(4, 'Masqué'),
-(5, 'Supprimé');
+INSERT INTO `main_statuses` (`id`, `name`, `verb`) VALUES
+(1, 'Brouillon', 'Enregistrer'),
+(2, 'En attente de validation', 'Attendre validation'),
+(3, 'Publié', 'Publier'),
+(4, 'Masqué', 'Masquer'),
+(5, 'Supprimé', 'Supprimer');
 
 --
 -- Déchargement des données de la table `roles`
@@ -60,10 +60,10 @@ INSERT INTO `roles` (`id`, `name`, `current_name`) VALUES
 -- Déchargement des données de la table `user_statuses`
 --
 
-INSERT INTO `user_statuses` (`id`, `name`) VALUES
-(1, 'Actif'),
-(2, 'Inactif'),
-(3, 'Supprimé');
+INSERT INTO `user_statuses` (`id`, `name`, `verb`) VALUES
+(1, 'Actif', 'Activer'),
+(2, 'Inactif', 'Désactiver'),
+(3, 'Supprimé', 'Supprimer');
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
