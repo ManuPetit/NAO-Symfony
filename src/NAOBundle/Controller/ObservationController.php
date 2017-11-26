@@ -6,6 +6,7 @@ use NAOBundle\Entity\Bird;
 use NAOBundle\Entity\Observation;
 use NAOBundle\Form\BirdType;
 use NAOBundle\Form\ObservationType;
+use NAOBundle\Form\SearchType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;

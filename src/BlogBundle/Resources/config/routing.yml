@@ -1,6 +1,8 @@
 blog_homepage:
     path:     /blog
     defaults: { _controller: BlogBundle:Default:index }
+    requirements:
+        _method:  GET|POST
 
 blog_show_old_posts:
     path:     /blog/order/old

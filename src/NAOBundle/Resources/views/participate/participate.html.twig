@@ -72,8 +72,9 @@
                         <i class="fa fa-picture-o img-link"></i>
                     </a>
                 </div>
-                <div id="addPhotoDiv"> {{ form_row(form.photos) }}
-                    <a href="#" id="add_photo" class="btn btn-info">Ajouter une photo</a>
+                <div id="addPhotoDiv">
+                {{ form_row(form.photos) }}
+                    <a href="#" id="add_photo" class="btn btn-primary">Ajouter une photo</a>
                 </div>
 
                 <div class="row justify-content-around">
@@ -93,6 +94,9 @@
     {% block javascripts %}
     {{ parent() }}
 
+    <script async defer
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAmofWU0olWbvT_AZBjmqo3IhPjC0gLPf4&callback=initMap">
+    </script>
     <script>
         $(function(){
             //Mise en place du Français pour le datepicker
@@ -115,86 +119,77 @@
             $.datepicker.setDefaults($.datepicker.regional['fr']);
             //Ajout du datepicker
             $("#naobundle_observation_date").datepicker();
-        });
-    </script>
-    <script async defer
-            src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAmofWU0olWbvT_AZBjmqo3IhPjC0gLPf4&callback=initMap">
-    </script>
-    <script>
-        $('#map').hide();
-        $('#naobundle_observation_place').click(function(){
-            $('#map').show();
-            initMap();
-        })
 
-       var image = '{{ asset('img/mini-oiseau.png') }}';
-       var map;
-       var marker;
-       var geocoder;
-       var toulouse = {lat: 43.600452, lng: 1.427867};
-       function initMap() {
-            geocoder = new google.maps.Geocoder();
-            map = new google.maps.Map(document.getElementById('map'), {
-                zoom: 6,
-                center: toulouse,
-                mapTypeId: google.maps.MapTypeId.TERRAIN
+            $('#map').hide();
+            $('#naobundle_observation_place').click(function(){
+                $('#map').show();
+                initMap();
             });
 
-            function placeMarker(location) {
-                if(marker){
-                    marker.setPosition(location);
-                } else {
-                    marker = new google.maps.Marker({
-                        position:location,
-                        map:map,
-                        icon:image
-                    });
-                }
-                //récupération des coordonnées gps
-                console.log(location.lat());
-                $('#naobundle_observation_latitude').val(location.lat());
-                $('#naobundle_observation_longitude').val(location.lng());
+            var image = '{{ asset('img/mini-oiseau.png') }}';
+            var map;
+            var marker;
+            var geocoder;
+            var toulouse = {lat: 43.600452, lng: 1.427867};
+            function initMap() {
+                geocoder = new google.maps.Geocoder();
+                map = new google.maps.Map(document.getElementById('map'), {
+                    zoom: 6,
+                    center: toulouse,
+                    mapTypeId: google.maps.MapTypeId.TERRAIN
+                });
 
-                var latlng = {lat: location.lat(), lng: location.lng()};
-                geocoder.geocode({'location': latlng}, function(results,status){
-                    if(status === 'OK'){
-                        $('#naobundle_observation_place').val(results[1].address_components[0].long_name);
+                function placeMarker(location) {
+                    if(marker){
+                        marker.setPosition(location);
                     } else {
-                        $('#naobundle_observation_place').val('Echec de la géolocalisation : ' + status);
+                        marker = new google.maps.Marker({
+                            position:location,
+                            map:map,
+                            icon:image
+                        });
                     }
-                })
-            }
-            google.maps.event.addListener(map, 'click', function(event) {
-                placeMarker(event.latLng);
-            });
-       }
-    </script>
+                    //récupération des coordonnées gps
+                    console.log(location.lat());
+                    $('#naobundle_observation_latitude').val(location.lat());
+                    $('#naobundle_observation_longitude').val(location.lng());
 
-    <script>
-        $(function(){
+                    var latlng = {lat: location.lat(), lng: location.lng()};
+                    geocoder.geocode({'location': latlng}, function(results,status){
+                        if(status === 'OK'){
+                            $('#naobundle_observation_place').val(results[1].address_components[0].long_name);
+                        } else {
+                            $('#naobundle_observation_place').val('Echec de la géolocalisation : ' + status);
+                        }
+                    })
+                }
+                google.maps.event.addListener(map, 'click', function(event) {
+                    placeMarker(event.latLng);
+                });
+            };
+
             $('#addPhotoDiv').hide();
             $('#addPhotoImg').click(function(e){
                 $('#addPhotoImg').hide();
                 $('#addPhotoDiv').show();
                 e.preventDefault();
             });
-        })
-    </script>
 
-
-    <script type="text/javascript">
-        $(function(){
+            //gestion des photos
             var $container = $('div#naobundle_observation_photos');
-            var index = $container.find(':input').length;
-
+            var index = 0;
             $('#add_photo').click(function(e) {
                 addCategory($container);
                 e.preventDefault();
-
+                return false;
             });
 
+                addCategory($container);
+
             function addCategory($container) {
-                var template = $container.attr('data-prototype').replace(/__name__label__/g, 'Catégorie n°' + (index+1)).replace(/__name__/g,index);
+                var template = $container.attr('data-prototype')
+                    .replace(/__name__label__/g, 'Catégorie n°' + (index+1))
+                    .replace(/__name__/g,        index);
                 var $prototype = $(template);
                 addDeleteLink($prototype);
                 $container.append($prototype);
@@ -207,11 +202,13 @@
                 $deleteLink.click(function(e) {
                     $prototype.remove();
                     e.preventDefault();
+                    return false;
                 });
             }
-            //addCategory($container);
+
         });
-        </script>
+    </script>
+
     {% endblock %}
 
 {% endblock %}

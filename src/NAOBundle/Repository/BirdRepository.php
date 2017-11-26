@@ -9,6 +9,7 @@
 namespace NAOBundle\Repository;
 
 use Doctrine\ORM\EntityRepository;
+use Doctrine\ORM\Tools\Pagination\Paginator;
 
 class BirdRepository extends EntityRepository
 {

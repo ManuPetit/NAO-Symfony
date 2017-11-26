@@ -4,6 +4,7 @@ namespace NAOBundle\Controller;
 
 use NAOBundle\Entity\Bird;
 use NAOBundle\Entity\Observation;
+use NAOBundle\Form\BirdSearchType;
 use NAOBundle\Form\BirdType;
 use NAOBundle\Form\ObservationType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -71,11 +72,23 @@ class DefaultController extends Controller
         ));
     }
 
-    public function searchAction()
+    public function searchAction(Request $request)
     {
         $em = $this->getDoctrine()->getManager();
-        $bird = $em->getRepository('NAOBundle:Bird')->find(2);
-        $form = $this->get('form.factory')->create(BirdType::class, $bird);
+        $form = $this->get('form.factory')->create(BirdSearchType::class);
+        {
+            $form->handleRequest($request);
+            if ($form->isSubmitted() && $form->isValid())
+            {
+                $family = $form->getData()->getFamily()->getName();
+                $frenchName = $form->getData()->getFrenchName();
+                $listBirds = $em->getRepository('NAOBundle:Observation')->searchObs($frenchName,$family);
+                return $this->render('NAOBundle:search:search.Html.twig', array(
+                    'form' => $form->createView(),
+                    'listBirds' => $listBirds
+                ));
+            }
+        }
         return $this->render('NAOBundle:search:search.Html.twig', array(
             'form' => $form->createView(),
         ));

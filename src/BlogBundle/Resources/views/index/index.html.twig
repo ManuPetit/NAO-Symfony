@@ -10,6 +10,8 @@
         <div class="row justify-content-center">
             <div class="form-group col-12 col-md-8">
 
+                {{ form(form) }}
+
                 <b>Trier par</b>
                 <a href="{{ path('blog_homepage') }}" class="btn btn-secondary mx-3 button-posts-filter" id="btn_new_posts" style="cursor: pointer;">les plus récents</a>
                 <a href="{{ path('blog_show_old_posts') }}" class="btn btn-secondary mx-3 button-posts-filter" id="btn_new_posts" style="cursor: pointer;">les plus anciens</a>

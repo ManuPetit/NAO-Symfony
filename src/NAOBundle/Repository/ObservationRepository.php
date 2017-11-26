@@ -62,4 +62,26 @@ class ObservationRepository extends EntityRepository
             ->getQuery()
             ->getResult();
     }
+
+    public function searchObs($frenchName,$family)
+    {
+        return $qb = $this
+            ->createQueryBuilder('o')
+            ->leftJoin('o.bird', 'b')
+            ->addSelect('b')
+            ->andWhere('b.frenchName = :frenchName')
+            ->setParameter('frenchName', $frenchName)
+            ->leftJoin('b.family', 'f')
+            ->addSelect('f')
+            ->andWhere('f.name = :family')
+            ->setParameter('family', $family)
+            ->leftJoin('o.user', 'u')
+            ->addSelect('u')
+            ->orderBy('o.date', 'DESC')
+            ->getQuery()
+            ->getResult();
+
+        //return new Paginator($qb);
+    }
+
 }
