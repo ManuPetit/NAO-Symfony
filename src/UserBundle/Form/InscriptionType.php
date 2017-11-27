@@ -40,5 +40,4 @@ class InscriptionType extends AbstractType
             'data_class' => 'UserBundle\Entity\User',
         ]);
     }
-
 }
