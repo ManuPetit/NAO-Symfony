@@ -18,6 +18,9 @@ class DefaultController extends Controller
         return $this->render('NAOBundle:index:index.html.twig');
     }
 
+    /**
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
     public function homeAction()
     {
         $em = $this->getDoctrine()->getManager();
@@ -29,6 +32,9 @@ class DefaultController extends Controller
         ));
     }
 
+    /**
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
     public function aboutAction()
     {
         return $this->render('NAOBundle:about:about.html.twig');
@@ -72,6 +78,10 @@ class DefaultController extends Controller
         ));
     }
 
+    /**
+     * @param Request $request
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
     public function searchAction(Request $request)
     {
         $em = $this->getDoctrine()->getManager();
@@ -80,9 +90,8 @@ class DefaultController extends Controller
             $form->handleRequest($request);
             if ($form->isSubmitted() && $form->isValid())
             {
-                $family = $form->getData()->getFamily()->getName();
-                $frenchName = $form->getData()->getFrenchName();
-                $listBirds = $em->getRepository('NAOBundle:Observation')->searchObs($frenchName,$family);
+                $frenchName = $form->getData()->getBird()->getFrenchName();
+                $listBirds = $em->getRepository('NAOBundle:Observation')->searchObs($frenchName);
                 return $this->render('NAOBundle:search:search.Html.twig', array(
                     'form' => $form->createView(),
                     'listBirds' => $listBirds
@@ -94,6 +103,9 @@ class DefaultController extends Controller
         ));
     }
 
+    /**
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
     public function contactAction()
     {
         return $this->render('NAOBundle:contact:contact.Html.twig');

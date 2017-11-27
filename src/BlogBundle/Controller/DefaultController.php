@@ -8,7 +8,10 @@ use Symfony\Component\HttpFoundation\Request;
 
 class DefaultController extends Controller
 {
-    public function indexAction(Request $request)
+    /**
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function indexAction()
     {
         $em = $this->getDoctrine()->getManager();
         $posts = $em->getRepository('BlogBundle:Post');

@@ -5,6 +5,7 @@ namespace NAOBundle\Form;
 use Doctrine\ORM\EntityRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -16,27 +17,20 @@ class BirdSearchType extends AbstractType
     {
         $builder
             ->remove('cdNom')
-            ->remove('latinName')
-            ->add('frenchName',                 TextType::class)
-            ->remove('author')
-            ->remove('description')
-            ->add('family',                     EntityType::class, array(
-                'label'         =>'Famille *',
-                'class'         => 'NAOBundle:Family',
-                'query_builder' => function (EntityRepository $er) {
-                    return $er->createQueryBuilder('f')
-                        ->orderBy('f.name', 'ASC');
-                },
-                'choice_label'  => 'name',
-                'multiple'      => false
-            ))
-            ->remove('habitat')
+            ->remove('title')
+            ->remove('place')
+            ->remove('date')
+            ->remove('latitude')
+            ->remove('longitude')
+            ->remove('content')
+            ->remove('photos')
+            ->remove('save')
+            ->remove('saveAndAdd')
             ->add('Rechercher', SubmitType::class);
-
     }
 
     public function getParent()
     {
-        return BirdType::class;
+        return ObservationType::class;
     }
 }

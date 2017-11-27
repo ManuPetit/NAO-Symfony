@@ -19,6 +19,7 @@
             </div>
         </div>
 
+    <!--
         <div class="container">
             <form action="liste_observation_form">
                 <div class="row jusitfy-content-center">
@@ -47,6 +48,7 @@
                 </div>
             </form>
         </div>
+        -->
 
     {% set index = 1 %}
     {% for obs in observation %}
@@ -71,11 +73,6 @@
             {% endfor %}
         {% elseif (obs.photos.snapshot|length) > 1 %}
                 <div id="carouselObser{{ index }}" class="carousel slide" data-ride="carousel">
-                    <!--<ol class="carousel-indicators">
-                        <li data-target="#carouselObser" data-slide-to="0" class="active"></li>
-                        <li data-target="#carouselObser" data-slide-to="1"></li>
-                        <li data-target="#carouselObser" data-slide-to="2"></li>
-                    </ol>-->
                     <div class="carousel-inner">
                         {% for o in obs.photos %}
                             {% if loop.first %}
@@ -119,6 +116,7 @@
     {% endfor %}
 </section>
 
+<section class="bouton_add">
     <div class="row justify-content-center" id="div-posts-refresh">
         <div class="col-12 col-md-4 text-center"  id="posts-refresh">
             <a class="btn btn-success btn-block p-3" id="show-more-post" style="cursor: pointer;color: white">Voir plus</a>
@@ -130,6 +128,7 @@
             <a class="btn btn-success btn-block p-3" id="show-all" style="cursor: pointer;color: white">Voir tous</a>
         </div>
     </div>
+</section>
 
 <section class="back-up d-none d-md-block">
     <div class="container">
@@ -144,7 +143,6 @@
 {% endblock %}
 
 {% block javascripts %}
-
     <script>
         $(function(){
             $('#div-posts-all').hide();
@@ -155,14 +153,12 @@
                     $('#div-posts-all').show();
                 });
             });
-
             $('#show-all').click(function(){
                 $.get('{{ path('nao_observation_show_all')}}', function(data){
                     $('#liste-observation-section').append(data);
-                    $('#div-posts-refresh').remove();
+                    $('#div-posts-all').remove();
                 });
             });
         });
     </script>
-
 {% endblock %}
