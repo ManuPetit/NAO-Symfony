@@ -1,4 +1,4 @@
-s/* COULEURS DU SITE */
+/* COULEURS DU SITE */
 /* POLICE DU SITE */
 @font-face {
   font-family: 'Heebo';
@@ -94,18 +94,24 @@ body {
   color: #ffffff; }
 
 .side-menu a:hover, #my-observations a:hover {
-  color: #274144; }
+  color: #274144;
+  text-decoration: none;
+}
 
 .side-menu li, #my-observations li {
   border-bottom: 1px #ffffff solid; }
 
 .side-menu li.active a, #my-observations li.active a {
   color: #274144; }
-
+.help-block {
+  color: #800000;
+  font-weight: bold;
+}
 .dropdown-menu {
   left: -20%; }
   .dropdown-menu a.active {
     background-color: #274144; }
+
 
 /* NAVIGATION SECTION */
 nav li {
@@ -113,8 +119,6 @@ nav li {
 
 nav .img-nav {
   width: 70px; }
-
-<<<<<<< HEAD
 .navbar-light .navbar-nav .nav-link {
   color: #274144; }
 
@@ -128,8 +132,6 @@ nav .img-nav {
 .btn-landing {
   border-radius: 30px !important; }
 
-
->>>>>>> 9d58e64420da478f0ec15d445f1fd93e3e3c01d7
 /* LANDING PAGE -> IMAGE SECTION */
 #image-section {
   background: url("../img/eagle.jpg") no-repeat;
@@ -274,7 +276,6 @@ nav .img-nav {
   }
 }
 
->>>>>>> 9d58e64420da478f0ec15d445f1fd93e3e3c01d7
 #vouloir-accueil-section a {
   color: #ffffff; }
 
@@ -344,23 +345,55 @@ nav .img-nav {
   text-decoration: none; }
 
 /* ADMIN SECTIONS */
+#my-observations *:not(h1) {
+  font-size: .7rem;
+}
 #profil_form .row:not(:last-of-type),
 #my-observations .row-separate:not(:last-child) {
   padding-bottom: 12px;
   border-bottom: 1px #ffffff solid; }
 
-#profil_form input {
+#profil_form input,
+#my-observations select{
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  text-indent: 1px;
+  text-overflow: '';
   border: 1px solid #1daa69;
   color: #ffffff;
   background-color: #1daa69; }
+#my-observations select#filter_status {
+  color: #274144;
+}
+#my-observations .img-link {
+  font-size: 2em;
+}
+#my-observations .input-group input,
+#my-observations .input-group span{
+  border: 1px solid #1daa69;
+  color: #274144;
+  background-color: #1daa69;
+  text-align: right;
+}
+#my-observations .input-group input:focus{
+  border: 1px solid #274144;
+  color: #274144;
+  background-color: #ffffff;
+}
 
-#profil_form input:focus {
+#profil_form input:focus,
+#my-observations select:focus {
+  -webkit-appearance: button;
+  -moz-appearance: button;
   border: 1px solid #274144;
   color: #274144;
   background-color: #ffffff; }
 
 /* BREAKPOINT SECTION */
 @media (min-width: 768px) {
+  #my-observations *:not(h1) {
+    font-size: 1rem;
+  }
   nav .container {
     border-bottom: 3px #274144 solid; }
   .carousel-control-prev, .carousel-control-next {
@@ -369,7 +402,7 @@ nav .img-nav {
     left: -105%; }
   #image-section {
     height: auto;
-    background: url();
+    /*background: url();*/
     background-color: #274144; }
     #image-section #video-background {
       display: initial;

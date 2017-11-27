@@ -33,6 +33,12 @@ class MainStatus
     private $name;
 
     /**
+     * @var string
+     * @ORM\Column(type="string", length=20)
+     */
+    private $verb;
+
+    /**
      * @return int
      */
     public function getId()
@@ -54,6 +60,22 @@ class MainStatus
     public function setName($name)
     {
         $this->name = $name;
+    }
+
+    /**
+     * @return string
+     */
+    public function getVerb()
+    {
+        return $this->verb;
+    }
+
+    /**
+     * @param string $verb
+     */
+    public function setVerb($verb)
+    {
+        $this->verb = $verb;
     }
 
 

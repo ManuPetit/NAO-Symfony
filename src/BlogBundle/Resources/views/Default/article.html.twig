@@ -1,0 +1,81 @@
+{% import _self as formMacros %}
+
+{% macro printImageRow(itemImage) %}
+    <div class="col-12 js-image-item border border-success my-2 py-2">
+        {{ form_errors(itemImage) }}
+        <div class="row justify-content-between">
+            <div class="col-6">
+                {{ form_label(itemImage.upFile) }}
+            </div>
+            <div class="col-2">
+                <a href="#" class="btn btn-danger js-remove-image" title="Supprimer cette image">
+                    <i class="fa fa-window-close"></i>
+                </a>
+            </div>
+            <div class="col-12">
+                {{ form_widget((itemImage.upFile)) }}
+                {{ form_errors((itemImage.upFile)) }}
+            </div>
+        </div>
+    </div>
+{% endmacro %}
+
+
+{% extends '@NAO/layout.html.twig' %}
+{% block title %}
+    Rédaction article - NAO
+{% endblock %}
+
+{% block body %}
+    <!-- Observations SECTION -->
+    <section id="my-article">
+        <div class="container py-5 bg-green px-md-5">
+            <div class="row">
+                {% include 'UserBundle:Default:side_menu_top.html.twig' %}
+                <div class="col-12 col-md-8 text-white mt-md-5 pt-md-5 pb-md-4">
+                    <div class="col-12 d-md-none pb-4">
+                        <h1>Saisir un article</h1>
+                    </div>
+                    {{ form_start(form) }}
+                    <div class="col-12">
+                        {{ form_label(form.title) }}
+                    </div>
+                    <div class="col-12 col-md-6">
+                        {{ form_widget(form.title) }}
+                        {{ form_errors(form.title) }}
+                    </div>
+                    <div class="col-12 my-3">
+                        {{ form_widget(form.content) }}
+                        {{ form_errors(form.content) }}
+                    </div>
+                    <div class="col-12">
+                        <a href="#" class="btn btn-primary mb-4" id="js-add-image" title="Ajouter une photo à votre article">
+                            <i class="fa fa-picture-o img-link"></i>
+                        </a>
+                        <div class="row js-form-image-wrapper"
+                             data-prototype="{{ formMacros.printImageRow(form.blogImages.vars.prototype)|e('html_attr') }}"
+                             data-index="{{ form.blogImages|length }}">
+                            {% for itemImage in form.blogImages %}
+                                {{ formMacros.printImageRow(itemImage) }}
+                            {% endfor %}
+                        </div>
+                        {{ form_widget(form.blogImages) }}
+                    </div>
+                    <div class="row justify-content-around">
+                        <div class="col-12 col-md-4 py-2">
+                            {{ form_widget(form.save) }}
+                        </div>
+                        <div class="col-12 col-md-4 py-2">
+                            {{ form_widget(form.post) }}
+                        </div>
+                    </div>
+                    {{ form_end(form) }}
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock %}
+
+{% block javascripts %}
+<script src="{{ asset('js/create-post.js') }}"></script>
+{% endblock %}

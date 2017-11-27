@@ -10,6 +10,7 @@ namespace UserBundle\Form;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
@@ -21,7 +22,7 @@ class ProfileType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $labelClass = 'col-12 col-md-4 col-form-label';
-        $inputClass = 'col-12 col-md-8 form-control';
+        $inputClass = 'form-control';
         $builder
             ->add('email', EmailType::class,[
                 'label' => 'E-mail',

@@ -18,16 +18,41 @@
                             <p class="col-12">Il n'y a encore aucune observation enregistrée.</p>
                         </div>
                     {% else %}
+                        <div class="row py-3 text-dark-green align-items-baseline">
+                            <div class="col-5">
+                                <select id="filter_status" class="form-control" onchange="filter()">
+                                    <option selected>Filtrer par...</option>
+                                    <option value="0">Tous status</option>
+                                    {% for filter in statusToFilter %}
+                                        <option value="{{ filter.id }}">{{ filter.name }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                            <div class="col-6">
+                                <div class="input-group">
+                                    <input type="text" class="form-control" id="search_name" onchange="filter()">
+                                    <span class="input-group-addon" onclick="search()"><i class="fa fa-search"></i></span>
+                                </div>
+                            </div>
+                        </div>
                         {% for observation in observations %}
-                            <div class="row row-separate py-3">
+                            <div class="row row-separate py-3 align-items-center">
                                 <div class="col-2">{{ observation.date|date("d m/Y") }}</div>
                                 <div class="col-4">{{ observation.place }}</div>
                                 <div class="col-4">{{ observation.title }}</div>
                                 <div class="col-1"><a href="#" title="Voir observation"><i
                                                 class="fa fa-angle-double-right"></i></a></div>
-                                <div class="col-5">{{ observation.mainStatus.name }}</div>
+                                <div class="col-5">
+                                    <select id="ms{{ observation.id }}" onchange="update({{ observation.id }})"
+                                            class="form-control">
+                                        <option selected>{{ observation.mainStatus.name }}</option>
+                                        {% for apply in statusToApply %}
+                                            <option value="{{ apply.id }}">{{ apply.verb }}</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
                                 {% if observation.mainStatus.name != 'Publié' %}
-                                    <div class="col-3"><a href="#" title="Voir observation">Modifier</a></div>
+                                    <div class="col-3"><a href="#" title="Modifier observation">Modifier</a></div>
                                 {% endif %}
                             </div>
                         {% endfor %}
@@ -36,4 +61,8 @@
             </div>
         </div>
     </section>
+{% endblock %}
+
+{% block javascripts %}
+    <script src="{{ asset('js/gestion-obs.js') }}"></script>
 {% endblock %}

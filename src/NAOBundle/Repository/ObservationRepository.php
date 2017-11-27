@@ -41,6 +41,7 @@ class ObservationRepository extends EntityRepository
     }
 
     /**
+     * Function to retrieve all observations from a user
      * @param User $user
      * @return array
      */
@@ -61,20 +62,54 @@ class ObservationRepository extends EntityRepository
             ->getResult();
     }
 
-    /**
+
+    /**Function to retrieve all observations (except the one deleted or not put
+     * in for validation(status brouillon)) or to retrieve all observation from
+     * a filtered status
+     * @param null $filter
      * @return array
      */
-    public function getAllObservations()
+    public function getAllObservations($filter = null)
+    {
+        if (isset($filter) && $filter != '') {
+            $qb = $this->createQueryBuilder('o')
+                ->leftJoin('o.mainStatus', 's')
+                ->addSelect('s')
+                ->andWhere('s.id = :filter')
+                ->setParameter('filter', $filter)
+                ->orderBy('o.id')
+                ->getQuery()
+                ->getResult();
+        } else {
+            $deleted = 'Supprimé';
+            $not_ready = 'Brouillon';
+            $qb = $this->createQueryBuilder('o')
+                ->leftJoin('o.mainStatus', 's')
+                ->addSelect('s')
+                ->andWhere('s.name <> :name_deleted')
+                ->setParameter('name_deleted', $deleted)
+                ->andWhere('s.name <> :name_not_ready')
+                ->setParameter('name_not_ready', $not_ready)
+                ->orderBy('s.id')
+                ->getQuery()
+                ->getResult();
+        }
+        return $qb;
+    }
+
+    public function getObservationBySearch($search)
     {
         $deleted = 'Supprimé';
-        $notready = 'Brouillon';
+        $not_ready = 'Brouillon';
         return $this->createQueryBuilder('o')
+            ->andWhere('LOWER(o.title) LIKE LOWER(:search)')
+            ->setParameter('search', '%' . $search . '%')
             ->leftJoin('o.mainStatus', 's')
             ->addSelect('s')
             ->andWhere('s.name <> :name_deleted')
             ->setParameter('name_deleted', $deleted)
             ->andWhere('s.name <> :name_not_ready')
-            ->setParameter('name_not_ready', $notready)
+            ->setParameter('name_not_ready', $not_ready)
             ->orderBy('s.id')
             ->getQuery()
             ->getResult();

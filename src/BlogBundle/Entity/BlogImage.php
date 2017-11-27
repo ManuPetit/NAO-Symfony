@@ -9,6 +9,7 @@
 namespace BlogBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 /**
  * Class BlogImage
@@ -34,10 +35,52 @@ class BlogImage
 
     /**
      * @var \BlogBundle\Entity\Post
-     * @ORM\ManyToOne(targetEntity="BlogBundle\Entity\Post", inversedBy="blogImages", cascade={"persist"})
+     * @ORM\ManyToOne(targetEntity="BlogBundle\Entity\Post", inversedBy="blogImages")
      * @ORM\JoinColumn(name="post_id", referencedColumnName="id")
      */
     private $post;
+
+    /**
+     * Image file to uploaded
+     * @var string
+     */
+    private $upFile;
+
+    /**
+     * @return mixed
+     */
+    public function getUpFile()
+    {
+        return $this->upFile;
+    }
+
+    /**
+     * @param mixed $upFile
+     */
+    public function setUpFile(UploadedFile $upFile = null)
+    {
+        $this->upFile = $upFile;
+    }
+
+    public function upload()
+    {
+        if (null === $this->upFile)
+        {
+            return;
+        }
+        $file = $this->upFile->getClientOriginalName();
+        $this->upFile->move($this->getUploadRootDir(), $file);
+        $this->file = $file;
+    }
+
+    public function getUploadDir()
+    {
+        return 'img/posts';
+    }
+    public function getUploadRootDir()
+    {
+        return __DIR__.'/../../../web/'.$this->getUploadDir();
+    }
 
     /**
      * @return int
