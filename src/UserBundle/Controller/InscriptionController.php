@@ -42,6 +42,5 @@ class InscriptionController extends Controller
         return $this->render('UserBundle:Inscription:register.html.twig',[
             'form' => $form->createView()
         ]);
-
     }
 }

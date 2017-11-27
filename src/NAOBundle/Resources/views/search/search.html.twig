@@ -2,86 +2,37 @@
 
 {% extends "NAOBundle::layout.html.twig" %}
 
-{% block title %}{{ parent() }} - Participer {% endblock %}
+{% block title %}{{ parent() }} - Rechercher {% endblock %}
 
 {% block body %}
-
-<head>
-  <style>
-  #map {
-    width: 100%;
-    height: 300px;
-  }
-
-  .options-box {
-    background: #fff;
-    border: 1px solid #999;
-    border-radius: 3px;
-    height: 100%;
-    line-height: 35px;
-    padding: 10px 10px 30px 10px;
-    text-align: left;
-    width: 340px;
-  }
-
-  .text {
-    font-size: 12px;
-  }
-  @media (min-width:768px) {
-    #map {
-      height: 500px;
-    }
-  }
-  </style>
-</head>
-<body>
 
   <!-- FORM SECTION -->
   <div id="rechercher-section" class="py-3">
     <div class="container">
       <div class="row">
+        {% if listBirds is defined %}
+          {% if listBirds is empty %}
+            <div class="col-12 text-center pb-3 alert alert-success">
+              Aucun résultat ne correspond à votre recherche !
+            </div>
+          {% endif %}
+        {% endif %}
         <div class="col-12 text-center pb-3">
           <h1>Rechercher une espèce</h1>
         </div>
       </div>
-      <form id="rechercher_form">
-        <div class="row">
-          <div class="form-group col-12 col-md-6">
-            <label for="name">Nom de l'oiseau *</label>
-            <input type="text" id="birdname" class="form-control">
+      <div id="observation_form">
+          {{ form_start(form) }}
+          {{ form_errors(form) }}
+          {{ form_row(form.bird) }}
+        <div class="row justify-content-around">
+          <div class="col-12 col-md-4 py-2">
+              {{ form_widget(form.Rechercher, {'attr': {'class': 'btn btn-success btn-block'}}) }}
           </div>
         </div>
-        <div class="row">
-          <div class="col-12">
-            <p>Choisissez une espèce</p>
-          </div>
-        </div>
-        <div class="row">
-          <div class="form-group col-12 col-md-6">
-            <select class="form-control" id="orders">
-              <option>Ordre</option>
-              <option value="1">Accipitriformes</option>
-              <option value="8">Cuculiformes</option>
-              <option value="21">Piciformes</option>
-              <option value="29">Trogoniformes</option>
-            </select>
-          </div>
-          <div class="form-group col-12 col-md-6">
-            <select class="form-control" id="families">
-              <option>Famille</option>
-              <option value="1">Accipitridae</option>
-              <option value="8">Anhimidae</option>
-              <option value="20">Capitonidae</option>
-              <option value="104">Regulidae</option>
-            </select>
-          </div>
-        </div>
-        <div class="row justify-content-center py-2 py-md-5">
-          <div class="col-12 col-md-4">
-            <a href="#" class="btn btn-success btn-block" id="show-oiseaux">Voir le résultat</a>
-          </div>
-        </div>
-      </form>
+          {{ form_rest(form) }}
+          {{ form_end(form) }}
+      </div>
     </div>
   </div>
 
@@ -96,36 +47,20 @@
       <div class="row justify-content-center text-white">
         <div class="col-12 col-md-8">
           <table class="table table-sm" id="tablemap">
-            <tr>
-              <td>10 août 2017</td>
-              <td>Montépilloy</td>
-              <td>Jean</td>
-              <td>
-                <a href="">
-                  <i class="fa fa-arrow-right"></i>
-                </a>
-              </td>
-            </tr>
-            <tr>
-              <td>26 sept. 2017</td>
-              <td>Luxey</td>
-              <td>Emily</td>
-              <td>
-                <a href="">
-                  <i class="fa fa-arrow-right"></i>
-                </a>
-              </td>
-            </tr>
-            <tr>
-              <td>04 nov. 2017</td>
-              <td>Asco</td>
-              <td>fifi</td>
-              <td>
-                <a href="">
-                  <i class="fa fa-arrow-right"></i>
-                </a>
-              </td>
-            </tr>
+              {% if listBirds is defined %}
+                  {% for obs in listBirds %}
+                    <tr>
+                      <td>{{ obs.date|date('d/m/Y') }}</td>
+                      <td>{{ obs.place }}</td>
+                      <td>{{ obs.user.login }}</td>
+                      <td>
+                        <a href="{{ path('nao_observation_show', {'id': obs.id}) }}">
+                          <i class="fa fa-arrow-right"></i>
+                        </a>
+                      </td>
+                    </tr>
+                  {% endfor %}
+              {% endif %}
           </table>
         </div>
       </div>
@@ -133,13 +68,13 @@
   </div>
 
   <script>
+
   var map;
   //tableau vide pour inserer les oiseaux
   var markers = [];
 
   function initMap() {
     //creation du style de la carte
-    document.getElementById('tablemap').style.display = 'none';
     styles = [{
       "featureType": "water",
       "elementType": "geometry",
@@ -308,28 +243,22 @@ map = new google.maps.Map(document.getElementById('map'), {
 });
 
 //observations d'oiseaux
-var observations = [{
-  title: 'Moineau domestique',
-  lieu: 'Montépilloy',
-  location: {
-    lat: 49.212019,
-    lng: 2.692987
-  }
-}, {
-  title: 'Moineau domestique',
-  lieu: 'Luxey',
-  location: {
-    lat: 44.260773,
-    lng: -0.532514
-  }
-}, {
-  title: 'Moineau domestique',
-  lieu: 'Asco',
-  location: {
-    lat: 42.457788,
-    lng: 9.033258
-  }
-}];
+
+      var observations = [
+          {% if listBirds is defined %}
+          {% for obs in listBirds %}
+          {
+              title: '{{ obs.title }}',
+              lieu: '{{ obs.place }}',
+              location: {
+                  lat: {{ obs.latitude }},
+                  lng: {{ obs.longitude }}
+              }
+          }
+          {% if loop.last %}{% else %},{% endif %}
+          {% endfor %}{% endif %}
+      ];
+
 
 // variable pour la fenêtre d'info
 var infoWindow = new google.maps.InfoWindow();
@@ -352,9 +281,6 @@ for (var i=0; i < observations.length; i++){
   });
 }
 
-//ajout event sur les boutons
-document.getElementById('show-oiseaux').addEventListener('click', showOiseaux);
-
 //function pour afficher les infos du marker
 function populateInfoWin(marker, infoWindow){
   console.log(observations);
@@ -372,6 +298,10 @@ function populateInfoWin(marker, infoWindow){
   }
 }
 
+      {% if listBirds is defined %}
+      showOiseaux();
+      {% endif %}
+
 function showOiseaux() {
   //show liste
   document.getElementById('tablemap').style.display = 'inline-table';
@@ -388,8 +318,6 @@ function showOiseaux() {
 
 </script>
 <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCTCCkM-6bWoL4S0qxYduwMC6k_aIzgrKg&v=3&callback=initMap"></script>
-</body>
-</html>
 
 
 {% endblock %}

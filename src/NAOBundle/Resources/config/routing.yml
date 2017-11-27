@@ -10,10 +10,6 @@ nao_about:
     path:     /apropos
     defaults: { _controller: NAOBundle:Default:about }
 
-nao_observation:
-    path:     /observation
-    defaults: { _controller: NAOBundle:Default:observation }
-
 nao_participate:
     path:     /participate
     defaults: { _controller: NAOBundle:Default:participate }
@@ -25,3 +21,27 @@ nao_search:
 nao_contact:
     path:     /contact
     defaults: { _controller: NAOBundle:Default:contact}
+
+nao_observation:
+    path:     /observation
+    defaults: { _controller: NAOBundle:Observation:observation }
+
+nao_observation_show_more:
+    path:     /observation/show_more/{first}
+    defaults: { _controller: NAOBundle:Observation:show_more }
+
+nao_observation_show_all:
+    path:     /observation/show_all
+    defaults: { _controller: NAOBundle:Observation:show_all }
+
+nao_observation_show:
+    path:     /observation/show/{id}
+    defaults: { _controller: NAOBundle:Observation:show }
+    requirements:
+        id:    \d+
+
+nao_observation_save:
+    path:     /observation/save/{id}
+    defaults: { _controller: NAOBundle:Observation:save }
+    requirements:
+        id:    \d+

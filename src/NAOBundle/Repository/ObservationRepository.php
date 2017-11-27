@@ -14,12 +14,22 @@ use UserBundle\Entity\User;
 
 class ObservationRepository extends EntityRepository
 {
+    /**
+     * @param int $first
+     * @param int $limit
+     * @return Paginator
+     */
     public function getLastObservations($first = 0, $limit = 4)
     {
+        $published = 'Publié';
         $qb = $this
             ->createQueryBuilder('o')
             ->leftJoin('o.bird', 'bird')
             ->addSelect('bird')
+            ->leftJoin('o.mainStatus', 's')
+            ->addSelect('s')
+            ->andWhere('s.name = :name_masqued')
+            ->setParameter('name_masqued', $published)
             ->LeftJoin('o.photos','photos')
             ->addSelect('photos')
             ->leftJoin('o.user', 'user')
@@ -30,6 +40,10 @@ class ObservationRepository extends EntityRepository
         return new Paginator($qb);
     }
 
+    /**
+     * @param User $user
+     * @return array
+     */
     public function getObservationsPerUser(User $user)
     {
         $masqued = 'Masqué';
@@ -47,6 +61,9 @@ class ObservationRepository extends EntityRepository
             ->getResult();
     }
 
+    /**
+     * @return array
+     */
     public function getAllObservations()
     {
         $deleted = 'Supprimé';
@@ -62,4 +79,33 @@ class ObservationRepository extends EntityRepository
             ->getQuery()
             ->getResult();
     }
+
+    /**
+     * @param $frenchName
+     * @return array
+     */
+    public function searchObs($frenchName)
+    {
+        $published = 'Publié';
+        return $qb = $this
+            ->createQueryBuilder('o')
+            ->leftJoin('o.bird', 'b')
+            ->addSelect('b')
+            ->andWhere('b.frenchName = :frenchName')
+            ->setParameter('frenchName', $frenchName)
+            ->leftJoin('b.family', 'f')
+            ->addSelect('f')
+            ->leftJoin('o.mainStatus', 's')
+            ->addSelect('s')
+            ->andWhere('s.name = :name_masqued')
+            ->setParameter('name_masqued', $published)
+            ->leftJoin('o.user', 'u')
+            ->addSelect('u')
+            ->orderBy('o.date', 'DESC')
+            ->getQuery()
+            ->getResult();
+
+        //return new Paginator($qb);
+    }
+
 }

@@ -128,7 +128,7 @@ nav .img-nav {
 .btn-landing {
   border-radius: 30px !important; }
 
-=======
+
 >>>>>>> 9d58e64420da478f0ec15d445f1fd93e3e3c01d7
 /* LANDING PAGE -> IMAGE SECTION */
 #image-section {
@@ -255,7 +255,6 @@ nav .img-nav {
 #observation-accueil-section .card-text {
   font-size: .8em; }
 
-=======
 /*Gestion des images en responsiv*/
 @media all and (min-width: 1200px){
   .card-title {
@@ -285,7 +284,7 @@ nav .img-nav {
 
 #vouloir-accueil-section h2 {
   font-size: 1.7em;
-  margin-top: 0%; }
+  margin-top: 0; }
 
 /* PAGE A PROPOS */
 #apropos-proposition-section .box {
@@ -318,8 +317,12 @@ nav .img-nav {
 #participer-section .fa {
   font-size: 2.5em; }
 
-#participer-section a.img-link {
-  color: #274144; }
+.img-link {
+  color: #274144;  }
+
+.js-image-add {
+  background-color: #274144;
+}
 
 #participer-section a:hover.img-link {
   color: #4267b2;
@@ -392,11 +395,18 @@ nav .img-nav {
   #apropos-proposition-section .box {
     margin-bottom: 70px; } }
 
-input[type="file"] {
-  cursor:pointer;
-}
+  input[type="file"] {
+    cursor:pointer;
+  }
 
-#naobundle_observation_save,#naobundle_observation_saveAndAdd {
-  color: white;
-  background-color: #274144;
-}
+  #naobundle_observation_save,#naobundle_observation_saveAndAdd {
+    color: white;
+    background-color: #274144;
+  }
+
+  .button-posts-filter
+  {
+    color:black;
+    background-color: #FFFFFF;
+    border-color: #FFFFFF;
+  }

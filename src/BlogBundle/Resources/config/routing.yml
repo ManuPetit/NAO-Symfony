@@ -1,7 +1,23 @@
 blog_homepage:
     path:     /blog
     defaults: { _controller: BlogBundle:Default:index }
+    requirements:
+        _method:  GET|POST
 
-blog_refresh:
-    path:     /blog/{limit}
-    defaults: { _controller: BlogBundle:Default:refresh }
+blog_show_old_posts:
+    path:     /blog/order/old
+    defaults: { _controller: BlogBundle:Posts:show_old_posts }
+
+blog_show_more_posts:
+    path:     /blog/{first}/{limit}/{order}
+    defaults: { _controller: BlogBundle:Posts:show_more_posts }
+    requirements:
+        first:    \d+
+        limit:    \d+
+        order:    "ASC|DESC"
+
+blog_show_post:
+    path:     /blog/show/{id}
+    defaults: { _controller: BlogBundle:Posts:show_post }
+    requirements:
+        id:    \d+

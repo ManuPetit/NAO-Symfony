@@ -4,6 +4,7 @@ namespace NAOBundle\Controller;
 
 use NAOBundle\Entity\Bird;
 use NAOBundle\Entity\Observation;
+use NAOBundle\Form\BirdSearchType;
 use NAOBundle\Form\BirdType;
 use NAOBundle\Form\ObservationType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -17,6 +18,9 @@ class DefaultController extends Controller
         return $this->render('NAOBundle:index:index.html.twig');
     }
 
+    /**
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
     public function homeAction()
     {
         $em = $this->getDoctrine()->getManager();
@@ -28,14 +32,12 @@ class DefaultController extends Controller
         ));
     }
 
+    /**
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
     public function aboutAction()
     {
         return $this->render('NAOBundle:about:about.html.twig');
-    }
-
-    public function observationAction()
-    {
-        return $this->render('NAOBundle:observation:observation.html.twig');
     }
 
     /**
@@ -45,9 +47,11 @@ class DefaultController extends Controller
      */
     public function participateAction(Request $request)
     {
+        $currentUser = $this->getUser();
         $testObs = $this->getDoctrine()->getManager()->getRepository('NAOBundle:MainStatus');
         $observation = new Observation();
         $observation->setMainStatus($testObs->find(2));
+        $observation->setUser($currentUser);
         $form = $this->get('form.factory')->create(ObservationType::class, $observation);
         if ($request->isMethod('POST'))
         {
@@ -74,16 +78,34 @@ class DefaultController extends Controller
         ));
     }
 
-    public function searchAction()
+    /**
+     * @param Request $request
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function searchAction(Request $request)
     {
         $em = $this->getDoctrine()->getManager();
-        $bird = $em->getRepository('NAOBundle:Bird')->find(2);
-        $form = $this->get('form.factory')->create(BirdType::class, $bird);
+        $form = $this->get('form.factory')->create(BirdSearchType::class);
+        {
+            $form->handleRequest($request);
+            if ($form->isSubmitted() && $form->isValid())
+            {
+                $frenchName = $form->getData()->getBird()->getFrenchName();
+                $listBirds = $em->getRepository('NAOBundle:Observation')->searchObs($frenchName);
+                return $this->render('NAOBundle:search:search.Html.twig', array(
+                    'form' => $form->createView(),
+                    'listBirds' => $listBirds
+                ));
+            }
+        }
         return $this->render('NAOBundle:search:search.Html.twig', array(
             'form' => $form->createView(),
         ));
     }
 
+    /**
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
     public function contactAction()
     {
         return $this->render('NAOBundle:contact:contact.Html.twig');

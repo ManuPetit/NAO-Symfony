@@ -66,8 +66,17 @@
                         {{ form_widget(form.content, {'attr': {'class': 'form-control'}}) }}
                     </div>
                 </div>
-                        {{ form_row(form.photos) }}
-                        <!--<a href="#" id="add_photo" class="btn btn-info">Ajouter une photo</a>-->
+
+                <div id="addPhotoImg">
+                    <a href="#" title="Ajouter une photo à votre article" >
+                        <i class="fa fa-picture-o img-link"></i>
+                    </a>
+                </div>
+                <div id="addPhotoDiv">
+                {{ form_row(form.photos) }}
+                    <a href="#" id="add_photo" class="btn btn-success">Ajouter une photo</a>
+                </div>
+
                 <div class="row justify-content-around">
                     <div class="col-12 col-md-4 py-2">
                         {{ form_widget(form.save, {'attr': {'class': 'btn btn-block'}}) }}
@@ -85,8 +94,10 @@
     {% block javascripts %}
     {{ parent() }}
 
+    <script async defer
+                src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAmofWU0olWbvT_AZBjmqo3IhPjC0gLPf4&callback=initMap">
+    </script>
     <script>
-        $(function(){
             //Mise en place du Français pour le datepicker
             $.datepicker.regional['fr'] = {
                 closeText: 'Fermer',
@@ -107,92 +118,102 @@
             $.datepicker.setDefaults($.datepicker.regional['fr']);
             //Ajout du datepicker
             $("#naobundle_observation_date").datepicker();
-        });
-    </script>
-    <script async defer
-            src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAmofWU0olWbvT_AZBjmqo3IhPjC0gLPf4&callback=initMap">
+
+            //Gestion de l'apparition de la carte
+            $('#map').hide();
+            $('#naobundle_observation_place').click(function(){
+                $('#map').show();
+                initMap();
+            });
+
+            //définition des différentes variables
+            var image = '{{ asset('img/mini-oiseau.png') }}';
+            var map;
+            var marker;
+            var geocoder;
+            var toulouse = {lat: 43.600452, lng: 1.427867};
+
+            //initialisation de la map
+            function initMap() {
+                geocoder = new google.maps.Geocoder();
+                map = new google.maps.Map(document.getElementById('map'), {
+                    zoom: 6,
+                    center: toulouse,
+                    mapTypeId: google.maps.MapTypeId.TERRAIN
+                });
+
+                function placeMarker(location) {
+                    if(marker){
+                        marker.setPosition(location);
+                    } else {
+                        marker = new google.maps.Marker({
+                            position:location,
+                            map:map,
+                            icon:image
+                        });
+                    }
+                    //récupération des coordonnées gps
+                    console.log(location.lat());
+                    $('#naobundle_observation_latitude').val(location.lat());
+                    $('#naobundle_observation_longitude').val(location.lng());
+
+                    var latlng = {lat: location.lat(), lng: location.lng()};
+                    geocoder.geocode({'location': latlng}, function(results,status){
+                        if(status === 'OK'){
+                            $('#naobundle_observation_place').val(results[1].address_components[0].long_name);
+                        } else {
+                            $('#naobundle_observation_place').val('Echec de la géolocalisation : ' + status);
+                        }
+                    })
+                }
+                google.maps.event.addListener(map, 'click', function(event) {
+                    placeMarker(event.latLng);
+                });
+            };
     </script>
     <script>
-        $('#map').hide();
-        $('#naobundle_observation_place').click(function(){
-            $('#map').show();
-            initMap();
-        })
-
-       var image = '{{ asset('img/mini-oiseau.png') }}';
-       var map;
-       var marker;
-       var geocoder;
-       var toulouse = {lat: 43.600452, lng: 1.427867};
-       function initMap() {
-            geocoder = new google.maps.Geocoder();
-            map = new google.maps.Map(document.getElementById('map'), {
-                zoom: 6,
-                center: toulouse,
-                mapTypeId: google.maps.MapTypeId.TERRAIN
-            });
-
-            function placeMarker(location) {
-                if(marker){
-                    marker.setPosition(location);
-                } else {
-                    marker = new google.maps.Marker({
-                        position:location,
-                        map:map,
-                        icon:image
-                    });
-                }
-                //récupération des coordonnées gps
-                console.log(location.lat());
-                $('#naobundle_observation_latitude').val(location.lat());
-                $('#naobundle_observation_longitude').val(location.lng());
-
-                var latlng = {lat: location.lat(), lng: location.lng()};
-                geocoder.geocode({'location': latlng}, function(results,status){
-                    if(status === 'OK'){
-                        $('#naobundle_observation_place').val(results[1].address_components[0].long_name);
-                    } else {
-                        $('#naobundle_observation_place').val('Echec de la géolocalisation : ' + status);
-                    }
-                })
-            }
-            google.maps.event.addListener(map, 'click', function(event) {
-                placeMarker(event.latLng);
-            });
-       }
-    </script>
-    <script type="text/javascript">
-        $(document).ready(function() {
-            var $container = $('div#naobundle_observation_photos');
-            var index = $container.find(':input').length;
-            $('#add_photo').click(function(e) {
-                addPhoto($container);
+        //Ajout des photos
+        $(function(){
+            $('#addPhotoDiv').hide();
+            $('#addPhotoImg').click(function(e){
                 e.preventDefault();
-                return false;
+                $('#addPhotoImg').hide();
+                $('#addPhotoDiv').show();
             });
 
-            if (index == 0) {addPhoto($container);}
-            function addPhoto($container) {
-                var template = $container.attr('data-prototype')
-                    .replace(/__name__label__/g, 'Photo n°' + (index+1))
-                    .replace(/__name__/g,        index)
-                ;
-                var $prototype = $(template);
-                addDeleteLink($prototype);
-                $container.append($prototype);
-                index++;
-            }
-            function addDeleteLink($prototype) {
-                var $deleteLink = $('<a href="#" class="btn btn-danger">Supprimer</a>');
-                $prototype.append($deleteLink);
-                $deleteLink.click(function(e) {
-                    $prototype.remove();
+                var $container = $('div#naobundle_observation_photos');
+                var index = 1;
+                $('#add_photo').click(function(e) {
+                    addPhoto($container);
                     e.preventDefault();
                     return false;
                 });
-            }
+
+                addPhoto($container);
+
+                function addPhoto($container) {
+                    var template = $container.attr('data-prototype')
+                        .replace(/__name__label__/g, 'Photo n°' + (index))
+                        .replace(/__name__/g,        index)
+                    ;
+                    var $prototype = $(template);
+                    addDeleteLink($prototype);
+                    $container.append($prototype);
+                    index++;
+                }
+
+                function addDeleteLink($prototype) {
+                    var $deleteLink = $('<a href="#" class="btn btn-danger">Supprimer</a>');
+                    $prototype.append($deleteLink);
+                    $deleteLink.click(function(e) {
+                        $prototype.remove();
+                        e.preventDefault();
+                        return false;
+                    });
+                }
         });
     </script>
+
     {% endblock %}
 
 {% endblock %}
