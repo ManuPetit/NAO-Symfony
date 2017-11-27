@@ -6,7 +6,7 @@
  * Time: 16:31
  */
 
-namespace NAOBundle\Menu;
+namespace NAOBundle\Services;
 
 use Knp\Menu\FactoryInterface;
 

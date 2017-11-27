@@ -24,16 +24,10 @@ class DefaultController extends Controller
         $lastPosts = $posts->getLastPosts();
         $form = $this->get('form.factory')->create(SearchType::class);
 
-            return $this->render('BlogBundle:index:index.html.twig', array(
-                'posts' => $lastPosts,
-                'index' => 0,
-                'form' => $form->createView()
-            ));
-        }
-
-        $posts = $em->getRepository('BlogBundle:Post')->getLastPosts();
         return $this->render('BlogBundle:index:index.html.twig', array(
-            'posts' => $posts
+            'posts' => $lastPosts,
+            'index' => 0,
+            'form' => $form->createView()
         ));
     }
 
@@ -48,7 +42,7 @@ class DefaultController extends Controller
         $form = $this->createForm(ArticleType::class, $article);
         $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()){
+        if ($form->isSubmitted() && $form->isValid()) {
             $em = $this->getDoctrine()->getManager();
             //set user and status
             $article->setUser($this->getUser());
@@ -56,8 +50,7 @@ class DefaultController extends Controller
             $article->setMainStatus($em->getRepository('NAOBundle:MainStatus')->find($status));
             //sort out the photo
             $blogImages = $article->getBlogImages();
-            foreach ($blogImages as $blogImage)
-            {
+            foreach ($blogImages as $blogImage) {
                 $blogImage->setPost($article);
                 $blogImage->upload();
             }
@@ -91,7 +84,7 @@ class DefaultController extends Controller
         $form = $this->createForm(ArticleType::class, $post);
         $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()){
+        if ($form->isSubmitted() && $form->isValid()) {
             $em = $this->getDoctrine()->getManager();
             //set user and status
             $post->setUser($this->getUser());
@@ -99,8 +92,7 @@ class DefaultController extends Controller
             $post->setMainStatus($em->getRepository('NAOBundle:MainStatus')->find($status));
             //sort out the photo
             $blogImages = $post->getBlogImages();
-            foreach ($blogImages as $blogImage)
-            {
+            foreach ($blogImages as $blogImage) {
                 $blogImage->setPost($post);
                 $blogImage->upload();
             }
@@ -185,7 +177,7 @@ class DefaultController extends Controller
             $em->flush();
             $message = "Changement de status de publication pour l'article : " . $post->getTitle()
                 . "<br>Ancien status : " . $oldStatus->getName() . " - Nouveau status : "
-                . $newStatus->getName() .".";
+                . $newStatus->getName() . ".";
             $this->addFlash('info', $message);
         }
 

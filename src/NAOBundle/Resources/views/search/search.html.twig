@@ -52,7 +52,7 @@
                     <tr>
                       <td>{{ obs.date|date('d/m/Y') }}</td>
                       <td>{{ obs.place }}</td>
-                      <td>{{ obs.user.login }}</td>
+                      <td>{{ obs.user.login|capitalize }}</td>
                       <td>
                         <a href="{{ path('nao_observation_show', {'id': obs.id}) }}">
                           <i class="fa fa-arrow-right"></i>

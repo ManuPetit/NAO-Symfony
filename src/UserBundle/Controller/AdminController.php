@@ -148,7 +148,7 @@ class AdminController extends Controller
         //retrieve the extension of the file
         $targetDirectory = 'img/avatars/';
         $imageFileType = pathinfo(basename($_FILES['avatar']['name']), PATHINFO_EXTENSION);
-        $newImageName = $this->generateOrderNumber() . '.' . $imageFileType;
+        $newImageName = $this->generateFileName() . '.' . $imageFileType;
         $targetFile = $targetDirectory . $newImageName;
         //check if image
         $errors = [];
@@ -194,7 +194,7 @@ class AdminController extends Controller
         return $this->redirectToRoute('user_profile');
     }
 
-    private function generateOrderNumber(){
+    private function generateFileName(){
         //generate random 8 letters word
         $letter = array_merge(range('a', 'z'), range('A', 'Z'), range(0,9));
         shuffle($letter);

@@ -60,7 +60,7 @@
                     </div>
                 </div>
                 <div class="row pt-4 px-4">
-                    <div class="col-12 col-md-4">Auteur : {{ observation.user.login }}</div>
+                    <div class="col-12 col-md-4">Auteur : {{ observation.user.login|capitalize }}</div>
                     <div class="col-12 col-md-4">Espèce : {{ observation.bird.frenchName }} </div>
                 </div>
                 <div class="row px-4">

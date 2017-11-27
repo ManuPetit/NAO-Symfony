@@ -8,11 +8,11 @@
     <div id="participer-section" class="py-5">
         <div class="container">
             {% for message in app.session.flashbag.get('info') %}
-            <div class="row justify-content-center mb-3">
-                <div class="col-12 text-center alert-info p-3">
-                    <span>{{ message }}</span>
+                <div class="row justify-content-center mb-3">
+                    <div class="col-12 text-center alert-info p-3">
+                        <span>{{ message }}</span>
+                    </div>
                 </div>
-            </div>
             {% endfor %}
             <div class="row">
                 <div class="col-12 text-center pb-3">
@@ -20,7 +20,7 @@
                 </div>
             </div>
             <div id="observation_form">
-            {{ form_start(form) }}
+                {{ form_start(form) }}
                 {{ form_errors(form) }}
                 {{ form_row(form.bird) }}
                 <div class="row">
@@ -73,7 +73,7 @@
                     </a>
                 </div>
                 <div id="addPhotoDiv">
-                {{ form_row(form.photos) }}
+                    {{ form_row(form.photos) }}
                     <a href="#" id="add_photo" class="btn btn-success">Ajouter une photo</a>
                 </div>
 
@@ -92,12 +92,12 @@
     </div>
 
     {% block javascripts %}
-    {{ parent() }}
+        {{ parent() }}
 
-    <script async defer
+        <script async defer
                 src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAmofWU0olWbvT_AZBjmqo3IhPjC0gLPf4&callback=initMap">
-    </script>
-    <script>
+        </script>
+        <script>
             //Mise en place du Français pour le datepicker
             $.datepicker.regional['fr'] = {
                 closeText: 'Fermer',
@@ -118,21 +118,18 @@
             $.datepicker.setDefaults($.datepicker.regional['fr']);
             //Ajout du datepicker
             $("#naobundle_observation_date").datepicker();
-
             //Gestion de l'apparition de la carte
             $('#map').hide();
             $('#naobundle_observation_place').click(function(){
                 $('#map').show();
                 initMap();
             });
-
             //définition des différentes variables
             var image = '{{ asset('img/mini-oiseau.png') }}';
             var map;
             var marker;
             var geocoder;
             var toulouse = {lat: 43.600452, lng: 1.427867};
-
             //initialisation de la map
             function initMap() {
                 geocoder = new google.maps.Geocoder();
@@ -141,7 +138,6 @@
                     center: toulouse,
                     mapTypeId: google.maps.MapTypeId.TERRAIN
                 });
-
                 function placeMarker(location) {
                     if(marker){
                         marker.setPosition(location);
@@ -156,7 +152,6 @@
                     console.log(location.lat());
                     $('#naobundle_observation_latitude').val(location.lat());
                     $('#naobundle_observation_longitude').val(location.lng());
-
                     var latlng = {lat: location.lat(), lng: location.lng()};
                     geocoder.geocode({'location': latlng}, function(results,status){
                         if(status === 'OK'){
@@ -170,17 +165,16 @@
                     placeMarker(event.latLng);
                 });
             };
-    </script>
-    <script>
-        //Ajout des photos
-        $(function(){
-            $('#addPhotoDiv').hide();
-            $('#addPhotoImg').click(function(e){
-                e.preventDefault();
-                $('#addPhotoImg').hide();
-                $('#addPhotoDiv').show();
-            });
-
+        </script>
+        <script>
+            //Ajout des photos
+            $(function(){
+                $('#addPhotoDiv').hide();
+                $('#addPhotoImg').click(function(e){
+                    e.preventDefault();
+                    $('#addPhotoImg').hide();
+                    $('#addPhotoDiv').show();
+                });
                 var $container = $('div#naobundle_observation_photos');
                 var index = 1;
                 $('#add_photo').click(function(e) {
@@ -188,9 +182,7 @@
                     e.preventDefault();
                     return false;
                 });
-
                 addPhoto($container);
-
                 function addPhoto($container) {
                     var template = $container.attr('data-prototype')
                         .replace(/__name__label__/g, 'Photo n°' + (index))
@@ -201,7 +193,6 @@
                     $container.append($prototype);
                     index++;
                 }
-
                 function addDeleteLink($prototype) {
                     var $deleteLink = $('<a href="#" class="btn btn-danger">Supprimer</a>');
                     $prototype.append($deleteLink);
@@ -211,8 +202,8 @@
                         return false;
                     });
                 }
-        });
-    </script>
+            });
+        </script>
 
     {% endblock %}
 

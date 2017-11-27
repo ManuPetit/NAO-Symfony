@@ -42,7 +42,7 @@
                                 <div class="col-5 text-center">{{ article.title }}</div>
                                 <div class="col-4 text-center">{{ article.user.login|capitalize }}</div>
                                 <div class="col-1">
-                                    <a href="#" title="Voir observation">
+                                    <a href="{{ path('blog_show_post', {'id': article.id}) }}" title="Voir observation">
                                         <i class="fa fa-angle-double-right"></i>
                                     </a>
                                 </div>

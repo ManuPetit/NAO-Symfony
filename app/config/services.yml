@@ -6,7 +6,7 @@ parameters:
 services:
     app.menu_builder:
         public: true
-        class: NAOBundle\Menu\Builder
+        class: NAOBundle\Services\Builder
         arguments: ["@knp_menu.factory"]
         tags:
             - { name: knp_menu.menu_builder, method: createMainMenu, alias: main }

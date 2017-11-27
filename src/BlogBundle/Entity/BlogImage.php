@@ -9,6 +9,7 @@
 namespace BlogBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Eventviva\ImageResize;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 /**
@@ -68,9 +69,21 @@ class BlogImage
         {
             return;
         }
-        $file = $this->upFile->getClientOriginalName();
-        $this->upFile->move($this->getUploadRootDir(), $file);
-        $this->file = $file;
+        $ext = $this->upFile->guessExtension();
+        //we resize the file to be 1000 * 750
+        $image = new ImageResize($this->upFile);
+        $image->crop(1000,750, ImageResize::CROPCENTER);
+        // change the name of file
+        $fileName = $this->generateFileName() . '.' . $ext;
+        if ($ext ='png') {
+            $image->save($this->getUploadRootDir() . '/' . $fileName, IMAGETYPE_PNG, 2);
+        } elseif ($ext = 'jpg' || $ext = 'jpeg'){
+            $image->save($this->getUploadRootDir() . '/' . $fileName, IMAGETYPE_JPEG, 75);
+        } elseif ($ext = 'gif'){
+            $image->save($this->getUploadRootDir() . '/' . $fileName, IMAGETYPE_GIF, 50);
+        }
+        //$image->move($this->getUploadRootDir(), $fileName);
+        $this->file = $fileName;
     }
 
     public function getUploadDir()
@@ -122,6 +135,12 @@ class BlogImage
         $this->post = $post;
     }
 
-
+    private function generateFileName(){
+        //generate random 8 letters word
+        $letter = array_merge(range('a', 'z'), range('A', 'Z'), range(0,9));
+        shuffle($letter);
+        $word = substr(implode($letter), 0, 15);
+        return date('Ymd_His') . $word;
+    }
 
 }
