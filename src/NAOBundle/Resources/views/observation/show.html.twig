@@ -64,11 +64,11 @@
                     <div class="col-12 col-md-4">Espèce : {{ observation.bird.frenchName }} </div>
                 </div>
                 <div class="row px-4">
-                    <div class="col-12 col-md-4">Date : 4 juin 2017</div>
-                    <div class="col-12 col-md-4">Lieu : Piana</div>
-                    <div class="col-12 col-md-4">Point: 42.260662, 8.676282</div>
+                    <div class="col-12 col-md-4">{{ observation.date|date("d/m/Y") }}</div>
+                    <div class="col-12 col-md-4">{{ observation.place }}</div>
+                    <div class="col-12 col-md-4">Point: {{ observation.latitude }}, {{ observation.longitude }}</div>
                     <div class="col-12 py-5">
-                        <p>Superbe oiseau oiseau observé cette année, en juin près de Porto, en Corse.</p>
+                        <p>{{ observation.content }}</p>
                     </div>
                 </div>
             </div>

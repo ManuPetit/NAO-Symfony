@@ -92,13 +92,13 @@ class DefaultController extends Controller
             {
                 $frenchName = $form->getData()->getBird()->getFrenchName();
                 $listBirds = $em->getRepository('NAOBundle:Observation')->searchObs($frenchName);
-                return $this->render('NAOBundle:search:search.Html.twig', array(
+                return $this->render('NAOBundle:search:search.html.twig', array(
                     'form' => $form->createView(),
                     'listBirds' => $listBirds
                 ));
             }
         }
-        return $this->render('NAOBundle:search:search.Html.twig', array(
+        return $this->render('NAOBundle:search:search.html.twig', array(
             'form' => $form->createView(),
         ));
     }
@@ -108,6 +108,6 @@ class DefaultController extends Controller
      */
     public function contactAction()
     {
-        return $this->render('NAOBundle:contact:contact.Html.twig');
+        return $this->render('NAOBundle:contact:contact.html.twig');
     }
 }

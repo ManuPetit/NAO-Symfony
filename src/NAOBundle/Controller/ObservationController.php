@@ -40,6 +40,11 @@ class ObservationController extends Controller
         ));
     }
 
+    /**
+     * @param $id
+     * @return \Symfony\Component\HttpFoundation\Response
+     * @Security("has_role('ROLE_MEMBRE')")
+     */
     public function showAction($id)
     {
         $em = $this->getDoctrine()->getManager();
@@ -49,6 +54,11 @@ class ObservationController extends Controller
         ));
     }
 
+    /**
+     * @param $id
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     * @Security("has_role('ROLE_MEMBRE')")
+     */
     public function saveAction($id)
     {
         $em = $this->getDoctrine()->getManager();
