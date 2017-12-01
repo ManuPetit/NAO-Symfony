@@ -15,6 +15,7 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Validator\Constraints as Assert;
 use NAOBundle\Entity\Observation;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
+use Eventviva\ImageResize;
 
 /**
  * Class User
@@ -139,47 +140,59 @@ class User implements AdvancedUserInterface
         $this->dateJoined = new \DateTime();
     }
 
-    /**
-     * Image file to uploaded
-     * @var string
-     */
-    private $upFile;
-
-    /**
-     * @return mixed
-     */
-    public function getUpFile()
-    {
-        return $this->upFile;
-    }
-
-    /**
-     * @param mixed $upFile
-     */
-    public function setUpFile(UploadedFile $upFile = null)
-    {
-        $this->upFile = $upFile;
-    }
-
-    public function upload()
-    {
-        if (null === $this->upFile) {
-            return;
-        }
-        $file = $this->upFile->getClientOriginalName();
-        $this->upFile->move($this->getUploadRootDir(), $file);
-        $this->avatar = $file;
-    }
-
-    public function getUploadDir()
-    {
-        return 'img/avatar';
-    }
-
-    public function getUploadRootDir()
-    {
-        return __DIR__ . '/../../../web/' . $this->getUploadDir();
-    }
+//    /**
+//     * Image file to uploaded
+//     * @var string
+//     */
+//    private $upFile;
+//
+//    /**
+//     * @return mixed
+//     */
+//    public function getUpFile()
+//    {
+//        return $this->upFile;
+//    }
+//
+//    /**
+//     * @param mixed $upFile
+//     */
+//    public function setUpFile(UploadedFile $upFile = null)
+//    {
+//        $this->upFile = $upFile;
+//    }
+//
+//    public function upload()
+//    {
+//        if (null === $this->upFile) {
+//            return;
+//        }
+//        $ext = $this->upFile->guessExtension();
+//        //we resize the file to be 300  * 300
+//        $image = new ImageResize($this->upFile);
+//        $image->crop(300,300, ImageResize::CROPCENTER);
+//        // change the name of file
+//        $fileName = $this->generateFileName() . '.' . $ext;
+//        if ($ext ='png') {
+//            $image->save($this->getUploadRootDir() . '/' . $fileName, IMAGETYPE_PNG, 2);
+//        } elseif ($ext = 'jpg' || $ext = 'jpeg'){
+//            $image->save($this->getUploadRootDir() . '/' . $fileName, IMAGETYPE_JPEG, 75);
+//        } elseif ($ext = 'gif'){
+//            $image->save($this->getUploadRootDir() . '/' . $fileName, IMAGETYPE_GIF, 50);
+//        }
+//        //$image->move($this->getUploadRootDir(), $fileName);
+//        $this->avatar = $fileName;
+//    }
+//
+//    public function getUploadDir()
+//    {
+//        return 'img/avatar';
+//    }
+//
+//    public function getUploadRootDir()
+//    {
+//        return __DIR__ . '/../../../web/' . $this->getUploadDir();
+//    }
 
     /**
      * @return int
@@ -501,5 +514,12 @@ class User implements AdvancedUserInterface
         }
     }
 
+    private function generateFileName(){
+        //generate random 8 letters word
+        $letter = array_merge(range('a', 'z'), range('A', 'Z'), range(0,9));
+        shuffle($letter);
+        $word = substr(implode($letter), 0, 15);
+        return date('Ymd_His') . $word;
+    }
 
 }

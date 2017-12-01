@@ -61,8 +61,18 @@ class ObservationType extends AbstractType
                 'allow_add'     => true,
                 'allow_delete'  => true
             ))
-            ->add('save',               SubmitType::class, array('label' => 'Envoyer'))
-            ->add('saveAndAdd',         SubmitType::class, array('label' => 'Sauvegarder'));
+            ->add('save',               SubmitType::class, array(
+                'label' => 'Envoyer',
+                'attr' => array(
+                    'title' => 'Cliquez ici pour soumettre votre observation à nos membres pro.'
+                )
+            ))
+            ->add('saveAndAdd',         SubmitType::class, array(
+                'label' => 'Sauvegarder',
+                'attr' => array(
+                    'title' => 'Cliquez ici pour enregistrer votre observation en tant que brouillon.'
+                )
+            ));
     }
     
     /**

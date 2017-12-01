@@ -1,4 +1,25 @@
 {# src/NAOBundle/ressources/views/participate/participate.html.twig #}
+{#{% import _self as formMacros %}#}
+
+{#{% macro printPhotoRow(itemPhoto) %}#}
+    {#<div class="col-12 js-image-item border border-success my-2 py-2">#}
+        {#{{ form_errors(itemPhoto) }}#}
+        {#<div class="row justify-content-between">#}
+            {#<div class="col-6">#}
+                {#{{ form_label(itemPhoto.fileAdd) }}#}
+            {#</div>#}
+            {#<div class="col-2">#}
+                {#<a href="#" class="btn btn-danger js-remove-image" title="Supprimer cette image">#}
+                    {#<i class="fa fa-window-close"></i>#}
+                {#</a>#}
+            {#</div>#}
+            {#<div class="col-12">#}
+                {#{{ form_widget((itemPhoto.fileAdd)) }}#}
+                {#{{ form_errors((itemPhoto.fileAdd)) }}#}
+            {#</div>#}
+        {#</div>#}
+    {#</div>#}
+{#{% endmacro %}#}
 
 {% extends "NAOBundle::layout.html.twig" %}
 
@@ -68,14 +89,31 @@
                 </div>
 
                 <div id="addPhotoImg">
-                    <a href="#" title="Ajouter une photo à votre article" >
+                    <a href="#" title="Ajouter une photo à votre article" id="add_photo">
                         <i class="fa fa-picture-o img-link"></i>
                     </a>
                 </div>
+
+                {{ form_row(form.photos) }}
                 <div id="addPhotoDiv">
-                    {{ form_row(form.photos) }}
-                    <a href="#" id="add_photo" class="btn btn-success">Ajouter une photo</a>
+                    {#<a href="#" id="add_photo" class="btn btn-success">Ajouter une photo</a>#}
                 </div>
+
+                {#<div class="col-12">#}
+                    {#<a href="#" class="btn btn-primary mb-4" id="js-add-image" title="Ajouter une photo à votre observation">#}
+                        {#<i class="fa fa-picture-o img-link"></i>#}
+                    {#</a>#}
+                    {#<div class="row js-form-image-wrapper"#}
+                         {#data-prototype="{{ formMacros.printPhotoRow(form.photos.vars.prototype)|e('html_attr') }}"#}
+                         {#data-index="{{ form.photos|length }}">#}
+                        {#{% for itemPhoto in form.photos %}#}
+                            {#{{ formMacros.printPhotoRow(itemPhoto) }}#}
+                        {#{% endfor %}#}
+                    {#</div>#}
+                    {#<hr>#}
+                    {#{{ form_row(form.photos) }}#}
+                    {#{{ form_widget(form.photos) }}#}
+                {#</div>#}
 
                 <div class="row justify-content-around">
                     <div class="col-12 col-md-4 py-2">
@@ -93,6 +131,7 @@
 
     {% block javascripts %}
         {{ parent() }}
+
 
         <script async defer
                 src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAmofWU0olWbvT_AZBjmqo3IhPjC0gLPf4&callback=initMap">
@@ -166,7 +205,7 @@
                 });
             };
         </script>
-        <script>
+       {# <script>
             //Ajout des photos
             $(function(){
                 $('#addPhotoDiv').hide();
@@ -203,8 +242,8 @@
                     });
                 }
             });
-        </script>
-
+        </script>#}
+        <script src="{{ asset('js/participate.js') }}"></script>
     {% endblock %}
 
 {% endblock %}

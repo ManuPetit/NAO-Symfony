@@ -194,9 +194,10 @@ class AdminController extends Controller
         return $this->redirectToRoute('user_profile');
     }
 
-    private function generateFileName(){
+    private function generateFileName()
+    {
         //generate random 8 letters word
-        $letter = array_merge(range('a', 'z'), range('A', 'Z'), range(0,9));
+        $letter = array_merge(range('a', 'z'), range('A', 'Z'), range(0, 9));
         shuffle($letter);
         $word = substr(implode($letter), 0, 15);
         return date('Ymd_His') . $word;
