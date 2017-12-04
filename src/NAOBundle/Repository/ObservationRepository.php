@@ -143,4 +143,36 @@ class ObservationRepository extends EntityRepository
         //return new Paginator($qb);
     }
 
+    /**
+     * Function to get the number of observations published by a user
+     * @param User $user
+     * @return mixed
+     */
+    public function getNumberOfObservationPerUser(User $user)
+    {
+        return $this->createQueryBuilder('o')
+            ->leftJoin('o.user', 'u')
+            ->andWhere('u = :user')
+            ->setParameter('user', $user)
+            ->leftJoin('o.mainStatus', 'ms')
+            ->andWhere('ms.id = 3')
+            ->select('COUNT(o)')
+            ->getQuery()
+            ->getSingleScalarResult();
+    }
+
+    public function getNumberOfPhotoPerUser(User $user)
+    {
+        return $this->createQueryBuilder('o')
+            ->leftJoin('o.user', 'u')
+            ->andWhere('u = :user')
+            ->setParameter('user', $user)
+            ->leftJoin('o.mainStatus', 'ms')
+            ->andWhere('ms.id = 3')
+            ->leftJoin('o.photos', 'p')
+            ->select('COUNT(p)')
+            ->getQuery()
+            ->getSingleScalarResult();
+    }
+
 }

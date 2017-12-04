@@ -47,6 +47,7 @@ class AdminController extends Controller
      */
     public function badgeAction()
     {
+        $this->checkForBadges();
         $em = $this->getDoctrine()->getManager();
         // SPEND HOURS Trying to find of doing this with dql. In the end I gave up!!!
         $userId = $this->getUser()->getId();
@@ -201,5 +202,127 @@ class AdminController extends Controller
         shuffle($letter);
         $word = substr(implode($letter), 0, 15);
         return date('Ymd_His') . $word;
+    }
+
+    private function checkForBadges()
+    {
+        $emb = $this->getDoctrine()->getRepository('UserBundle:Badge');
+        $user = $this->getUser();
+        //check if we have all 12 badges
+        if ($emb->getTotalBadgeNumber($user) == 12) {
+            return;
+        }
+        //check if we have all 4 observation badges
+        $obsBadge = $emb->getNumberOfObservationBadge($user);
+        if ($obsBadge != 4) {
+            $this->observationBadge();
+        }
+        //check if we have all 4 photo badges
+        $photoBadge = $emb->getNumberOfPhotoBadge($user);
+        if ($photoBadge != 4) {
+            $this->photoBadge();
+        }
+        //check if we have all 4 ancien badge
+        $ancienBadge = $emb->getNumberOfAncienneteBadge($user);
+        if ($ancienBadge != 4) {
+            $this->ancienBadge();
+        }
+    }
+
+    /**
+     * Function to check and add badges for observations as necessary
+     */
+    private function observationBadge()
+    {
+        $em = $this->getDoctrine()->getManager();
+        $emo = $em->getRepository('NAOBundle:Observation');
+        $emu = $em->getRepository('UserBundle:User');
+        $emb = $em->getRepository('UserBundle:Badge');
+        $user = $this->getUser();
+        $observationNumber = $emo->getNumberOfObservationPerUser($user);
+        if ($observationNumber > 0 && $observationNumber < 5) {
+            $badge = 1;
+        } elseif ($observationNumber > 4 && $observationNumber < 20) {
+            $badge = 2;
+        } elseif ($observationNumber > 19 && $observationNumber < 50) {
+            $badge = 3;
+        } elseif ($observationNumber > 50) {
+            $badge = 4;
+        }
+        //check we have all badges up to
+        for ($i = 1; $i <= $badge; $i++){
+            //retrieve the badge
+            $badgeElement = $emb->find($i);
+            //check if the user has it, if not had the badge
+            if ($emu->hasUserGotBadge($user, $badgeElement) == 0){
+                $user->addBadge($badgeElement);
+            }
+        }
+        $em->flush();
+    }
+
+    /**
+     * Function to check and add badges for photo as necessary
+     */
+    private function photoBadge()
+    {
+        $em = $this->getDoctrine()->getManager();
+        $emo = $em->getRepository('NAOBundle:Observation');
+        $emu = $em->getRepository('UserBundle:User');
+        $emb = $em->getRepository('UserBundle:Badge');
+        $user = $this->getUser();
+        $photoNumber = $emo->getNumberOfPhotoPerUser($user);
+        if ($photoNumber > 0 && $photoNumber < 10) {
+            $badge = 5;
+        } elseif ($photoNumber > 9 && $photoNumber < 50){
+            $badge = 6;
+        } elseif ($photoNumber > 49 && $photoNumber < 100){
+            $badge = 7;
+        } elseif($photoNumber > 99){
+            $badge = 8;
+        }
+        //check we have all badges up to
+        for ($i = 5; $i <= $badge; $i++){
+            //retrieve the badge
+            $badgeElement = $emb->find($i);
+            //check if the user has it, if not had the badge
+            if ($emu->hasUserGotBadge($user, $badgeElement) == 0){
+                $user->addBadge($badgeElement);
+            }
+        }
+        $em->flush();
+    }
+
+    /**
+     * Function to check and add badges for anciennete as needed
+     */
+    private function ancienBadge()
+    {
+        $em = $this->getDoctrine()->getManager();
+        $emu = $em->getRepository('UserBundle:User');
+        $emb = $em->getRepository('UserBundle:Badge');
+        $user = $this->getUser();
+        $dateJoined = $user->getDateJoined();
+        $dateOfToday = new \DateTime();
+        $interval = $dateJoined->diff($dateOfToday);
+        $numberMonth = $interval->m;
+        if ($numberMonth < 6){
+            $badge = 9;
+        } elseif ($numberMonth > 5 && $numberMonth < 12){
+            $badge = 10;
+        } elseif ($numberMonth > 11 & $numberMonth < 24){
+            $badge = 11;
+        } elseif ($numberMonth > 23) {
+            $badge = 12;
+        }
+        for ($i = 9; $i <= $badge; $i++){
+            //retrieve the badge
+            $badgeElement = $emb->find($i);
+            //check if the user has it, if not had the badge
+            if ($emu->hasUserGotBadge($user, $badgeElement) == 0){
+                $user->addBadge($badgeElement);
+            }
+        }
+        $em->flush();
     }
 }

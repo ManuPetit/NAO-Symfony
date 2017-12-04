@@ -138,4 +138,5 @@ class observationsController extends Controller
 
         return new Response();
     }
+
 }

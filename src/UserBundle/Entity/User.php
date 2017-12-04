@@ -46,7 +46,7 @@ class User implements AdvancedUserInterface
 
     /**
      * @var string
-     * @ORM\Column(type="string", length=45, unique=true)
+     * @ORM\Column(type="string", length=45)
      * @Assert\NotBlank(message="Veuillez enter un nom de connexion.")
      * @Assert\Length(min=4, max=45,
      *     minMessage="Votre nom de connexion est trop court.",
@@ -130,6 +130,18 @@ class User implements AdvancedUserInterface
      * @ORM\JoinTable(name="bookmarks")
      */
     private $favoriteObservations;
+
+    /**
+     * @var string
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $facebookID;
+
+    /**
+     * @var string
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $googleID;
 
 
     public function __construct()
@@ -512,6 +524,38 @@ class User implements AdvancedUserInterface
         }else {
             return false;
         }
+    }
+
+    /**
+     * @return string
+     */
+    public function getFacebookID()
+    {
+        return $this->facebookID;
+    }
+
+    /**
+     * @param string $facebookID
+     */
+    public function setFacebookID($facebookID)
+    {
+        $this->facebookID = $facebookID;
+    }
+
+    /**
+     * @return string
+     */
+    public function getGoogleID()
+    {
+        return $this->googleID;
+    }
+
+    /**
+     * @param string $googleID
+     */
+    public function setGoogleID($googleID)
+    {
+        $this->googleID = $googleID;
     }
 
     private function generateFileName(){
