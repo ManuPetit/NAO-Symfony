@@ -9,6 +9,7 @@
 namespace UserBundle\Repository;
 
 use Doctrine\ORM\EntityRepository;
+use UserBundle\Entity\Badge;
 use UserBundle\Entity\User;
 
 class UserRepository extends EntityRepository
@@ -61,5 +62,18 @@ class UserRepository extends EntityRepository
             ->orderBy('u.login')
             ->getQuery()
             ->getResult();
+    }
+
+    public function hasUserGotBadge(User $user, Badge $badge)
+    {
+        return $this->createQueryBuilder('u')
+            ->join('u.badges', 'b')
+            ->andWhere('u = :user')
+            ->setParameter('user', $user)
+            ->andWhere('b = :badge')
+            ->setParameter('badge', $badge)
+            ->select('COUNT(u)')
+            ->getQuery()
+            ->getSingleScalarResult();
     }
 }

@@ -70,9 +70,9 @@ class BlogImage
             return;
         }
         $ext = $this->upFile->guessExtension();
-        //we resize the file to be 1000 * 750
+        //we resize the file to be 1000 * 600
         $image = new ImageResize($this->upFile);
-        $image->crop(1000,750, ImageResize::CROPCENTER);
+        $image->crop(1000,600, ImageResize::CROPCENTER);
         // change the name of file
         $fileName = $this->generateFileName() . '.' . $ext;
         if ($ext ='png') {

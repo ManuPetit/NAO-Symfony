@@ -87,3 +87,31 @@ vich_uploader:
             product_image:
                 uri_prefix:         /img/observations
                 upload_destination: '%kernel.root_dir%/../web/img/observations'
+
+knpu_oauth2_client:
+    clients:
+        # the key "facebook_main" can be anything, it
+        # will create a service: "knpu.oauth2.client.facebook_main"
+        facebook_main:
+            # this will be one of the supported types
+            type: facebook
+            client_id: 173781976541852
+            client_secret: d96db02eece27be771b2c12d73608b7b
+            # the route that you're redirected to after
+            # see the controller example below
+            redirect_route: connect_facebook_check
+            # route parameters to pass to your route, if needed
+            redirect_params: {}
+            graph_api_version: v2.11
+        # will create service: "knpu.oauth2.client.google_main"
+        # an instance of: KnpU\OAuth2ClientBundle\Client\Provider\GoogleClient
+        # composer require league/oauth2-google
+        google_main:
+            # must be "google" - it activates that type!
+            type: google
+            # add and configure client_id and client_secret in parameters.yml
+            client_id: 808932958284-oq4lvh5jkk39cu780lvsvq4tulka2klf.apps.googleusercontent.com
+            client_secret: 199x8N12kwaerY_UcWnM4xFV
+            # a route name you'll create
+            redirect_route: connect_google_check
+            redirect_params: {}

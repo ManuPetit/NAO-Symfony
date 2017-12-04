@@ -17,6 +17,14 @@ services:
         class: UserBundle\Security\FormLoginAuthenticator
         arguments: ["@router","@security.password_encoder"]
 
+    app.facebook_login_authenticator:
+        class: UserBundle\Security\FacebookAuthenticator
+        arguments: ["@oauth2.registry","@doctrine.orm.entity_manager","@router"]
+
+    app.google_login_authenticator:
+        class: UserBundle\Security\GoogleAuthenticator
+        arguments: ["@oauth2.registry","@doctrine.orm.entity_manager","@router"]
+
     # default configuration for services in *this* file
     _defaults:
         # automatically injects dependencies in your services

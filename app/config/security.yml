@@ -32,6 +32,9 @@ security:
             guard:
                 authenticators:
                     - app.form_login_authenticator
+                    - app.facebook_login_authenticator
+                    - app.google_login_authenticator
+                entry-point: app.form_login_authenticator
 
             logout:
                 path: logout
